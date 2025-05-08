@@ -257,13 +257,12 @@ sankeyData = { nodes, links };
 
 sankeyGenerator = 
     sankey()
-      .nodeWidth(70)//horizontal space between nodes
-      .nodePadding(9) //vertical space between nodes
+      .nodeWidth(100)//horizontal space between nodes
+      .nodePadding(8) //vertical space between nodes
       .extent([ //overall layout boundaries
         [margin.left, margin.top],
         [svgWidth - margin.right, svgHeight - margin.bottom]
       ]);
-      console.log(svgWidth, svgHeight);
 
 
     sankeyDataReadyToUse();
@@ -410,6 +409,12 @@ function startTickerLineWith() {
         .ease(easeLinear)
         .attr("stroke-dashoffset", 0);
     });
+    setTimeout(() => {
+
+    signalNextStep();
+
+
+    },2000);
 }
 
 
@@ -465,38 +470,139 @@ $: if (phaseSankey === 7) {
      }
 
 
-$: if (phaseSankey === 8) {
-
-    increaseLinkWidth = true;
-    setTimeout(() => {
-      startTickerLineWith();
-      
-    }, 50)
-      
-
-       reduceOpacity = true;
+let highlightConcreteIdeaSource1 = null; 
+let highlightConcreteIdeaTarget1 = null;
+let highlightConcreteIdeaSource2 = null; 
+let highlightConcreteIdeaTarget2 = null;
+let highlightConcreteIdeaSource3 = null; 
+let highlightConcreteIdeaTarget3 = null;
+let greyOutOthers = false;
+/*
+$: if (phaseSankey === 9) {
+       highlightConcreteIdea = "Kompetenzen und St\u00e4rken im Quartier mit Nachbarschaftshilfe oder Tauschb\u00f6rsen zusammen bringen";
+       signalNextStep();
      }
+*/
+
+// Vorbereitung Beispiel // erste source == originalIdea
+const highlightExample ={
+  8: { source: "Inklusion durch digitale Maßnahmen", target: "Digitaler Zwilling"},
+  9: { source: "Digitaler Zwilling", target: "Bewahren"},
+  10: { source: "Bewahren", target: "Digitaler Zwilling"},
+  12: { source: "Intelligente Steuerung des Verkehrsfluss", target: "Digitaler Zwilling"},
+  13: { source: "Nachbarschaftshilfe APP", target: "Bewahren"},
+}
 
 
 
 
+$: if (phaseSankey === 8) {
+  greyOutOthers = true;
+  setTimeout(() => {
+    highlightConcreteIdeaSource1 = highlightExample[8].source;
+    highlightConcreteIdeaTarget1 = highlightExample[8].target;
+      
+    }, 500)
+
+  signalNextStep();
+}
+
+$: if (phaseSankey === 9) {
+  setTimeout(() => {
+    highlightConcreteIdeaSource2 = highlightExample[9].source;
+    highlightConcreteIdeaTarget2 = highlightExample[9].target;
+      
+    }, 500)
+
+  signalNextStep();
+}
+
+$: if (phaseSankey === 10) {
+  setTimeout(() => {
+    highlightConcreteIdeaSource3 = highlightExample[10].source;
+    highlightConcreteIdeaTarget3 = highlightExample[10].target;
+      
+    }, 500)
+  signalNextStep();
+}
 
 
+
+
+$: if (phaseSankey === 11) {
+
+increaseLinkWidth = true;
+setTimeout(() => {
+  startTickerLineWith();
   
+  
+}, 50)
+  
+   reduceOpacity = true;
+ }
 
 
+
+
+
+//Vorbereitung für Labels
+const stageYears = [
+    { stage: "Idee",              year: 2021, showPhase: 1 },
+    { stage: "Projektskizze",     year: 2022, showPhase: 3 },
+    { stage: "Maßnahme",          year: 2023, showPhase: 6 },
+    { stage: "Umsetzungsprojekt", year: 2025, showPhase: 7 }
+  ];
+
+
+
+
+//Vorbereitung Stage Labels + BgBoxes
+  const boxPaddingX = 10;
+  const boxPaddingY = 15;
+  $: boxWidth  = svgWidth  * 0.11;
+  $: boxHeight = svgHeight * 0.08;
+
+
+    // Berechne die x-Positionen gleichmäßig
+    $: yearPositions = stageYears.map((d, i) => {
+    const availableW = svgWidth - margin.left - margin.right;
+    const step = availableW / (stageYears.length - 1);
+    return {
+      ...d,
+      x: margin.left + i * step,
+      y: margin.top
+    };
+  });
+
+ /* $: if (sankeyDataReady) {
+    console.group("📦 sankeyDataReady.links");
+    console.table(
+      sankeyDataReady.links.map((link, i) => ({
+        idx: i,
+        source: link.source.name, 
+        target: link.target.name,
+        originalIdea: link.source.originalIdea,
+        value: link.value,
+        x0: link.source.x0,
+        y0: link.source.y0,
+        x1: link.target.x1,
+        y1: link.target.y1,
+      }))
+    );
+    console.groupEnd();
+  }
+    */
 
 
 </script>
 
 
 
- <!--<div class="container">
- <h1 class="text-xl font-bold text-smblue mb-6 text-center">
-    
-  </h1>
--->
+
   {#if sankeyDataReady}
+
+
+ 
   <g class="sankey-layer">
 
     <!-- <svg  viewBox="0 0 {width} {height}"preserveAspectRatio="xMinYMin meet">
@@ -509,19 +615,45 @@ $: if (phaseSankey === 8) {
      (link.source.stage === "Maßnahme" && link.target.stage === "Umsetzungsprojekt" && showLinksToUmsetzung) 
      )}
    
-       <path
-         d={linkGenerator(link)}
-         fill="none"
-         stroke="url(#smartCityGradient)"
-         stroke-width={ 
-            link.target.name === "Keine Projektskizze" && reduceOpacity ? 0.5 :
-             Math.max(3, link.width + 3)
-            
-          }
-         opacity={ link.target.name === "Keine Projektskizze" && reduceOpacity ? 0.3 : 0.8 }
-         transition:draw={{ duration: 2000 }}
-         class="link"
-       />
+      <path
+      d={linkGenerator(link)}
+      fill="none"
+      stroke={
+          link.source.name === highlightConcreteIdeaSource1 && link.target.name === highlightConcreteIdeaTarget1 ||
+          link.source.name === highlightConcreteIdeaSource2 && link.target.name === highlightConcreteIdeaTarget2 ||
+          link.source.name === highlightConcreteIdeaSource3 && link.target.name === highlightConcreteIdeaTarget3
+
+          ? 'orange'
+        // 2. sobald greyOutOthers aktiv ist, alle anderen grau
+          : (greyOutOthers 
+              ? '#CCC' 
+              : 'url(#smartCityGradient)')
+      }
+       
+      stroke-width={
+          // dickere Linie beim Highlight
+          link.source.name === highlightConcreteIdeaSource1 && link.target.name === highlightConcreteIdeaTarget1 ||
+          link.source.name === highlightConcreteIdeaSource2 && link.target.name === highlightConcreteIdeaTarget2 ||
+          link.source.name === highlightConcreteIdeaSource3 && link.target.name === highlightConcreteIdeaTarget3
+
+
+          ? 20
+          : Math.max(10, link.width + 10)
+      }
+      opacity={
+        // komplett sichtbar, wenn wir gerade highlighten
+          link.source.name === highlightConcreteIdeaSource1 && link.target.name === highlightConcreteIdeaTarget1 ||
+          link.source.name === highlightConcreteIdeaSource2 && link.target.name === highlightConcreteIdeaTarget2 ||
+         link.source.name === highlightConcreteIdeaSource3 && link.target.name === highlightConcreteIdeaTarget3
+          ? 1
+          
+          : (link.target.name === "Keine Projektskizze" && reduceOpacity ? 0.3 : 0.8)
+      }
+      transition:draw={{ duration: 500 }}
+      class="link"
+    />
+
+
  
    {/if}
  {/each}
@@ -546,8 +678,8 @@ $: if (phaseSankey === 8) {
             height={node.y1 - node.y0}
             width={node.x1 - node.x0}
             fill={
-              node.stage === "Maßnahme" ? getColorForMeasure(node.name) || "grey" :
-              "grey"
+              node.stage === "MaßnahmePAUSE" ? getColorForMeasure(node.name) || "rgb(41, 41, 61)" :
+              "rgb(41, 41, 61)"
               }
              opacity={ 
                 node.name === "Keine Projektskizze" && reduceOpacity ? 0.1 :
@@ -577,7 +709,7 @@ $: if (phaseSankey === 8) {
           {/if}
           -->
            
-
+<!--
           {#if node.stage === "Maßnahme"}
             <image
               x="10"
@@ -587,6 +719,7 @@ $: if (phaseSankey === 8) {
               href={"./icons/" + node.name + ".svg"}
             />
           {/if}
+           -->
           {#if node.stage === "Maßnahme" }
           <text
             x={node.x0 < svgWidth/ 2 ? node.x1 - node.x0 + 6 : -6}
@@ -597,11 +730,64 @@ $: if (phaseSankey === 8) {
             {node.name}
           </text>
           {/if}
+         
 
 
         </g>
       {/if}
     {/each}
+
+     <!--  Jahreszahlen pro Stage -->
+     {#each yearPositions as { year, stage, x, y,  showPhase }}
+     {#if phaseSankey >= showPhase}
+       <text
+         x={x}
+         y={y-40}
+         fill="rgb(41, 41, 61)"
+         font-size={svgWidth * 0.03}
+         text-anchor="middle"
+         class="years-label"
+         font-weight="bold"
+       >
+         {year}
+       </text>
+ 
+       <line
+       x1={margin.left}
+       x2={x}
+       y1={margin.top - 20}
+       y2={margin.top - 20}
+       stroke="rgb(41, 41, 61)"
+       stroke-width="6"
+       stroke-dasharray="4 2"
+       transition:draw={{ duration: 1100 }}
+ 
+     />
+     
+     <g class="annotations">
+      {#each yearPositions as { year, stage, x, y,  showPhase }}
+      {#if phaseSankey >= showPhase}
+            <g transform={`translate(${x},${y})`}>
+              <foreignObject
+                x={boxWidth/2-230}
+                y={boxHeight/2  +470}
+                width={boxWidth}
+                height={boxHeight}
+              >
+                <div class="label-box">
+                  {stage}
+                </div>
+              </foreignObject>
+            </g>
+          {/if}
+        {/each}
+      </g>
+    
+ 
+     {/if}
+   {/each}
+ 
+ 
     
 
 
@@ -620,20 +806,38 @@ $: if (phaseSankey === 8) {
 </g>
   {/if}
 
-<!--</div>
+
+
+
+
 
 <style>
-.sankey-container {
-    width: 90vw;  /* Nimmt die gesamte Breite des Bildschirms */
-    max-width: 90vw; /* Begrenze auf 90% der Bildschirmbreite */
-    height: auto; /* Höhe bleibt proportional */
+  .label-box {
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden; /* Verhindert Scroll-Bars */
-}
+    justify-content: center;
+    text-anchor: middle;
 
+    /* noch etwas extra Innenabstand */
+    padding: 1rem 2rem;
 
+    /* abgerundete Ecken */
+    border: 3px solid;
 
+    background:rgb(41, 41, 61);
+    border-radius: 0.4rem;
+
+    color: white;
+
+    /* responsive Schriftgröße */
+    font-size: clamp(2rem, 2vw, 3rem);
+    line-height: 1.2;
+    text-align: center;
+
+    /* erlauben, dass man innerhalb der Box umbricht */
+    white-space: normal;
+    word-break: break-word;
+  }
 </style>
--->
+
+

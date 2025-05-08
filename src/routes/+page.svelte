@@ -6,6 +6,7 @@
   import Layout from "../components/Layout.svelte";
   import Sankey from "../components/sankey.svelte"; 
   import * as d3 from "d3-scale-chromatic";
+  import { writable } from 'svelte/store';
 	import { scaleOrdinal } from "d3";
 
 
@@ -66,16 +67,12 @@
 
 <main >
 
-<!--
-	<Layout>
-		<DataStory allData={allData} catCount={catCount}/>
-	</Layout>
 
--->
+
 
 {#if allData.length > 0}
-<Layout>
-	<DataStory	allData={allData} catCount={catCount} farbSkala={farbSkala} />
+<Layout >
+	<DataStory allData={allData} catCount={catCount} farbSkala={farbSkala} />
 </Layout>
 
 {:else}

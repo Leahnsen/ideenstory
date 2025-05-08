@@ -7,6 +7,7 @@
     import * as d3 from "d3-scale-chromatic";
     import { xml } from 'd3-fetch';
     import Sankey from './sankey.svelte';
+    import { max } from 'd3-array';
 
 
 
@@ -16,6 +17,8 @@
   export let phase;
   export let farbSkala;
   export let container; 
+  export let svgWidth;
+  export let svgHeight;
   let svg;
 
 
@@ -34,12 +37,12 @@ function signalNextStep() {
   
   const dispatch = createEventDispatcher(); // Event-Dispatcher, um das Story-Update zu triggern
     
-//SVG resposive
+/*/SVG resposive
 let aspectRatio = 1700 / 2900; // Ursprüngliches Verhältnis
 let svgWidth = window.innerWidth * 0.9;
 let svgHeight = svgWidth / aspectRatio;
 
-
+*/
     
 //Kategorien und Farben
 //Umwandlung der Kategorien in Set
@@ -149,7 +152,7 @@ let svgHeight = svgWidth / aspectRatio;
 
 
 
-    function startPhase0() {
+    function drawIdeas() {
   
       setTimeout(() => {
         
@@ -162,15 +165,14 @@ let svgHeight = svgWidth / aspectRatio;
             .attr("fill", "url(#ideeGradient)")
             .attr("width", rectSize* 0.12) //gleichmäßig zur SVG Größe skalieren
             .attr("height", rectSize* 0.12)
-            .attr("x", (d, i) => (i % 6) * rectSize*0.4 +svgWidth*0.75 )  // Grid-Layout am Anfang
-            .attr("y", (d, i) => Math.floor(i / 6) * rectSize*0.5)
+            .attr("x", (d, i) => (i % 7) * rectSize*0.4 +svgWidth*0.75 )  // Grid-Layout am Anfang
+            .attr("y", (d, i) => Math.floor(i / 7) * rectSize*0.5)
             .attr("opcaity", 0)
             .transition()
             .duration(3000)
             .attr("opacity", 1)
             .on("end", signalNextStep);
-            console.log("IdeenRects: phase 0");
-           // signalNextStep();
+
 
         // **Mouseover Debugging für Ideengeber**
        // svg.selectAll(".ideengeber")
@@ -178,7 +180,7 @@ let svgHeight = svgWidth / aspectRatio;
             //    console.log(`Ideengeber: ${d.ideengeber}`);
            // });
 
-    }, 4000);
+    }, 1000);
 
            // .on("end", signalNextStep);
 
@@ -193,7 +195,7 @@ let svgHeight = svgWidth / aspectRatio;
 
 
 
-  function startPhase1() {
+  function drawIdeengeber() {
     setTimeout(() => {
       
       svg = select(container)
@@ -218,16 +220,15 @@ let svgHeight = svgWidth / aspectRatio;
             signalNextStep();
 
 
-    }, 4000);
+    }, 2000);
   }
 
   
 
 
     // Ideen fliegen zu ihren Ideengebern & ordnen sich als Grid an
-      function startPhase2() {
+      function ideenToIdeengeber() {
 
-       // console.log("startPhase2");
         let ideenRects = svg.selectAll(".idee").raise();
             ideenRects.transition()
                 .duration(4000)
@@ -252,7 +253,7 @@ let svgHeight = svgWidth / aspectRatio;
                 .then(() => signalNextStep ());
         }
 
-function startPhase5() {
+function highligtAverageIdeas() {
 
     // Alle Ideengeber hervorheben, die 3 oder 4 Ideen haben
     
@@ -286,13 +287,14 @@ function startPhase5() {
             
 
         signalNextStep();
+
     }, 4000);
 }
 
 
         
 
-function startPhase6() {
+function highlightMaxIdeas() {
 
     // Ideengeber finden, der 39 Ideen hatte
     let highlightIdeengeber = eindeutigeIdeengeber.find(d => d.ideen_count === 39);
@@ -328,9 +330,9 @@ function startPhase6() {
 
 
 
-  // Phase 3: Die Ideen werden eingefärbt, basierend auf ihrer Kategorie.
-  function startPhase3() {
-    console.log("startPhase3");
+  //Die Ideen werden eingefärbt, basierend auf ihrer Kategorie.
+  function colorIdeas() {
+  
     let ideenRects = svg.selectAll(".idee");
     ideenRects.transition()
       .duration(1000)
@@ -346,13 +348,12 @@ function startPhase6() {
 
       .then(() => new Promise(resolve => setTimeout(resolve, 3000)))
       .then(() => signalNextStep());
-      console.log("endPhase3");
   }
 
 
 
 
-    function startPhase4() {  
+    function ideasToBarChart() {  
         fadeOutIdeengeberRects();
         let ideenRects = svg.selectAll(".idee");
         ideenRects.transition()
@@ -394,10 +395,13 @@ function fadeOutIdeengeberRects() {
 
 
 //Bar Chart Vorbereitung   
-const barChartX = 380; 
-const barChartY = 650; 
+const barChartX = 280; 
+const barChartY = 350; 
 const barHeight = svgHeight * 0.03; // 3% der SVG-Höhe
-const barSpacing = svgHeight * 0.02; // 2% der SVG-Höhe
+const barSpacing = svgHeight * 0.04; // 2% der SVG-Höhe
+const hSpacing = 47;  // horizontaler Abstand zwischen Rects
+const vSpacing = 47;  // vertikaler Abstand (für die 2 Zeilen)
+
 
 
 // Sortiere Kategorien nach Größe für Bar Chart
@@ -406,7 +410,6 @@ let categoryPositions = {};
 catCount.forEach((d, i) => {
     categoryPositions[d.kategorie] = barChartX + i * barSpacing;
 });
-//console.log("Kategorie-Startpositionen:", categoryPositions);
 
 
 function renderBarChartOrganic() {
@@ -420,8 +423,7 @@ function renderBarChartOrganic() {
         if(numRects === 0) return;
 
         const numCols = Math.ceil(numRects / 2); //Fix: 2 Zeilen, darauf aufbauend berechnen, wie viele Spalten
-        const hSpacing = 47;  // horizontaler Abstand zwischen Rects
-        const vSpacing = 47;  // vertikaler Abstand (für die 2 Zeilen)
+
         const catIndex = catCount.findIndex(d => d.kategorie === cat); //index der Kategorie
 
        //transtition start für die kleinen ideen rects
@@ -437,39 +439,73 @@ function renderBarChartOrganic() {
             .attr("fill", d => farbSkala(d.kategorie));
     });
   
-  svg.selectAll(".bar-label")
+  const labels = svg.selectAll(".bar-label")
     .data(catCount)
     .join("text")
     .attr("class", "bar-label")
-    .attr("x", barChartX - 10)  // 10px links vom Start des Balkenbereichs
-    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) + (barHeight + barSpacing)/2 )
-    .attr("text-anchor", "end")
-    .attr("alignment-baseline", "middle")
-    .attr("font-size", svgWidth * 0.016)
-    .attr("font-family", "Inter")
-    .text(d => d.kategorie);
+    .attr("x", barChartX - 150)  // 10px links vom Start des Balkenbereichs
+    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) -5)
+    .attr("font-size", svgWidth * 0.025)
+    .attr("font-family", "Inter, sans-serif")
+    .text(d => d.kategorie)
+    .attr("opacity", 0);
+    /*.each(function(d) {
+    // 1) Split am ersten Leerzeichen:
+    const [first, ...rest] = d.kategorie.split(" ");
+    const second = rest.join(" ");
+    // 2) Clear text, damit wir mit <tspan> neu bauen:
+    select(this).text("");
+    // 3) Erste Zeile
+    select(this)
+      .append("tspan")
+        .attr("x", this.getAttribute("x"))
+        .attr("dy", "0em")
+        .text(first);
+    // 4) Zweite Zeile (falls vorhanden)
+    if (second) {
+      select(this)
+        .append("tspan")
+          .attr("x", this.getAttribute("x"))
+          .attr("dy", "1.2em")
+          .text(second);
+    }
+  }); */
 
 
     //Füge Text hinzu, der die Anzahl der Ideen anzeigt – platziert am rechten Rand der Bar.
-    svg.selectAll(".bar-count")
+    const counts= svg.selectAll(".bar-count")
     .data(catCount)
     .join("text")
     .attr("class", "bar-count")
     .attr("x", d => {
       // Berechne, wie viele Spalten diese Kategorie braucht:
-      const numCols = Math.ceil(d.count / 2);
-      // Setze den Text 5px rechts vom Ende der Bar:
-      return barChartX + numCols * 50 + 10;
-    })
-    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) + (barHeight + barSpacing)/2 )
-    .attr("text-anchor", "start")
-    .attr("font-size", 30)
+      const numCols= Math.ceil(d.count/2);
+      return barChartX + numCols* hSpacing + 7;
+    }) 
+    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) + barHeight/2 + 3)
+    .attr("alignment-baseline", "middle")
+    .attr("font-size", svgWidth * 0.030)
+    .attr("font-weight", "bold")
+    .attr("opacity", 0) 
     .text(d => d.count);
 
   
- // setTimeout(() => signalNextStep(), 2500);
+//Einfliegen von Labels 
+const barDelay = categories.length * 30 + 1800;
 
+labels
+  .transition()
+  .duration(600)
+  .delay((d,i) => barDelay + i * 100)
+  .attr("opacity", 1);
+
+counts
+  .transition()
+  .duration(500)
+  .delay(barDelay +  100 + 200)
+  .attr("opacity", 1);
 }
+
 
 //Array Positionen rects vertikal zuordnen
 
@@ -478,7 +514,7 @@ function hideBarChart() {
   svg.selectAll(".bar-label, .bar-count")
     .transition()
     .delay(1000)   
-    .duration(1000) 
+    .duration(2000) 
     .attr("opacity", 0);
 
   arrangeRectsVerticallyLeft();
@@ -501,16 +537,26 @@ function arrangeRectsVerticallyLeft() {
   const vSpacing = (availableHeight - rectSize * total) / (total - 1);
 
 
-  svg.selectAll(".idee")
+ 
+    svg.selectAll(".idee")
     .transition()
-    .duration(2000)
-    .delay((d, i) => i * 10)
-    .attr('x', padding)
-    .attr('y', (d,i) => padding + i * (rectSize + vSpacing))
-    .attr("width", rectSize)
-    .attr("height", rectSize)
-    .attr("fill", '#ccc')
-    .attr("opacity", 1);
+      .duration(2200)
+      .delay((d, i) => i * 20)
+      .attr('x', padding)
+      .attr('y', (d,i) => padding + i * (rectSize + vSpacing))
+      .attr("width", rectSize)
+      .attr("height", rectSize)
+
+    .transition()
+      .delay(500)
+      .duration(500)
+      .attr("fill", 'rgb(41, 41, 61)');
+
+
+   
+
+  
+
 }
 
 
@@ -525,31 +571,31 @@ function arrangeRectsVerticallyLeft() {
 
    
   $: if (phase === 1) {
-    startPhase0(); //0 macht gerade nur Intro. Ideen tauchen auf! (nicht on Mount)
+    drawIdeas(); //0 macht gerade nur Intro.
   }
 
   $: if (phase === 3) {
-     startPhase1(); //Ideengeber tauchen auf
+     drawIdeengeber(); //Ideengeber tauchen auf
   }
 
   $: if (phase === 4) {
-    startPhase2(); // Ideen ordnen sich Ideengebern zu 
+    ideenToIdeengeber(); // Ideen ordnen sich Ideengebern zu 
   }
 
   $: if (phase === 5) {
-    startPhase5(); // Ideen ordnen sich Ideengebern zu 
+    highligtAverageIdeas(); // Hightlight average nr. of ideas
   }
 
   $: if (phase === 6) {
-    startPhase6(); // 38 Ideen hervorheben
+    highlightMaxIdeas(); // 38 Ideen hervorheben
   }
 
   $: if (phase === 7) {
-    startPhase3(); // // Ideen werden eingefärbt
+    colorIdeas(); // // Ideen werden eingefärbt
   }
 
   $: if (phase === 8) {
-    startPhase4(); // Ideen fliegen in ihre Kategorie-Bar
+    ideasToBarChart(); // Ideen fliegen in ihre Kategorie-Bar
   }
 
   $: if (phase === 9) {

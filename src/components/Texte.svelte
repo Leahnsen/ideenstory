@@ -27,8 +27,9 @@
   
 
     .story-text {
-        font-size: clamp(2rem, 3vw, 5rem); /* Dynamische Schriftgröße */
+        font-size: clamp(4rem, 4vw, 5rem); /* clamp wählt zwischen min(2rem) und max(5rem), das was am nähsten zu vw Zahl liegt */
         line-height: 1.3;
 
     }
+    
 </style>

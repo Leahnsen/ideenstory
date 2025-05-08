@@ -7,6 +7,7 @@
 
     import { onMount } from "svelte";
     import Sankey from "./sankey.svelte"; 
+    import Layout from "./Layout.svelte";
     import { writable } from "svelte/store";
     import {scaleOrdinal} from 'd3-scale';
     import * as d3 from "d3-scale-chromatic";
@@ -26,13 +27,24 @@
   // Gemeinsame SVG-Dimensionen
   let svgContainer;
   let svgWidth = window.innerWidth * 0.9;
-  console.log("svgWidth data story", svgWidth);
+  //console.log("svgWidth data story", svgWidth);
   let svgHeight = window.innerHeight * 0.9;
-  console.log("svgHeight data story", svgHeight);
+  //console.log("svgHeight data story", svgHeight);
   //Position des Texts nach Phase ändern
   let phaseTop;
   let phaseLeft;
   let width;
+
+
+  /**Titelsteuerung
+  const years= [2021, 2022, 2023, 2025];
+  let currentTitle;
+    currentTitle = "Die Ideenreise 2021-2025";
+  // Nur bis Phase 1 Layout nutzen:
+  $: layoutTitle = $phaseSankey < 2 
+    ? currentTitle
+    : "";  // ab Phase >=2 kein Header
+/***/
 
  
 
@@ -59,32 +71,32 @@ function handlePhaseEnd() {
 
 
     phase.update(n => n + 1);
-   // console.log("phase after n+1", $phase);
+   console.log("phase after n+1", $phase);
 
     setTimeout(() => {
         phaseLock = false;  // Nach kurzer Zeit wieder freigeben
-    }, 3000);
+    }, 1000);
 }
 
 
 
     $: {
       if($phase === 0|| $phase === 1 ||$phase === 2 || $phase === 10) {
-        phaseTop = "30vh";
+        phaseTop = "20vh";
         phaseLeft = "20vw";
         width = "50vw";
       } else if($phase === 8 || $phase === 9 ) {
-        phaseTop = "55vh";
-        phaseLeft = "50vw";
-        width = "40vw";
+        phaseTop = "35vh";
+        phaseLeft = "55vw";
+        width = "50vw";
       } else if($phase === 3) {
-        phaseTop = "40vh";
+        phaseTop = "20vh";
         phaseLeft = "35vw";
-        width = "25vw";     
+        width = "35vw";     
       } else {
         phaseTop = "40vh";
-        phaseLeft = "60vw";
-        width = "30vw";
+        phaseLeft = "50vw";
+        width = "45vw";
       }
     }
 
@@ -92,9 +104,10 @@ function handlePhaseEnd() {
 
 $: if ($phase < storySteps.length) {
     // Timer nur für Textphasen starten (keine D3 Animation vorhanden)
-    if ($phase <= 10 && $phase !== 2 && $phase !== 3 && $phase !== 4 && $phase !== 6 && $phase !== 5 &&$phase !==  7 && $phase !== 8) {
+    if ($phase <= 10  && $phase !== 3 && $phase !== 4 && $phase !== 6 && $phase !== 5 &&$phase !==  7 && $phase !== 8) {
             //    const delay = storyDelays[$phase] || 5000; // Standard: 5s
-        setTimeout(handlePhaseEnd, 4000);
+            console.log("phase von abfangen", $phase);
+        setTimeout(handlePhaseEnd, 3000);
     }
 }
 
@@ -129,6 +142,14 @@ $: if ($phase < storySteps.length) {
     },
 
     {   text: "Es wurden 18 Projektskizzen erstellt. Dafür wurden oft mehrere Ideen zu einem Projekt zusammengefasst,",
+        top: "20vh", left: "10vw", width: "40vw",
+    },
+
+    {   text: "BEISPIEL: Projektskizze mit vielen Ideen, aus der am Ende auch was wurde (Bsp für alle Stages verwenden)",
+        top: "20vh", left: "10vw", width: "40vw",
+    },
+
+    {   text: "BEISPIEL: Projektskizze mit vielen Ideen, aus der am Ende auch was wurde (Bsp für alle Stages verwenden)",
         top: "20vh", left: "10vw", width: "40vw",
     },
 
@@ -170,17 +191,24 @@ $: if ($phase < storySteps.length) {
 </script>
 
     
-<main class="w-full h-full flex flex-col items-center justify-center p-6">
-  <!-- unser einziger SVG-Container -->
+<main class="relative w-full h-screen flex flex-col items-center justify-start pt-6 px-6">
+<!--Header: wechselnder Titel je nach Phase  -->
+
+
+<div class="w-full flex-grow pt-20 overflow-visible">  <!--  einziger SVG-Container für beide Components-->
   <svg bind:this={svgContainer}
        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
        preserveAspectRatio="xMinYMin meet"
-       class="svg-container">
+       class="svg-container overflow-visible">
 
     {#if svgContainer}
+
+
       {#if $phase <= 10}
         <Ideen2Ideengeber
           container={svgContainer}
+          svgHeight={svgHeight}
+          svgWidth={svgWidth}
           allData={allData}
           catCount={catCount}
           farbSkala={farbSkala}
@@ -190,7 +218,7 @@ $: if ($phase < storySteps.length) {
         />
       {/if}
 
-      {#if $phaseSankey <= 10}
+      {#if $phaseSankey <= 15}
 
 
         <Sankey
@@ -206,6 +234,8 @@ $: if ($phase < storySteps.length) {
     {/if}
   </svg>
 
+
+
   <!-- Texte als Overlay außerhalb des SVG -->
   {#key phaseTop}
     <Texte
@@ -215,7 +245,7 @@ $: if ($phase < storySteps.length) {
       width={width}
     />
   {/key}
-  {#if $phase === storySteps.length && $phaseSankey <= 10}
+  {#if $phase === storySteps.length && $phaseSankey <= 15}
 
   {#key $phaseSankey}
   {#if storyStepsSankey[$phaseSankey]}
@@ -228,4 +258,8 @@ $: if ($phase < storySteps.length) {
   {/if}
 {/key}
   {/if}
+
 </main>
+
+
+
