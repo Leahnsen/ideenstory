@@ -1,45 +1,49 @@
-import { join } from 'path'
+import { join } from 'path';
 
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
-import { skeleton } from '@skeletonlabs/tw-plugin'
+import { skeleton } from '@skeletonlabs/tw-plugin';
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: 'class',
-	content: ['./src/**/*.{html,js,svelte,ts}', join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')],
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
+	],
 	theme: {
 		extend: {
 			colors: {
-				primary: "#4f46e5",  // Indigo
-				secondary: "#9333ea", // Violett
-				accent: "#14b8a6",   // Türkis
-				background: "#f0eeed ", // Hellgrau/braun
-				textcolor: "#293133", // Dunkelgrau für Texte
-				smred:"#e73e20",
-				smblue:"#2b7ab7",
-				smgreen:"#1c9741",
-				smpurple:"#883582",
-				türkis:	"#8dd3c7", // Türkis
-				gelb: "#ffffb3", // Hellgelb
-				lavendel:"#bebada", // Lavendel
-				rot: "#fb8072", // Lachsrot
-				hellblau:"#80b1d3", // Hellblau
-				orange:"#fdb462", // Orange
-				hellgrün:"#b3de69", // Hellgrün
-				rosa:"#fccde5", // Rosa
-				grau:"#d9d9d9", // Grau
-				lila:"#bc80bd", // Lila
-				grün:"#ccebc5", // Mintgrün
-				gelb: "#ffed6f"  // Sonnengelb
-
-
+				primary: '#4f46e5', // Indigo
+				secondary: '#9333ea', // Violett
+				accent: '#14b8a6', // Türkis
+				background: '#f0eeed ', // Hellgrau/braun
+				//textcolor: "#293133", // Dunkelgrau für Texte
+				textcolor: 'white', // weiß für Texte
+				smred: '#e73e20',
+				smblue: '#2b7ab7',
+				smgreen: '#1c9741',
+				smpurple: '#883582',
+				türkis: '#8dd3c7', // Türkis
+				gelb: '#ffffb3', // Hellgelb
+				lavendel: '#bebada', // Lavendel
+				rot: '#fb8072', // Lachsrot
+				hellblau: '#80b1d3', // Hellblau
+				orange: '#fdb462', // Orange
+				hellgrün: '#b3de69', // Hellgrün
+				rosa: '#fccde5', // Rosa
+				grau: '#d9d9d9', // Grau
+				lila: '#bc80bd', // Lila
+				grün: '#ccebc5', // Mintgrün
+				gelb: '#ffed6f', // Sonnengelb
+				bgblue: '#152d47', //new sm blue bg
+				bcpurple: '#aa98b8' //bar chart purple
 			},
-		},
+			boxShadow: {
+				'inset-soft': 'inset 0 2px 6px rgba(0, 0, 0, 0.15)',
+				'inset-deep': 'inset 0 4px 12px rgba(0, 0, 0, 0.25)'
+			}
+		}
 	},
-	plugins: [
-		forms,
-		typography,
-		skeleton(),
-		
-	],
+	safelist: ['inset-soft', 'inset-deep'],
+	plugins: [forms, typography, skeleton()]
 };

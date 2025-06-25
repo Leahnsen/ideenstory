@@ -1,628 +1,833 @@
 <script>
-  // @ts-nocheck
-    import { onMount, createEventDispatcher } from 'svelte';
-    import { select } from "d3-selection";
-    import { transition } from "d3-transition";
-    import { scaleOrdinal } from "d3-scale";
-    import * as d3 from "d3-scale-chromatic";
-    import { xml } from 'd3-fetch';
-    import Sankey from './sankey.svelte';
-    import { max } from 'd3-array';
-
-
-
-
-  export let allData = []; 
-  export let catCount = [];
-  export let phase;
-  export let farbSkala;
-  export let container; 
-  export let svgWidth;
-  export let svgHeight;
-  let svg;
-
-
-let phaseLock = false;
-
-function signalNextStep() {
-    if (phaseLock) return; // Falls schon aktiv, nicht erneut starten
-    phaseLock = true;
-
-      setTimeout(() => {
-        dispatch("phaseEnd");
-        phaseLock = false; // Phase entsperren für nächsten Schritt
-    }, 2000);
-}
-
-  
-  const dispatch = createEventDispatcher(); // Event-Dispatcher, um das Story-Update zu triggern
-    
-/*/SVG resposive
-let aspectRatio = 1700 / 2900; // Ursprüngliches Verhältnis
-let svgWidth = window.innerWidth * 0.9;
-let svgHeight = svgWidth / aspectRatio;
-
-*/
-    
-//Kategorien und Farben
-//Umwandlung der Kategorien in Set
-    const katSammlung = new Set(allData.map(d => d.kategorie));
-//D3 Funktionen erwarten aber Array mit Index als Eingabe   [...katSammlung]... ist Spread Operator und wandelt um in Array
-//Alternativ: const katSammlungArray = Array.from(katSammlung);  
-    const katSammlungArray= [...katSammlung];
-
-    
-   /* const farbSkala = scaleOrdinal()
-        .domain(katSammlungArray)
-          
-        .range(d3.schemeCategory10);
-*/
-
-    // Layout für Ideengeber-Rects
-  const rectSize = svgWidth * 0.08; // 9% der Breite
-  const gap = svgWidth * 0.02; // 1% der Breite
-  const columns= 5; 
-  //const columns = Math.floor(svgWidth / (rectSize + gap));
-
-
-    // **Eindeutige Liste der Ideengeber erstellen**
-    let eindeutigeIdeengeber = Array.from(
-        new Set(allData.map(d => d.ideengeber))
-    ).map(ideengeber => ({
-        ideengeber, 
-        ideen_count: allData.filter(d => d.ideengeber === ideengeber).length // Anzahl der Ideen pro Ideengeber zählen
-    }));
-
-    //Durchnschnittliche Ideen pro Ideengeber
-    let averageIdeen = 0; 
-    eindeutigeIdeengeber.forEach(ideengeber => {
-        averageIdeen += ideengeber.ideen_count;
-    });
-    averageIdeen = (averageIdeen / eindeutigeIdeengeber.length).toFixed(1);
-
-
-    // **Positionen für Ideengeber speichern**
-    let positionen = {};
-    eindeutigeIdeengeber.forEach((d, i) => {
-        const col = i % columns;
-        const row = Math.floor(i / columns);
-        positionen[d.ideengeber] = {
-            x: col * (rectSize + gap) + gap,
-            y: row * (rectSize + gap) + gap
-        };
-    });
-
-   // console.log("Gespeicherte Positionen der Ideengeber:", positionen);
-
-    // **Alle Ideen mit korrektem Index für das Grid speichern**
-   let alleIdeen = [];
-    eindeutigeIdeengeber.forEach(ideengeber => {
-        let ideenListe = allData.filter(d => d.ideengeber === ideengeber.ideengeber);
-        ideenListe.forEach((idee, index) => {
-            alleIdeen.push({
-                idee: idee.idee,
-                ideengeber: idee.ideengeber,
-                kategorie: idee.kategorie,
-                index // Index für jede Idee innerhalb des Ideengebers, bspw. 0-5 (Grid Berechnung der Animation beruht)
-            });
-        });
-    });
-
-
-
-
-
-    //SVG initialisieren und statische Elemente zeichnen
-    onMount(() => {
-        svg = select(container)
-        .attr("viewBox", container.getAttribute("viewBox"))
-
-          .attr("preserveAspectRatio", "xMinYMin meet"); //gleichmäsige Skalierung bei unterschiedlichen Seitenverhältnissen
-        
-
-        //Vorbereitung für die Rects: Gradients für Farbverlauf definieren
-        const defs = svg.append("defs");
-      
-        const gradient = defs.append("linearGradient")
-          .attr("id", "ideeGradient")
-          .attr("x1", "0%")
-          .attr("x2", "100%")
-          .attr("y1", "0%")
-          .attr("y2", "100%")
-
-          //Farbverlauf definieren
-          gradient.append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", "#e73e20"); // Anfangsfarbe
-
-          
-          gradient.append("stop")
-            .attr("offset", "50%")
-            .attr("stop-color", "#883582"); // Mitte
-
-          
-          gradient.append("stop")
-            .attr("offset", "100%")
-            .attr("stop-color", "#2b7ab7"); // Ende
-          
-      
-   
-    });
-
-
-
-
-    function drawIdeas() {
-  
-      setTimeout(() => {
-        
-      
-        // Ideen als kleine Rechtecke zeichnen (Start: zufällig)
-        const ideenRects = svg.selectAll(".idee")
-            .data(alleIdeen)
-            .join("rect")
-            .attr("class", "idee")
-            .attr("fill", "url(#ideeGradient)")
-            .attr("width", rectSize* 0.12) //gleichmäßig zur SVG Größe skalieren
-            .attr("height", rectSize* 0.12)
-            .attr("x", (d, i) => (i % 7) * rectSize*0.4 +svgWidth*0.75 )  // Grid-Layout am Anfang
-            .attr("y", (d, i) => Math.floor(i / 7) * rectSize*0.5)
-            .attr("opcaity", 0)
-            .transition()
-            .duration(3000)
-            .attr("opacity", 1)
-            .on("end", signalNextStep);
-
-
-        // **Mouseover Debugging für Ideengeber**
-       // svg.selectAll(".ideengeber")
-           // .on("mouseover", (event, d) => {
-            //    console.log(`Ideengeber: ${d.ideengeber}`);
-           // });
-
-    }, 1000);
-
-           // .on("end", signalNextStep);
-
-  
-            
-     // debugging
-       // ideenRects.on("mouseover", (event, d) => {
-        //    console.log(`Idee: ${d.idee} | Ideengeber: ${d.ideengeber} | Kategorie: ${d.kategorie}`);
-        //});
-    }
-
-
-
-
-  function drawIdeengeber() {
-    setTimeout(() => {
-      
-      svg = select(container)
-            .attr("width", svgWidth)
-            .attr("height", svgHeight);
-
-        // Ideengeber zeichnen
-        svg.selectAll(".ideengeber")
-            .data(eindeutigeIdeengeber)
-            .join("rect")
-            .attr("class", "ideengeber")
-            .attr("fill", "grey")
-            .attr("width", rectSize)
-            .attr("height", rectSize)
-            .attr("x", d => positionen[d.ideengeber].x)
-            .attr("y", d => positionen[d.ideengeber].y)
-            .attr("opcaity", 0)
-            .transition()
-            .duration(3000)
-            .attr("opacity", 1);
-            //.on("end", signalNextStep);
-            signalNextStep();
-
-
-    }, 2000);
-  }
-
-  
-
-
-    // Ideen fliegen zu ihren Ideengebern & ordnen sich als Grid an
-      function ideenToIdeengeber() {
-
-        let ideenRects = svg.selectAll(".idee").raise();
-            ideenRects.transition()
-                .duration(4000)
-                .attr("x", d => {
-                    
-                    let baseX = positionen[d.ideengeber].x;  
-                    let col = d.index % 7;  //modulo 6 -> 6 Spalten Grid 0%6=0, 1%6=1, 2%6=2, 3%6=3, 4%6=4, 5%6=5
-                    //console.log(d.ideengeber, " index:", d.index," baseX:", baseX, "col:", col, "final:" , baseX + col * 13);
-
-                    return baseX + col * rectSize*0.14;  // baseX ist linker Rand des rects(für alle Ideen(Ideengeber) gleich), 
-                    // Abstand zwischen den Spalten =1 (größe rect 16)
-                })
-                .attr("y", d =>{
-                    let baseY = positionen[d.ideengeber].y;  
-                    let row = Math.floor(d.index / 7);  
-
-                    return baseY + row *rectSize*0.14;  // baseY ist oberer Rand des rects(für alle Ideen(Ideengeber) gleich),
-                })
-                .end()
-                .then(() => new Promise(resolve => setTimeout(resolve, 5000)))
-                
-                .then(() => signalNextStep ());
-        }
-
-function highligtAverageIdeas() {
-
-    // Alle Ideengeber hervorheben, die 3 oder 4 Ideen haben
-    
-    let highlightIdeengeberSchnitt = eindeutigeIdeengeber.filter(d => d.ideen_count === 3 || d.ideen_count === 4);
-
-    // Alle Ideengeber ausgrauen
-    svg.selectAll(".ideengeber")
-        .transition()
-        .duration(1000)
-        .attr("opacity", 0.3);
-
-    // Den Ideengeber mit 3 und 4 Ideen hervorheben
-    highlightIdeengeberSchnitt.forEach(ideengeber =>{
-      svg.selectAll(".ideengeber")
-        .filter(d => d.ideengeber === ideengeber.ideengeber)
-        .transition()
-        .duration(1000)
-        .attr("opacity", 0.7)
-        .attr("fill", "url(#ideeGradient)"); 
-
-    })
-
-
-    // Nach 4 Sekunden zurücksetzen & zur nächsten Phase übergehen
-    setTimeout(() => {
-        svg.selectAll(".ideengeber")
-            .transition()
-            .duration(1000)
-            .attr("opacity", 1)
-            .attr("fill", "grey"); 
-            
-
-        signalNextStep();
-
-    }, 4000);
-}
-
-
-        
-
-function highlightMaxIdeas() {
-
-    // Ideengeber finden, der 39 Ideen hatte
-    let highlightIdeengeber = eindeutigeIdeengeber.find(d => d.ideen_count === 39);
-
-    // Alle Ideengeber ausgrauen
-    svg.selectAll(".ideengeber")
-        .transition()
-        .duration(1000)
-        .attr("opacity", 0.3);
-
-    // Den Ideengeber mit 39 Ideen hervorheben
-    svg.selectAll(".ideengeber")
-        .filter(d => d.ideengeber === highlightIdeengeber.ideengeber)
-        .transition()
-        .duration(1000)
-        .attr("opacity", 0.7)
-        .attr("fill", "url(#ideeGradient)"); // Optional: Goldene Farbe für mehr Aufmerksamkeit
-
-    // Nach 4 Sekunden zurücksetzen & zur nächsten Phase übergehen
-    setTimeout(() => {
-        svg.selectAll(".ideengeber")
-            .transition()
-            .duration(1000)
-            .attr("opacity", 1)
-            .attr("fill", "grey"); // Standardfarbe zurücksetzen
-
-        signalNextStep();
-    }, 4000);
+	// @ts-nocheck
+	import { onMount, createEventDispatcher } from 'svelte';
+	import { select, selectAll } from 'd3-selection';
+	import { transition } from 'd3-transition';
+	import { scaleOrdinal } from 'd3-scale';
+	import * as d3 from 'd3-scale-chromatic';
+	import { xml } from 'd3-fetch';
+	import Sankey from './sankey.svelte';
+	import { max } from 'd3-array';
+	import { easeBackOut, easeBounceInOut } from 'd3-ease';
+	import { animate } from 'motion';
+	import { lab } from 'd3';
+	import { cubicInOut } from 'svelte/easing';
+
+	export let allData = [];
+	export let catCount = [];
+	export let phase;
+	export let farbSkala;
+	export let container;
+	export let svgWidth;
+	export let svgHeight;
+	let svg;
+
+	let phaseLock = false;
+
+	function signalNextStep() {
+		if (phaseLock) return; // Falls schon aktiv, nicht erneut starten
+		phaseLock = true;
+
+		setTimeout(() => {
+			dispatch('phaseEnd');
+			phaseLock = false; // Phase entsperren für nächsten Schritt
+		}, 2000);
+	}
+
+	const dispatch = createEventDispatcher(); // Event-Dispatcher, um das Story-Update zu triggern
+
+	//Kategorien und Farben
+	//Umwandlung der Kategorien in Set
+	const katSammlung = new Set(allData.map((d) => d.kategorie));
+	//D3 Funktionen erwarten aber Array mit Index als Eingabe   [...katSammlung]... ist Spread Operator und wandelt um in Array
+	//Alternativ: const katSammlungArray = Array.from(katSammlung);
+	const katSammlungArray = [...katSammlung];
+
+	// Layout für Ideengeber-Rects
+	const rectSize = svgWidth * 0.1; // 1% der Breite
+	const gap = svgWidth * 0.02;
+	const columns = 6;
+	//const columns = Math.floor(svgWidth / (rectSize + gap));
+
+	// **Eindeutige Liste der Ideengeber erstellen**
+	let eindeutigeIdeengeber = Array.from(new Set(allData.map((d) => d.ideengeber))).map(
+		(ideengeber) => ({
+			ideengeber,
+			ideen_count: allData.filter((d) => d.ideengeber === ideengeber).length // Anzahl der Ideen pro Ideengeber zählen
+		})
+	);
+
+	//Durchnschnittliche Ideen pro Ideengeber
+	let averageIdeen = 0;
+	eindeutigeIdeengeber.forEach((ideengeber) => {
+		averageIdeen += ideengeber.ideen_count;
+	});
+	averageIdeen = (averageIdeen / eindeutigeIdeengeber.length).toFixed(1);
+
+	//Positionen für Ideengeber speichern
+	let positionen = {};
+	eindeutigeIdeengeber.forEach((d, i) => {
+		const col = i % columns;
+		const row = Math.floor(i / columns);
+		positionen[d.ideengeber] = {
+			x: col * (rectSize + gap) + gap,
+			y: row * (rectSize + gap) + gap
+		};
+	});
+
+	// Alle Ideen mit korrektem Index für das Grid speichern
+	let alleIdeen = [];
+	eindeutigeIdeengeber.forEach((ideengeber) => {
+		let ideenListe = allData.filter((d) => d.ideengeber === ideengeber.ideengeber);
+		ideenListe.forEach((idee, index) => {
+			alleIdeen.push({
+				idee: idee.idee,
+				ideengeber: idee.ideengeber,
+				kategorie: idee.kategorie,
+				index // Index für jede Idee innerhalb des Ideengebers, bspw. 0-5 (Grid Berechnung der Animation beruht)
+			});
+		});
+	});
+
+	const alleIdeenWithStartposition = alleIdeen.map((d) => {
+		d.startX = randomStartPositionIdeas().x;
+		d.startY = randomStartPositionIdeas().y;
+		return d;
+	});
+
+	//SVG initialisieren und statische Elemente zeichnen
+	onMount(() => {
+		svg = select(container)
+			.attr('viewBox', container.getAttribute('viewBox'))
+
+			.attr('preserveAspectRatio', 'xMinYMin meet'); //gleichmäsige Skalierung bei unterschiedlichen Seitenverhältnissen
+
+		//Vorbereitung für die Rects: Gradients für Farbverlauf definieren
+		const defs = svg.append('defs');
+
+		const gradient = defs
+			.append('linearGradient')
+			.attr('id', 'ideeGradient')
+			.attr('x1', '0%')
+			.attr('x2', '100%')
+			.attr('y1', '0%')
+			.attr('y2', '100%');
+
+		//Farbverlauf definieren
+		gradient.append('stop').attr('offset', '0%').attr('stop-color', '#e73e20');
+
+		gradient.append('stop').attr('offset', '50%').attr('stop-color', '#883582');
+
+		gradient.append('stop').attr('offset', '100%').attr('stop-color', '#2b7ab7');
+	});
+
+	function randomStartPositionIdeas() {
+		const side = Math.floor(Math.random() * 4);
+
+		switch (side) {
+			case 0:
+				return { x: Math.random() * svgWidth, y: -150 }; // oben
+			case 1:
+				return { x: svgWidth + 150, y: Math.random() * svgHeight }; // rechts
+			case 2:
+				return { x: Math.random() * svgWidth, y: svgHeight + 150 }; // unten
+			case 3:
+				return { x: -150, y: Math.random() * svgHeight }; // links
+		}
+	}
+
+	function drawIdeas() {
+		const padding = rectSize * 0.3;
+		const rows = Math.floor(svgHeight / padding);
+		const columns = Math.ceil(alleIdeen.length / rows);
+		const totalWidth = columns * padding;
+		const startX = svgWidth - totalWidth;
+
+		//console.log("erste Idee:", alleIdeenWithStartposition?.[0]);
+
+		// Ausgangspunkt: alle kommen aus der gleichen Position
+		svg
+			.selectAll('.idee')
+			.data(alleIdeenWithStartposition)
+			.join('rect')
+			.attr('class', 'idee')
+			.attr('fill', 'url(#ideeGradient)')
+			.attr('x', (d) => d.startX)
+			.attr('y', (d) => d.startY)
+			.attr('width', rectSize * 0.15)
+			.attr('height', rectSize * 0.15)
+			.attr('rx', rectSize * 0.02)
+			.transition()
+			.delay((d, i) => i * 10)
+			.duration(2500)
+			.ease(easeBackOut.overshoot(1.7))
+			.attr('x', (d, i) => Math.floor(i / rows) * padding + startX)
+			.attr('y', (d, i) => (i % rows) * padding);
+
+		const annotationIdeas = svg
+			.selectAll('.annotation-idee')
+			.data([null]) // Dummy-Datenbindung, sonst funkt join noicht
+			.join('text')
+			.attr('class', 'annotation-idee')
+			.attr('x', startX + padding)
+			.attr('y', padding * 15)
+			.attr('transform', `rotate(-90, ${startX - padding}, ${padding * 15})`)
+			.attr('text-anchor', 'middle')
+			.text(`${alleIdeen.length} Ideen`)
+			.attr('font-size', svgWidth * 0.05)
+			.attr('font-weight', 'bold')
+			.attr('fill', 'white')
+			.attr('font-family', 'Inter, sans-serif')
+			.attr('opacity', 0);
+
+		annotationIdeas
+			.transition()
+			.duration(2000)
+			.attr('opacity', 1)
+			//.on('end', signalNextStep());
+	}
+
+	// debugging
+	// ideenRects.on("mouseover", (event, d) => {
+	 //  console.log(`Idee: ${d.idee} | Ideengeber: ${d.ideengeber} | Kategorie: ${d.kategorie}`);
+	//});
+
+function highlightIdea() {
+	console.log(alleIdeenWithStartposition)
+	const zielIdee = "IDEE aus der Bürgerschaft: Digitale Obstkarte zum Ernten";
+
+	// Idee im Dataset finden d.idee.trim() === 'Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen'
+	const ziel = alleIdeenWithStartposition.find((d) => d.idee.trim() === zielIdee);
+
+	if (!ziel) {
+		console.warn('Idee nicht gefunden:', zielIdee);
+		return;
+	}
+
+	// zugehöriges SVG-Element selektieren
+	const rect = svg.selectAll('.idee').filter((d) => d === ziel);
+
+	if (rect.empty()) {
+		console.warn('SVG-Element zur Idee nicht gefunden.');
+		return;
+	}
+
+	// Highlight 1 Ideenrect
+	rect
+
+		.transition()
+		.duration(200)
+		.attr('stroke-width', 6)
+		.transition()
+		.duration(2000)
+		.attr('stroke', 'white')
+		.transition()
+		.delay(2000)
+		.duration(1000)
+		.attr('stroke-width', 0)
+		.attr('stroke', 'none');
+
+		
 }
 
 
 
 
 
+	function drawIdeengeber() {
+		setTimeout(() => {
+			svg.select('.annotation-idee')
+				.transition()
+				.duration(2000)
+				.attr('opacity', 0);
 
-  //Die Ideen werden eingefärbt, basierend auf ihrer Kategorie.
-  function colorIdeas() {
-  
-    let ideenRects = svg.selectAll(".idee");
-    ideenRects.transition()
-      .duration(1000)
-      .attr("opacity", 0.5)
+			// Ideengeber zeichnen
+			svg
+				.selectAll('.ideengeber')
+				.data(eindeutigeIdeengeber)
+				.join('rect')
+				.attr('class', 'ideengeber')
+				.attr('fill', 'grey')
+				.attr('width', rectSize)
+				.attr('height', rectSize)
+				.attr('x', (d) => positionen[d.ideengeber].x)
+				.attr('y', (d) => positionen[d.ideengeber].y)
+				.attr('rx', rectSize * 0.1)
+				.attr('opacity', 0)
+				.on('mouseover', (event, d) => {
+					console.log(`Ideengeber: ${d.ideengeber}`)});
 
-      
-    .transition()
-      .duration(3000)
-      .delay(1000)
-      .attr("fill", d => farbSkala(d.kategorie))
-      .attr("opacity", 1)
-      .end()
-
-      .then(() => new Promise(resolve => setTimeout(resolve, 3000)))
-      .then(() => signalNextStep());
-  }
-
-
-
-
-    function ideasToBarChart() {  
-        fadeOutIdeengeberRects();
-        let ideenRects = svg.selectAll(".idee");
-        ideenRects.transition()
-                .duration(2000)
-                //.delay(1000)  // Kürzere Wartezeit
-                .attr("x", d => {
-                    let barX = barChartX; // Startposition der Balken
-                    let barIndex = catCount.findIndex(c => c.kategorie === d.kategorie);
-                    let barWidth = (catCount[barIndex]?.count || 1) * 10; // Balkenbreite anhand der Häufigkeit
-                    let col = d.index % 6;  
-                        return barX + col * (barWidth / 8); // Ideen gleichmäßig verteilen
-                    })
-                .attr("y", d => {
-                    let barBaseY = barChartY + catCount.findIndex(c => c.kategorie === d.kategorie) * (barHeight + barSpacing);
-                    let row = Math.floor(d.index / 8);  
-                    return barBaseY + row * 12;  // Innerhalb des Balkens in Reihen anordnen
-                     })
-                        
-
-                    .end()
-                    .then(()=> {
-                            //console.log(`Idee ${d.idee} wurde in Bar für ${d.kategorie} geparkt.`);  
-                            renderBarChartOrganic();
-
-                            setTimeout(() => {
-                              signalNextStep();
-                            },4000);
-                            
-                    });
-        };
-
-function fadeOutIdeengeberRects() {
-    svg.selectAll(".ideengeber")
-      .transition()
-      .duration(2000)
-      .attr("opacity", 0)
-      .remove();
-  }
-
-
-//Bar Chart Vorbereitung   
-const barChartX = 280; 
-const barChartY = 350; 
-const barHeight = svgHeight * 0.03; // 3% der SVG-Höhe
-const barSpacing = svgHeight * 0.04; // 2% der SVG-Höhe
-const hSpacing = 47;  // horizontaler Abstand zwischen Rects
-const vSpacing = 47;  // vertikaler Abstand (für die 2 Zeilen)
+			setTimeout(() => {
+				document.querySelectorAll('rect.ideengeber').forEach((el, i) => {
+					animate(
+						el,
+						{
+							opacity: [0, 1],
+							scale: [0.4, 1]
+						},
+						{
+							delay: i * 0.01, // kleine Verzögerung je Element
+							duration: 0.5,
+							easing: 'back-out'
+						}
+					);
+				});
+			}, 10); // mini Timeout, damit D3 erst DOM schreibt
 
 
 
-// Sortiere Kategorien nach Größe für Bar Chart
-catCount.sort((a, b) => b.count - a.count); 
-let categoryPositions = {}; 
-catCount.forEach((d, i) => {
-    categoryPositions[d.kategorie] = barChartX + i * barSpacing;
-});
+	const annotationIdeengeber = svg
+		.selectAll('.annotation-ideengeber')
+		.data([null])
+		.join('text')
+		.attr('class', 'annotation-ideengeber')
+		.attr('x', (columns * rectSize + gap) / 2)
+		.attr('y', gap / 2)
+		.attr('text-anchor', 'middle')
+		.text('') // Start leer, weil kommt über Animation 
+		.attr('font-size', svgWidth * 0.05)
+		.attr('font-weight', 'bold')
+		.attr('fill', 'white')
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('opacity', 0);
 
+	// Element-Referenz holen
+	const node = annotationIdeengeber.node();
 
-function renderBarChartOrganic() {
+	// Sichtbarkeit per D3-Transition (wie bisher)
+	annotationIdeengeber
+		.transition()
+		.duration(500)
+		.attr('opacity', 1);
 
-    // Gruppiert Rects nach Kategorie.
-    const categories = Array.from(new Set(allData.map(d => d.kategorie)));
-    
-    categories.forEach(cat => {
-        const rects = svg.selectAll(".idee").filter(d => d.kategorie === cat);
-        const numRects = rects.size();
-        if(numRects === 0) return;
+	// Zähler animieren mit motion
+	animate(0, eindeutigeIdeengeber.length, {
+		duration: 2,
+		easing: 'ease-out',
+		onUpdate: (v) => {
+			node.textContent = `${Math.round(v)} Ideengeber:innen`;
+		},
+	}).finished.then(() =>{
+		ideenToIdeengeber();
+		setTimeout(() => {
+		signalNextStep();
+			
+		}, 2500);
+		
+	
+	}) 
 
-        const numCols = Math.ceil(numRects / 2); //Fix: 2 Zeilen, darauf aufbauend berechnen, wie viele Spalten
-
-        const catIndex = catCount.findIndex(d => d.kategorie === cat); //index der Kategorie
-
-       //transtition start für die kleinen ideen rects
-        // Die x-Position berechnet sich aus der Spaltenposition, die y-Position aus dem Startwert plus
-    // dem Offset der Kategorie plus der Zeilenverschiebung (0 oder 1)
-        rects.transition()
-            .duration(1500)
-            .delay((d, i) => i * 30) //gestaffelter delay => Endruck von organischem zusammenfließen
-            .attr("x", (d, i) => barChartX+(i % numCols) * hSpacing)
-            .attr("y", (d, i) => barChartY + catIndex * (barHeight + barSpacing) + Math.floor(i / numCols) * vSpacing)
-            .attr("width", 40)
-            .attr("height", 40)
-            .attr("fill", d => farbSkala(d.kategorie));
-    });
-  
-  const labels = svg.selectAll(".bar-label")
-    .data(catCount)
-    .join("text")
-    .attr("class", "bar-label")
-    .attr("x", barChartX - 150)  // 10px links vom Start des Balkenbereichs
-    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) -5)
-    .attr("font-size", svgWidth * 0.025)
-    .attr("font-family", "Inter, sans-serif")
-    .text(d => d.kategorie)
-    .attr("opacity", 0);
-    /*.each(function(d) {
-    // 1) Split am ersten Leerzeichen:
-    const [first, ...rest] = d.kategorie.split(" ");
-    const second = rest.join(" ");
-    // 2) Clear text, damit wir mit <tspan> neu bauen:
-    select(this).text("");
-    // 3) Erste Zeile
-    select(this)
-      .append("tspan")
-        .attr("x", this.getAttribute("x"))
-        .attr("dy", "0em")
-        .text(first);
-    // 4) Zweite Zeile (falls vorhanden)
-    if (second) {
-      select(this)
-        .append("tspan")
-          .attr("x", this.getAttribute("x"))
-          .attr("dy", "1.2em")
-          .text(second);
-    }
-  }); */
-
-
-    //Füge Text hinzu, der die Anzahl der Ideen anzeigt – platziert am rechten Rand der Bar.
-    const counts= svg.selectAll(".bar-count")
-    .data(catCount)
-    .join("text")
-    .attr("class", "bar-count")
-    .attr("x", d => {
-      // Berechne, wie viele Spalten diese Kategorie braucht:
-      const numCols= Math.ceil(d.count/2);
-      return barChartX + numCols* hSpacing + 7;
-    }) 
-    .attr("y", (d, i) => barChartY + i * (barHeight + barSpacing) + barHeight/2 + 3)
-    .attr("alignment-baseline", "middle")
-    .attr("font-size", svgWidth * 0.030)
-    .attr("font-weight", "bold")
-    .attr("opacity", 0) 
-    .text(d => d.count);
-
-  
-//Einfliegen von Labels 
-const barDelay = categories.length * 30 + 1800;
-
-labels
-  .transition()
-  .duration(600)
-  .delay((d,i) => barDelay + i * 100)
-  .attr("opacity", 1);
-
-counts
-  .transition()
-  .duration(500)
-  .delay(barDelay +  100 + 200)
-  .attr("opacity", 1);
+	}, 1000);
 }
 
+	// Ideen fliegen zu ihren Ideengebern & ordnen sich als Grid an
+	async function ideenToIdeengeber() {
+		// Anzahl Ideen pro Ideengeber berechnen
+		const ideenProGeber = {};
+		alleIdeenWithStartposition.forEach((d) => {
+			if (!ideenProGeber[d.ideengeber]) ideenProGeber[d.ideengeber] = [];
+			ideenProGeber[d.ideengeber].push(d);
+		});
 
-//Array Positionen rects vertikal zuordnen
+		// index innerhalb des jeweiligen Ideengebers merken
+		Object.values(ideenProGeber).forEach((gruppe) => {
+			gruppe.forEach((d, i) => (d.innerIndex = i));
+		});
 
-function hideBarChart() {
-  
-  svg.selectAll(".bar-label, .bar-count")
-    .transition()
-    .delay(1000)   
-    .duration(2000) 
-    .attr("opacity", 0);
-
-  arrangeRectsVerticallyLeft();
-
-  setTimeout(() => {
-    dispatch("phaseEnd");
-
-  }, 2000);
-
-}
-
-function arrangeRectsVerticallyLeft() {
-
-
-  const total= svg.selectAll(".idee").size();
-  const padding= 20;
-  const availableHeight = svgHeight - padding * 2;
-  const rectSize= 9;
-  //vertikeler Abstand zwischen Rects, damit alle reinpassen
-  const vSpacing = (availableHeight - rectSize * total) / (total - 1);
-
-
- 
-    svg.selectAll(".idee")
-    .transition()
-      .duration(2200)
-      .delay((d, i) => i * 20)
-      .attr('x', padding)
-      .attr('y', (d,i) => padding + i * (rectSize + vSpacing))
-      .attr("width", rectSize)
-      .attr("height", rectSize)
-
-    .transition()
-      .delay(500)
-      .duration(500)
-      .attr("fill", 'rgb(41, 41, 61)');
-
-
-   
-
-  
-
-}
+		let ideenRects = svg.selectAll('.idee').raise();
+		ideenRects
+			.transition()
+			.duration(2000)
+			.delay(1000)
+			.attr('x', (d) => {
+				const baseX = positionen[d.ideengeber].x;
+				const ideen = ideenProGeber[d.ideengeber];
+				const spalten = Math.ceil(Math.sqrt(ideen.length)); // Quadratgrid
+				const col = d.innerIndex % spalten;
+				return baseX + col * rectSize * 0.15;
+			})
+			.attr('y', (d) => {
+				const baseY = positionen[d.ideengeber].y;
+				const ideen = ideenProGeber[d.ideengeber];
+				const spalten = Math.ceil(Math.sqrt(ideen.length));
+				const row = Math.floor(d.innerIndex / spalten);
+				return baseY + row * rectSize * 0.15;
+			})
+			.end();
+	}
 
 
 
+	function highlightAverageIdeas() {
+		let transitions = [];
 
 
+		svg.selectAll('rect.ideengeber').each(function (d) {
+			const rect = select(this);
 
 
+			if (d.ideen_count === 3 || d.ideen_count === 4) {
+				const t = rect
+					.transition()
+					.duration(200)
+					.attr('stroke-width', 7)
+					.transition()
+					.duration(2000)
+					.attr('stroke', 'white')
+					.transition()
+					.delay(2000)
+					.duration(2000)
+					.attr('stroke-width', 0)
+					.attr('stroke', 'none')
+					.end();
+
+				transitions.push(t);
+			} else {
+				const t = rect
+					.transition()
+					.duration(2000)
+					.attr('opacity', 0.3)
+					.transition()
+					.delay(2000)
+					.duration(2000)
+					.attr('opacity', 1)
+					.end();
+
+				transitions.push(t);
+			}
+		});
+
+		Promise.all(transitions).then(() => {
+			setTimeout(() => {
+				signalNextStep();
+			},1500);
+		});
+	}
 
 
+	function highlightMaxIdeas() {
+		const transitions = [];
+		svg.selectAll('rect.ideengeber').each(function (d) {
+			console.log(d.ideengeber, d.ideen_count);
+			const rect = select(this);
+			const originalYPosition = positionen[d.ideengeber].y;
+			const originalXPosition = positionen[d.ideengeber].x;
+
+			if (d.ideen_count === 39) {
+				//Bounce nach Oben und rechts für Highlight
+				const t = rect
+					.transition()
+					.duration(200)
+					.attr('stroke-width', 7)
+					.transition()
+					.duration(2000)
+					.attr('stroke', 'white')
+					.transition()
+					.delay(2000)
+					.duration(300)
+					.attr('stroke-width', 0)
+					.end();
+					
+				transitions.push(t);
+			} else {
+				const t = rect
+					.transition()
+					.duration(2000)
+					.attr('opacity', 0.3)
+					.transition()
+					.delay(2000)
+					.duration(100)
+					.attr('opacity', 1)
+					.end();
+
+				transitions.push(t);
+			}
+		});
+
+		Promise.all(transitions).then(() => {
+			signalNextStep();
+		});
+	}
+
+	function highlightMaxIdeas2() {
+		setTimeout(() => {
+			svg.selectAll('rect.ideengeber').each(function (d) {
+				if (d.ideen_count === 39) {
+					animate(
+						this,
+						{
+							scale: [1, 1.25],
+							stroke: ['#dbd5e0', '#aa98b8', '#8024c7'],
+							strokeWidth: [0, 3, 1]
+						},
+						{
+							duration: 1,
+							easing: 'back-out'
+						}
+					).finished.then(() => {
+						setTimeout(() => {
+							animate(
+								this,
+								{
+									scale: [1.25, 1]
+								},
+								{
+									duration: 0.5,
+									easing: 'ease-out'
+								}
+							);
+						}, 2500);
+					});
+				} else {
+					animate(
+						this,
+						{
+							opacity: [1, 0.3]
+						},
+						{
+							duration: 0.2,
+							easing: 'ease-out'
+						}
+					).finished.then(() => {
+						setTimeout(() => {
+							animate(
+								this,
+								{
+									opacity: [0.3, 1]
+								},
+								{
+									duration: 0.2,
+									easing: 'ease-out'
+								}
+							);
+						}, 2500);
+					});
+				}
+			});
+
+			signalNextStep();
+		}, 5000);
+	}
+
+	function colorIdeas() {
+		svg.selectAll('rect.idee').each(function (d, i) {
+			const zielFarbe = farbSkala(d.kategorie);
+
+			animate(
+				this,
+				{
+					fill: zielFarbe,
+					opacity: [0.5, 0.75, 1]
+				},
+				{
+					//delay: i * 0.01,
+					duration: 1.2,
+					ease: 'circInOut'
+				}
+			);
+		});
+
+		setTimeout(signalNextStep, alleIdeen.length * 10 + 1400);
+	}
+
+	function ideasToBarChart() {
+		fadeOutIdeengeberRects();
+		//Ideengeber:innen Ü weg
+		svg
+			.select('.annotation-ideengeber')
+			.transition()
+			.duration(2000)
+			//.ease(easeBackOut.overshoot(1.7))
+			.attr('opacity', 0);
+
+		let ideenRects = svg.selectAll('.idee');
+		ideenRects
+			.transition()
+			.duration(2000)
+			//.delay(1000)  // Kürzere Wartezeit
+			.attr('x', (d) => {
+				let barX = barChartX; // Startposition der Balken
+				let barIndex = catCount.findIndex((c) => c.kategorie === d.kategorie);
+				let barWidth = (catCount[barIndex]?.count || 1) * 10; // Balkenbreite anhand der Häufigkeit
+				let col = d.index % 6;
+				return barX + col * (barWidth / 8); // Ideen gleichmäßig verteilen
+			})
+			.attr('y', (d) => {
+				let barBaseY =
+					barChartY +
+					catCount.findIndex((c) => c.kategorie === d.kategorie) * (barHeight + barSpacing);
+				let row = Math.floor(d.index / 8);
+				return barBaseY + row * 12; // Innerhalb des Balkens in Reihen anordnen
+			})
+
+			.end()
+			.then(() => {
+				//console.log(`Idee ${d.idee} wurde in Bar für ${d.kategorie} geparkt.`);
+				renderBarChartOrganic();
+
+				setTimeout(() => {
+					signalNextStep();
+				}, 4000);
+			});
+	}
+
+	function fadeOutIdeengeberRects() {
+		svg.selectAll('.ideengeber').transition().duration(2000).attr('opacity', 0).remove();
+	}
+
+	//Bar Chart Vorbereitung
+
+	const barChartX = svgWidth * 0.1; // vorher: 280
+	const barChartY = svgHeight * 0.1; // vorher: 350
+	const barHeight = svgHeight * 0.03;
+	const barSpacing = svgHeight * 0.04; // etwas größer für Abstand
+	const hSpacing = svgWidth * 0.025; // vorher: 47
+	const vSpacing = svgWidth * 0.025; // vorher: 47
+	const rectSizeBar = svgWidth * 0.02; // Rechteckgröße
+	const labelOffset = barChartX * 0.2;
+	console.log('barChartX:', barChartX);
+	console.log('labelOffset:', labelOffset);
+	//console.log("x", barChartX - labelOffset)
+	//Für die Linien
+	const barChartHeight = catCount.length * (barHeight + barSpacing);
+	const lineX = barChartX - labelOffset * 2.5;
+	const lineYTop = barChartY - barSpacing * 0.8; //Problem, kleiner?
+	const lineYBottom = barChartY + barChartHeight - barSpacing;
+
+	// Sortiere Kategorien nach Größe für Bar Chart
+	catCount.sort((a, b) => b.count - a.count);
+	let categoryPositions = {};
+	catCount.forEach((d, i) => {
+		categoryPositions[d.kategorie] = barChartX + i * barSpacing;
+	});
+
+	function renderBarChartOrganic() {
+		// Gruppiert Rects nach Kategorie.
+		const categories = Array.from(new Set(allData.map((d) => d.kategorie)));
+
+		categories.forEach((cat) => {
+			const rects = svg.selectAll('.idee').filter((d) => d.kategorie === cat);
+			const numRects = rects.size();
+			if (numRects === 0) return;
+
+			const numCols = Math.ceil(numRects / 2); //Fix: 2 Zeilen, darauf aufbauend berechnen, wie viele Spalten
+
+			const catIndex = catCount.findIndex((d) => d.kategorie === cat); //index der Kategorie
+
+			//transtition start für die kleinen ideen rects
+			// Die x-Position berechnet sich aus der Spaltenposition, die y-Position aus dem Startwert plus
+			// dem Offset der Kategorie plus der Zeilenverschiebung (0 oder 1)
+			rects
+				.transition()
+				.duration(1500)
+				.delay((d, i) => i * 30) //gestaffelter delay => Endruck von organischem zusammenfließen
+				.attr('x', (d, i) => barChartX + (i % numCols) * hSpacing)
+				.attr(
+					'y',
+					(d, i) =>
+						barChartY + catIndex * (barHeight + barSpacing) + Math.floor(i / numCols) * vSpacing
+				)
+				.attr('width', rectSizeBar)
+				.attr('height', rectSizeBar)
+				.attr('fill', (d) => farbSkala(d.kategorie));
+		});
+
+		const labels = svg
+			.selectAll('.bar-label')
+			.data(catCount)
+			.join('text')
+			.attr('class', 'bar-label')
+			.attr('x', barChartX - labelOffset)
+			.attr('y', (d, i) => barChartY + i * (barHeight + barSpacing) - 5)
+			.attr('font-size', svgWidth * 0.025)
+			.attr('fill', 'white')
+			.attr('font-family', 'Inter, sans-serif')
+			.text((d) => d.kategorie)
+			.attr('opacity', 0);
+
+		//Text, der die Anzahl der Ideen anzeigt – platziert am rechten Rand der Bar.
+		const counts = svg
+			.selectAll('.bar-count')
+			.data(catCount)
+			.join('text')
+			.attr('class', 'bar-count')
+			.attr('x', (d) => {
+				// Berechne, wie viele Spalten diese Kategorie braucht:
+				const numCols = Math.ceil(d.count / 2);
+				return barChartX + numCols * hSpacing + 7;
+			})
+			.attr('y', (d, i) => barChartY + i * (barHeight + barSpacing) + rectSizeBar + vSpacing)
+			.attr('alignment-baseline', 'center')
+			.attr('font-size', svgWidth * 0.06)
+			.attr('font-weight', 'bold')
+			.attr('fill', 'white')
+			.attr('opacity', 0)
+			.text((d) => d.count);
+
+		//Bar Chart Überschrift
+
+		const annotationBarChart = svg
+			.selectAll('.annotation-barChart')
+			.data([null]) // Dummy-Datenbindung, sonst funkt join noicht
+			.join('text')
+			.attr('class', 'annotation-barChart')
+			.attr('x', barChartX - labelOffset)
+			.attr('y', barChartY - barSpacing)
+			//.attr("transform", `rotate(-90, ${startX - padding}, ${padding * 15 })`)
+			//.attr("text-anchor", "middle")
+			.text(`Ideen in ${catCount.length} Kategorien gepackt `)
+			.attr('font-size', svgWidth * 0.05)
+			.attr('font-weight', 'bold')
+			.attr('fill', 'white')
+			.attr('font-family', 'Inter, sans-serif')
+			.attr('opacity', 0);
+
+		annotationBarChart.transition().duration(2000).attr('opacity', 1);
+
+		//Einfliegen von Labels
+		const barDelay = categories.length * 30 + 1800;
+
+		labels
+			.transition()
+			.duration(600)
+			.delay((d, i) => barDelay + i * 100)
+			.attr('opacity', 1);
+
+		counts
+			.transition()
+			.duration(500)
+			.delay(barDelay + 100 + 200)
+			.attr('opacity', 1);
+
+		//Linien um die Bar Chart
+		const lineLengthHorizontal = svgWidth * 0.92 - lineX;
+		svg
+			.selectAll('.bar-line-top')
+			.data([null])
+			.join('line')
+			.attr('class', 'bar-line-top')
+			.attr('x1', lineX)
+			.attr('y1', lineYTop)
+			.attr('x2', svgWidth * 0.92) // bis fast ganz rechts
+			.attr('y2', lineYTop)
+			.attr('stroke', 'white')
+			.attr('stroke-width', 8)
+			.attr('stroke-dasharray', lineLengthHorizontal)
+			.attr('stroke-dashoffset', lineLengthHorizontal)
+			.transition()
+			.duration(1000)
+			.ease(cubicInOut)
+			.attr('stroke-dashoffset', 0);
+
+		const lineLengthVert = lineYBottom - lineYTop;
+
+		svg
+			.selectAll('.bar-line-left')
+			.data([null])
+			.join('line')
+			.attr('class', 'bar-line-left')
+			.attr('x1', lineX)
+			.attr('y1', lineYTop)
+			.attr('x2', lineX)
+			.attr('y2', lineYBottom)
+			.attr('stroke', 'white')
+			.attr('stroke-width', 8)
+			.attr('stroke-dasharray', lineLengthVert)
+			.attr('stroke-dashoffset', lineLengthVert)
+			.transition()
+			.duration(1000)
+			.delay(200)
+			.ease(cubicInOut)
+			.attr('stroke-dashoffset', 0);
+	}
+
+	//Array Positionen rects vertikal zuordnen
+
+	function hideBarChart() {
+		svg
+			.selectAll('.bar-label, .bar-count, .bar-line-top, .bar-line-left, .annotation-barChart')
+			.transition()
+			.delay(1000)
+			.duration(2000)
+			.attr('opacity', 0)
+			.remove();
+
+		arrangeRectsVerticallyLeft();
+
+		setTimeout(() => {
+			signalNextStep();
+		}, 4000);
+	}
+
+	function arrangeRectsVerticallyLeft() {
+		const total = svg.selectAll('.idee').size();
+		const padding = 20;
+		const availableHeight = svgHeight - padding * 2;
+		const rectSize = 9;
+		//vertikeler Abstand zwischen Rects, damit alle reinpassen
+		const vSpacing = (availableHeight - rectSize * total) / (total - 1);
+
+		svg
+			.selectAll('.idee')
+			.transition()
+			.duration(1400)
+			.delay((d, i) => i * 20)
+			.attr('x', padding)
+			.attr('y', (d, i) => padding + i * (rectSize + vSpacing))
+			.attr('width', rectSize)
+			.attr('height', rectSize)
+
+			.transition()
+			.delay(700)
+			.duration(400)
+			.attr('fill', 'white');
+	}
+
+	$: if (phase === 1) {
+		drawIdeas();
+		setTimeout(() => {
+			 
+			signalNextStep();
+			
+		},5000)
+	}
+
+	$: if (phase === 4) {
+		highlightIdea(); 
+
+		setTimeout(() => {
+			signalNextStep();
+		},2000);
+		
+	}	
+
+	$: if (phase === 5) {
+		drawIdeengeber(); //Ideengeber tauchen auf
+	}
 
 
-   
-  $: if (phase === 1) {
-    drawIdeas(); //0 macht gerade nur Intro.
-  }
+	$: if (phase === 6) {
+		//setTimeout(() => {
+			highlightAverageIdeas(); // Hightlight average nr. of ideas
+		//}, 3500);
+	}
 
-  $: if (phase === 3) {
-     drawIdeengeber(); //Ideengeber tauchen auf
-  }
+	$: if (phase === 7) {
+		highlightMaxIdeas(); // 38 Ideen hervorheben
+	}
 
-  $: if (phase === 4) {
-    ideenToIdeengeber(); // Ideen ordnen sich Ideengebern zu 
-  }
+	$: if (phase === 9) {
+		setTimeout(() => {
+			colorIdeas(); // Ideen werden eingefärbt
 
-  $: if (phase === 5) {
-    highligtAverageIdeas(); // Hightlight average nr. of ideas
-  }
+		},1000);
+	}
 
-  $: if (phase === 6) {
-    highlightMaxIdeas(); // 38 Ideen hervorheben
-  }
+	$: if (phase === 10) {
+		ideasToBarChart(); // Ideen fliegen in ihre Kategorie-Bar
+	}
 
-  $: if (phase === 7) {
-    colorIdeas(); // // Ideen werden eingefärbt
-  }
-
-  $: if (phase === 8) {
-    ideasToBarChart(); // Ideen fliegen in ihre Kategorie-Bar
-  }
-
-  $: if (phase === 9) {
-    hideBarChart(); // Bar Chart transformiert zu vertikaler Grid
-  }
-
-
-
-
-
-
+	$: if (phase === 13) {
+		hideBarChart(); // Bar Chart transformiert zu vertikaler Grid
+	}
 </script>
-
-
-
-
-<!--<svg bind:this={container} class="svg-container" ></svg>
-
-
-<style>
-
-    .svg-container {
-        width: 100%; 
-        height: auto; 
-        max-height: 90vh; 
-        display: block;
-        margin: 0 auto;
-    }
-</style>
--->

@@ -1,1 +1,1560 @@
-[{"id":1,"idee":"Hausbesitzer bei energetischer Sanierung unterst\u00fctzen","ideengeber":"Sascha G\u00f6tz","kategorie":"Wohnen und Bauen"},{"id":2,"idee":"Digitalisierung von Bambergs g\u00e4rtnerischen Angeboten","ideengeber":"Patricia Alberth","kategorie":"Umwelt"},{"id":3,"idee":"Inklusion durch digitale Ma\u00dfnahmen","ideengeber":"Patricia Alberth","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":4,"idee":"Intelligente Steuerung des Verkehrsfluss","ideengeber":"Mario Mages","kategorie":"Verkehr"},{"id":5,"idee":"\u00d6PNV im Landkreis goes Huber","ideengeber":"Max Dahmer","kategorie":"Verkehr"},{"id":6,"idee":"SMART-Home L\u00f6sungen","ideengeber":"Bertrand Eitel","kategorie":"Pflege und Gesundheit"},{"id":7,"idee":"Nachbarschaftshilfe APP","ideengeber":"Bertrand Eitel","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":8,"idee":"Orte des Erinnerns und Verweilens","ideengeber":"Claus-Christian Carbon","kategorie":"Kultur und Tourismus"},{"id":9,"idee":"Mobilit\u00e4ts-App","ideengeber":"Claus-Christian Carbon","kategorie":"Verkehr"},{"id":10,"idee":"Regional-App","ideengeber":"Claus-Christian Carbon","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":11,"idee":"Bewegungsprofile verschiedener Gruppen","ideengeber":"Niklas D\u00f6bler","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":12,"idee":"Personalisierte und intelligente Stadtf\u00fchrung","ideengeber":"Niklas D\u00f6bler","kategorie":"Kultur und Tourismus"},{"id":13,"idee":"(Video-)Konferenz Telefonie Netzwerk aufbauen","ideengeber":"System","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":14,"idee":"OpenHub als dauerhafte Einrichtung","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":15,"idee":"Bereitstellen \u00f6ffentlicher Daten und Programmierschnittstellen (APIs)","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":16,"idee":"Vereinigte + verteilte St\u00e4dte (Online-)Pr\u00e4senz","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":17,"idee":"Gr\u00fcndung und F\u00f6rderung von OpenSource Spaces","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":18,"idee":"B\u00fcrgerbeteiligungs-App","ideengeber":"Karl Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":19,"idee":"Videoberatung und Chatbots in der Verwaltung (und dar\u00fcber hinaus)","ideengeber":"Bertrand Eitel","kategorie":"Serviceleistungen der Stadt"},{"id":20,"idee":"Eine App ist nicht die L\u00f6sung","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":21,"idee":"VHS.daheim - online-gest\u00fctzte Lehr- und Lernangebote ","ideengeber":"Anna Scherbaum","kategorie":"Bildung und Forschung"},{"id":22,"idee":"Gaming Campus ","ideengeber":"Niklas D\u00f6bler","kategorie":"Bildung und Forschung"},{"id":23,"idee":"Projekte- und Vorhaben\u00fcbersicht ","ideengeber":"Markus Sch\u00e4fer","kategorie":"Serviceleistungen der Stadt"},{"id":24,"idee":"Helping Hands (Plattform Web\/App) f\u00fcr Nachbarschaftshilfe","ideengeber":"Marcel Binzenh\u00f6fer ","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":25,"idee":"Hackathons f\u00fcr Bamberg","ideengeber":"Claus-Christian Carbon","kategorie":"Serviceleistungen der Stadt"},{"id":26,"idee":"Nachhaltig aus der aktuellen Krise lernen","ideengeber":"Markus Raupach","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":27,"idee":"Familienfreundliche Stadt 2.0","ideengeber":"Iris Meyer","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":28,"idee":"Stadtplanung und Open-Street-Maps Hand in Hand","ideengeber":"System","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":29,"idee":"Digitale Formulare","ideengeber":"System","kategorie":"Serviceleistungen der Stadt"},{"id":30,"idee":"KI-Einsatz in der \u00f6ffentlichen Verwaltung","ideengeber":"Christian Schachtner","kategorie":"Serviceleistungen der Stadt"},{"id":31,"idee":"Kreativit\u00e4tsr\u00e4ume f\u00fcr Interdisziplin\u00e4re Teams schaffen","ideengeber":"Christian Schachtner","kategorie":"Serviceleistungen der Stadt"},{"id":32,"idee":"Ideen Contra Ideen","ideengeber":"Karl-Heinz Schmittlutz","kategorie":"Serviceleistungen der Stadt"},{"id":33,"idee":"eine Stadt f\u00fcr Alle","ideengeber":"Anton Zahneisen","kategorie":"Serviceleistungen der Stadt"},{"id":34,"idee":"Beteiligungsangebote an unterschiedlichen Nutzer*innen orientieren","ideengeber":"Wolfgang Budde","kategorie":"Serviceleistungen der Stadt"},{"id":35,"idee":"Kompetenzen und St\u00e4rken im Quartier mit Nachbarschaftshilfe oder Tauschb\u00f6rsen zusammen bringen","ideengeber":"Wolfgang Budde","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":36,"idee":"Smarte Wertstoffinseln","ideengeber":"Andreas Eichenseher","kategorie":"Umwelt"},{"id":37,"idee":" Altes Hallenbad am Margaretendamm in Bamberg\n","ideengeber":"Regina Henniges","kategorie":"Pflege und Gesundheit"},{"id":38,"idee":"Potenielle Faktoren, welche einen Beitrag zur Entwicklung leisten k\u00f6nnen","ideengeber":"Karl-Heinz Schmittlutz","kategorie":"Serviceleistungen der Stadt"},{"id":39,"idee":"Smarte Stra\u00dfenbeleuchtung","ideengeber":"Andreas Eichenseher","kategorie":"Verkehr"},{"id":40,"idee":" Eine G\u00e4rtnerstadt- und G\u00e4rtner App f\u00fcr Verbraucher und Touristen\n","ideengeber":"Thomas Schmidt","kategorie":"Umwelt"},{"id":41,"idee":"Konzertierete Aktion \"Videokonferenz- und Online-Unterricht-Systeme\/Home-Office-Initiative\"","ideengeber":"Bernd Bauer-Banzhaf","kategorie":"Serviceleistungen der Stadt"},{"id":42,"idee":"Digitale Soforthilfe im Rahmen der Digitalen Agenda der Stadt Bamberg","ideengeber":"Katharina Kroll","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":43,"idee":"Lokales Shopping-Portal Bamberger H\u00e4ndler & Onlineshops","ideengeber":"Randy John","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":44,"idee":"Machbarkeit","ideengeber":"Karl-Heinz Schmittlutz","kategorie":"Serviceleistungen der Stadt"},{"id":45,"idee":" Aufbau von geobasierten Digitalen Zwillingen - SDDI-Modellregionen\n","ideengeber":"Christian Schachtner","kategorie":"Serviceleistungen der Stadt"},{"id":46,"idee":"Zusammenr\u00fccken","ideengeber":"Hannes Peschka","kategorie":"Kultur und Tourismus"},{"id":47,"idee":"Stromkosten intelligenter beeinflussen: Forcieren des Einsatzes von Smart Metern* durch die Stadtwerke","ideengeber":"Joachim Graff ","kategorie":"Serviceleistungen der Stadt"},{"id":48,"idee":"Soziales in den Ideen-Pool einbringen ","ideengeber":"Wolfgang Metzner","kategorie":"Serviceleistungen der Stadt"},{"id":49,"idee":"Wunsch des Seniorenbeirates der Stadt Bamberg","ideengeber":"Wolfgang Metzner","kategorie":"Serviceleistungen der Stadt"},{"id":50,"idee":"Digitale Welterbespur","ideengeber":"Lore Kleemann","kategorie":"Kultur und Tourismus"},{"id":51,"idee":"Kompletter Ausbau der Internetanbindung des Bambit-Netzes","ideengeber":"Tobias Straub ","kategorie":"Serviceleistungen der Stadt"},{"id":52,"idee":"Vernetzte und platzsparende M\u00fcllsammlung","ideengeber":"Timm Schulze ","kategorie":"Umwelt"},{"id":53,"idee":"M\u00e4ngelmelder f\u00fcr Schlagl\u00f6cher","ideengeber":"Sascha G\u00f6tz","kategorie":"Verkehr"},{"id":54,"idee":"LoRa Netzwerk in Bamberg","ideengeber":"Larissa Sedlmeier","kategorie":"Serviceleistungen der Stadt"},{"id":55,"idee":"Smart City Hackathon Bamberg","ideengeber":"Tobias Leisgang","kategorie":"Serviceleistungen der Stadt"},{"id":56,"idee":"Barrierefreies Krankenhaus","ideengeber":"Margit Gamberoni","kategorie":"Pflege und Gesundheit"},{"id":57,"idee":"Stadt-Smartmetering. Nachatligkeit Dashboard am Beispiel Mobilit\u00e4t und Energie","ideengeber":"Denis Hebert","kategorie":"Serviceleistungen der Stadt"},{"id":58,"idee":"Beratungsservice f\u00fcr Speisen & Eink\u00e4ufe f\u00fcr Menschen, die ihre Wohnungen nicht verlassen k\u00f6nnen","ideengeber":"Iris Fischer","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":59,"idee":"Matchmaking zwischen Besuchs- \/ Aktivit\u00e4tsbed\u00fcrfnissen und Besuchs- \/ Aktivit\u00e4tsanbietenden","ideengeber":"Iris Fischer","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":60,"idee":"3D-Stadtplanungssoftware f\u00fcr die Szenariendurchspielung bei B\u00fcrger:inn:enbeteiligungen","ideengeber":"Iris Fischer","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":61,"idee":"Smart-Terminals f\u00fcr B\u00fcrgerstimmung","ideengeber":"Horst Finkbeiner ","kategorie":"Serviceleistungen der Stadt"},{"id":62,"idee":"\"Rahmen-App\" f\u00fcr Smart City Bamberg","ideengeber":"Horst Finkbeiner ","kategorie":"Serviceleistungen der Stadt"},{"id":63,"idee":"Ver\u00e4nderung des Maxplatzes","ideengeber":"Roland Nowak","kategorie":"Kultur und Tourismus"},{"id":64,"idee":"B\u00f6rse f\u00fcr Wohnungsuchende","ideengeber":"Roland Nowak","kategorie":"Wohnen und Bauen"},{"id":65,"idee":"\u201eBamberger Schrottr\u00e4der\u201c werden zu \u201eBamberger Leihr\u00e4dern\u201c","ideengeber":"Nicolas Lindner","kategorie":"Verkehr"},{"id":66,"idee":"App f\u00fcr sofortiges Melden von Stolperfallen an den Bauhof mit Foto und Punkt im Stadtplan ","ideengeber":"Iris Fischer","kategorie":"Pflege und Gesundheit"},{"id":67,"idee":"Verbesserung der Stadtverwaltung-Homepage: bessere und leichter findbare Infos f\u00fcr B\u00fcrger:innen","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":68,"idee":"Anwohnerparkplakette f\u00fcr Handwerker:innen mit Kastenwagen","ideengeber":"Iris Fischer","kategorie":"Verkehr"},{"id":69,"idee":"Transparenz im Haushalt der Stadt Bamberg - Umstellung auf Doppik und Kurz-Erl\u00e4uterung","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":70,"idee":"\u00dcbersicht Sportm\u00f6glichkeiten in Stadt und Umkreis Bamberg","ideengeber":"Iris Fischer","kategorie":"Sport und Freizeit"},{"id":71,"idee":"\u00d6ffentliche Kantinen","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":72,"idee":"Fl\u00e4chenfra\u00df reduzieren","ideengeber":"Iris Fischer","kategorie":"Wohnen und Bauen"},{"id":73,"idee":"Begr\u00fcnungs- und Renaturierungsplan zur Mitwirkung ver\u00f6ffentlichen ","ideengeber":"Iris Fischer","kategorie":"Umwelt"},{"id":74,"idee":"Stadtentwicklung - geplant, nachhaltig, zukunftsf\u00e4hig","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":75,"idee":"Verbesserungs- und Wahlversprechen dokumentieren und nachverfolgen","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":76,"idee":" Verpflichtende Betriebsst\u00e4ttenparkpl\u00e4tze ab mehr als 2 Fahrzeugen\n","ideengeber":"Iris Fischer","kategorie":"Verkehr"},{"id":77,"idee":"# St\u00e4dtische Mietobjekte (Wohnungen, H\u00e4user, Werkst\u00e4tten, Keller etc)","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":78,"idee":"#Kenne Deine Kulturschaffenden! - (An)Erkennung statt Lobhudelei einzig bei Preisen","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":79,"idee":"Machtverteilung, Konflikte, Einflussm\u00f6glichkeiten","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":80,"idee":"Erlichstrasse ist f\u00fcr Fahrr\u00e4der frei geworden in beide Richtungen - Wegfall von 6 Parkpl\u00e4tzen.","ideengeber":"Roland Nowak","kategorie":"Verkehr"},{"id":81,"idee":"#Digitalisierung Busauskunft in Bamberg: alexa-f\u00e4hig stellen","ideengeber":"Iris Fischer","kategorie":"Verkehr"},{"id":82,"idee":"#Digitalisierung Pl\u00e4tze auf der Unteren Br\u00fccke per Luca-App vergeben","ideengeber":"Iris Fischer","kategorie":"Pflege und Gesundheit"},{"id":83,"idee":"Tempor\u00e4r autofreie Strassen","ideengeber":"Tobias Leisgang","kategorie":"Verkehr"},{"id":84,"idee":"Digitales Meldesystem f\u00fcr \u00fcbervolle \u00f6ffentliche M\u00fclleimer und Bekanntmachung des allgemeinen M\u00e4ngelmeldesystems","ideengeber":"Nadja Diemunsch","kategorie":"Umwelt"},{"id":85,"idee":"Sportangebote im \u00f6ffentlichen Raum I: Moderner Trimm-Dich-Pfad","ideengeber":"Nadja Diemunsch","kategorie":"Sport und Freizeit"},{"id":86,"idee":"Sportangebote im \u00f6ffentlichen Raum II: Fitnessger\u00e4te f\u00fcr Erwachsene auf Spielpl\u00e4tzen","ideengeber":"Nadja Diemunsch","kategorie":"Sport und Freizeit"},{"id":87,"idee":" Fitnessparks\/Fitness-Parcours schaffen im Hain, auf Erba, oder wo immer es m\u00f6glich ist","ideengeber":"Roland Nowak","kategorie":"Sport und Freizeit"},{"id":88,"idee":"\u00d6PNV attraktiver machen - \"Kreuz- und Querverbindungen des \u00d6PNV","ideengeber":"Roland Nowak","kategorie":"Verkehr"},{"id":89,"idee":"App f\u00fcr Neub\u00fcrger und\/oder Schaffung von bezahlten Stadtpaten","ideengeber":"Roland Nowak","kategorie":"Serviceleistungen der Stadt"},{"id":90,"idee":"Stressfreie Zone im Bamberg ","ideengeber":"Marzena Pisarek","kategorie":"Pflege und Gesundheit"},{"id":91,"idee":"\"Verloren-gefunden\"","ideengeber":"Marzena Pisarek","kategorie":"Serviceleistungen der Stadt"},{"id":92,"idee":"Bamberg App (Bamberg ist hier ganz, ganz hinten (hinter dem Mond?) Schaut Euch doch mal Heidelberg an","ideengeber":"Roland Nowak","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":93,"idee":"Digitaler \"Vandalismus-\"Melder","ideengeber":"Roland Nowak","kategorie":"Serviceleistungen der Stadt"},{"id":94,"idee":"Senior:inn:en-Hilfe: Modellprojekt mit Uni & Bosch & Caritas etc initiieren","ideengeber":"Iris Fischer","kategorie":"Pflege und Gesundheit"},{"id":95,"idee":"Kostenfreie Wohnungstauschb\u00f6rse ","ideengeber":"Iris Fischer","kategorie":"Wohnen und Bauen"},{"id":96,"idee":"Gespr\u00e4chs- & Spiele-Caf\u00e9s in allen Stadtvierteln ","ideengeber":"Iris Fischer","kategorie":"Sport und Freizeit"},{"id":97,"idee":"Parkplatz-App & Installation, die Autofahrer in die Parkh\u00e4user lotst","ideengeber":"Iris Fischer","kategorie":"Verkehr"},{"id":98,"idee":"Spielger\u00e4tei in Parks aus dem Automaten","ideengeber":"Sascha G\u00f6tz","kategorie":"Sport und Freizeit"},{"id":99,"idee":"App zu Abo-Kisten etc.","ideengeber":"Johanne Scharnick ","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":100,"idee":"\u00d6PNV vereinheitlichen","ideengeber":"Johanne Scharnick ","kategorie":"Verkehr"},{"id":101,"idee":"G\u00e4rtner erhalten, Markt regionaler Produkte ausbauen => Digitalkampagne, auch an relevanten Orten ","ideengeber":"Iris Fischer","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":102,"idee":"K\u00fcnstler:innen & Kulturschaffende gerechter in Planung von Veranstaltungen einbinden","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":103,"idee":"Digitalisierte Planung von Kultur-Standorten","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":104,"idee":"Single-Wohnungen nicht nur f\u00fcr Student:innen und in der Innenstadt","ideengeber":"Iris Fischer","kategorie":"Wohnen und Bauen"},{"id":105,"idee":"Digitales Modell f\u00fcr (Keller)Clubs f\u00fcr (Sub)Kultur im Hafenbereich","ideengeber":"Iris Fischer","kategorie":"Sport und Freizeit"},{"id":106,"idee":"Gewerbe und Wirtschaft: gesunde zukunftsf\u00e4hige Mischung herstellen","ideengeber":"Iris Fischer","kategorie":"Serviceleistungen der Stadt"},{"id":107,"idee":"Sport: Beachvolleyballfelder, Squashcourts etc.anlegen und digitale Karte erstellen","ideengeber":"Iris Fischer","kategorie":"Sport und Freizeit"},{"id":108,"idee":"Leitfaden f\u00fcr Smarte Pflege","ideengeber":"Anton Zahneisen","kategorie":"Pflege und Gesundheit"},{"id":109,"idee":"Ombudstelle f\u00fcr pflegende Angeh\u00f6rige","ideengeber":"Anton Zahneisen","kategorie":"Pflege und Gesundheit"},{"id":110,"idee":"G\u00fctesiegel f\u00fcr Netzwerkplattformen","ideengeber":"Anton Zahneisen","kategorie":"Serviceleistungen der Stadt"},{"id":111,"idee":"Smarte Informations und Qualifizierungsoffensive f\u00fcr die Pflege","ideengeber":"Anton Zahneisen","kategorie":"Pflege und Gesundheit"},{"id":112,"idee":"Autonome Pendelbusse zwischen ZOB, Bahnhof und den P&R-Parkh\u00e4usern","ideengeber":"TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ","kategorie":"Verkehr"},{"id":113,"idee":"Seniorengerechte Mobilit\u00e4tskarte\/-app","ideengeber":"TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ","kategorie":"Verkehr"},{"id":114,"idee":"Leistungsstarkes WLAN-Netz im Stadtgebiet und \u00d6PNV","ideengeber":"TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ","kategorie":"Serviceleistungen der Stadt"},{"id":115,"idee":" \"Wir sind eine gesunde Stadt\" => mehr Aufkl\u00e4rung gesunde Lebensweise, St\u00e4rkung lokaler & regionaler Erzeuger:innen\/Anbieter:innen","ideengeber":"Iris Fischer","kategorie":"Pflege und Gesundheit"},{"id":116,"idee":"Sportangebote Kinder & Jugendliche","ideengeber":"Iris Fischer","kategorie":"Sport und Freizeit"},{"id":117,"idee":"Homepages der Ausflugsziele up-to-date bringen und halten","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":118,"idee":"Wohnraum: von den Einkommen und M\u00f6glichkeiten her denken","ideengeber":"Iris Fischer","kategorie":"Wohnen und Bauen"},{"id":119,"idee":"Kultur: vielf\u00e4ltigers Angebot, auf Durchmischung achten","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":120,"idee":"Lernen von best practise Beispiel Hallstadt ","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":121,"idee":"Maxplatz - neues Leben f\u00fcr die Steinw\u00fcste ","ideengeber":"Heiko K\u00fcffner","kategorie":"Kultur und Tourismus"},{"id":122,"idee":"Sieben Zebras f\u00fcr die Lange Stra\u00dfe","ideengeber":"Heiko K\u00fcffner","kategorie":"Verkehr"},{"id":123,"idee":"Gr\u00fcnes Weltkulturerbe: Die Stadt und ihre D\u00e4cher begr\u00fcnen","ideengeber":"Heiko K\u00fcffner","kategorie":"Umwelt"},{"id":124,"idee":"50 Font\u00e4nen zum Abk\u00fchlen","ideengeber":"Heiko K\u00fcffner","kategorie":"Kultur und Tourismus"},{"id":125,"idee":"Bamberg Coins - Regionalen und nachhaltigen Konsum f\u00f6rdern","ideengeber":"Henri Heising","kategorie":"Serviceleistungen der Stadt"},{"id":126,"idee":"Lokales Foodsharing Netzwerk","ideengeber":"Justina Malke","kategorie":"Umwelt"},{"id":127,"idee":"Digitales Bildungsangebot zu Nachhaltigkeit in Leichter Sprache f\u00fcr Erwachsene & \u00c4ltere","ideengeber":"Iris Fischer","kategorie":"Bildung und Forschung"},{"id":128,"idee":"Aufbau digitaler Kompetenz","ideengeber":"Wolfgang Budde","kategorie":"Serviceleistungen der Stadt"},{"id":129,"idee":"Aufbau digitaler Begleitung","ideengeber":"Wolfgang Budde","kategorie":"Serviceleistungen der Stadt"},{"id":130,"idee":"Finanzielle Sicherstellung des Aufbaus digitaler Kompetenz und Begleitung","ideengeber":"Wolfgang Budde","kategorie":"Serviceleistungen der Stadt"},{"id":131,"idee":"Mehr mehrsprachige infos mit Hilfe digitaler Programme ","ideengeber":"Mitra Sharifi","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":132,"idee":"Schaffung einer Reflexions- und Evaluationsinstanz des Digitalisierungsprozesses ","ideengeber":"Wolfgang Budde","kategorie":"Serviceleistungen der Stadt"},{"id":133,"idee":"Familie und Kinder","ideengeber":"Andrea","kategorie":"Sport und Freizeit"},{"id":134,"idee":"Gesundheit ","ideengeber":"Andrea","kategorie":"Sport und Freizeit"},{"id":135,"idee":"Mobilit\u00e4t und Verkehr ","ideengeber":"Andrea","kategorie":"Verkehr"},{"id":136,"idee":"App f\u00fcr Bamberg!!!!","ideengeber":"Roland Nowak","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":137,"idee":"Freie Gastropl\u00e4tze in innerst\u00e4dtischen Lokalen","ideengeber":"Roland Nowak","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":138,"idee":"eine F\u00e4hrenverbindung (Wasserbus) zwischen Kranen und Erbainsel bzw. Gaustadt und dem Hafen","ideengeber":"Mitra Sharifi","kategorie":"Verkehr"},{"id":139,"idee":"Probleme in der Stadt von unterwegs melden","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":140,"idee":"Leichte Sprache und englische Version f\u00fcr das Programm Smart City","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":141,"idee":"B\u00fcndelung und \u00dcbersichtlichkeit der Newsletter auf der Webseite der Stadt Bamberg","ideengeber":"Nadja Diemunsch","kategorie":"Serviceleistungen der Stadt"},{"id":142,"idee":"Seilbahn zur Altenburg","ideengeber":"Nadja Diemunsch","kategorie":"Kultur und Tourismus"},{"id":143,"idee":"Neustrukturierung und Ausbau des Busnetzes","ideengeber":"Nadja Diemunsch","kategorie":"Verkehr"},{"id":144,"idee":"Bedarfsgerechte Gr\u00f6\u00dfe von \u00f6ffentlichen M\u00fclleimern","ideengeber":"Marc Kohaupt ","kategorie":"Serviceleistungen der Stadt"},{"id":145,"idee":"Digitalisierung in Schulen","ideengeber":"Jacqueline Langer","kategorie":"Bildung und Forschung"},{"id":146,"idee":"Digitale Beh\u00f6rdeng\u00e4nge","ideengeber":"Jacqueline Langer","kategorie":"Serviceleistungen der Stadt"},{"id":147,"idee":"Smarte Solarb\u00e4nke im \u00f6ffentlichen Raum","ideengeber":"Eva-Maria Steger","kategorie":"Umwelt"},{"id":148,"idee":"Bauernmarkt","ideengeber":"Natalie A\u00dfl\u00e4nder","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":149,"idee":"Heilkr\u00e4utergarten um und in Bamberg!","ideengeber":"Susanne Schreyer ","kategorie":"Pflege und Gesundheit"},{"id":150,"idee":"IDEE von der Begegnungsst\u00e4tte OASE: B\u00fcrgerb\u00fcro mit Endger\u00e4ten und geschulten Helfern","ideengeber":"Anonymus Bamberg","kategorie":"Serviceleistungen der Stadt"},{"id":151,"idee":"IDEE von der Begegnungsst\u00e4tte OASE: Digitale Litfa\u00dfs\u00e4ule ","ideengeber":"Anonymus Bamberg","kategorie":"Serviceleistungen der Stadt"},{"id":152,"idee":"IDEE von der Begegnungsst\u00e4tte OASE: Gemeinschaftsk\u00fcche","ideengeber":"Anonymus Bamberg","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":153,"idee":"Grundtarif Internet","ideengeber":"Marc Kohaupt","kategorie":"Serviceleistungen der Stadt"},{"id":154,"idee":"IDEE aus der B\u00fcrgerschaft: Materialpool Bamberg","ideengeber":"Anonymus Bamberg","kategorie":"Serviceleistungen der Stadt"},{"id":155,"idee":"Bamberg-App als zentrale Auskunfts- und Austauschplattform","ideengeber":"Nadja Diemunsch","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":156,"idee":"smarte Stra\u00dfenbeleuchtung","ideengeber":"Nadja Diemunsch","kategorie":"Verkehr"},{"id":157,"idee":"Stadtkarte f\u00fcr barrierefreie Wege","ideengeber":"Nadja Diemunsch","kategorie":"Pflege und Gesundheit"},{"id":158,"idee":"Lokaler Online-Handel","ideengeber":"Marc Kohaupt ","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":159,"idee":"Werbung f\u00fcr Pflege von Bepflanzungen - \"Hilf Bamberg gr\u00fcn zu bleiben!\"","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":160,"idee":"IDEE aus der B\u00fcrgerschaft: Virtueller Stadtrundgang\/Stadtf\u00fchrung","ideengeber":"Anonymus Bamberg","kategorie":"Kultur und Tourismus"},{"id":161,"idee":"Pfand-Hinweise an M\u00fclleimern","ideengeber":"Marc Kohaupt ","kategorie":"Pflege und Gesundheit"},{"id":162,"idee":"Sch\u00fcler*innen helfen Senior*innen am Smartphone","ideengeber":"Barbara Mosig","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":163,"idee":"die Lange Strasse nach und nach \"autofrei\" machen","ideengeber":"Barbara Mosig","kategorie":"Verkehr"},{"id":164,"idee":" IDEE aus der B\u00fcrgerschaft: Digitale Obstkarte zum Ernten","ideengeber":"Anonymus Bamberg","kategorie":"Umwelt"},{"id":165,"idee":"Smarte Ampeln","ideengeber":"Anna Berthold","kategorie":"Verkehr"},{"id":166,"idee":"Blindensignale f\u00fcr alle Ampelanlagen in Bamberg installieren","ideengeber":"Lukas B\u00f6hm","kategorie":"Verkehr"},{"id":167,"idee":"Ruhepl\u00e4tze","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Pflege und Gesundheit"},{"id":168,"idee":"Ruhepl\u00e4tze","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Pflege und Gesundheit"},{"id":169,"idee":"Erscheinungsbild Innenstadt ","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":170,"idee":"Erscheinungsbild Bahnhof","ideengeber":"Iris Fischer","kategorie":"Kultur und Tourismus"},{"id":171,"idee":"Wlan in der Innenstadt","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":172,"idee":"Maxplatz soll versch\u00f6nert werden - interaktive Screens mit Nachrichten","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Kultur und Tourismus"},{"id":173,"idee":"smarte L\u00f6sung f\u00fcr GEZ","ideengeber":"Eva Heising","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":174,"idee":"Zu hohe Wohnpreise","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Wohnen und Bauen"},{"id":175,"idee":"Warme K\u00fcche in Schulen\/Kantinen und ges\u00fcnder","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Pflege und Gesundheit"},{"id":176,"idee":"Luftfilter nach den Sommerferien in den Schulen","ideengeber":"Iris Fischer","kategorie":"Pflege und Gesundheit"},{"id":177,"idee":"kosteng\u00fcnstige Sch\u00fcler- und Studententickets ","ideengeber":"Eva Heising","kategorie":"Verkehr"},{"id":178,"idee":"Kita- und Hortgeb\u00fchren sind zu hoch! ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Bildung und Forschung"},{"id":179,"idee":"Eine Neuentwicklung des Webkita-Portals","ideengeber":"Eva Heising","kategorie":"Serviceleistungen der Stadt"},{"id":180,"idee":"Zu viel Religion, zu wenig Sportunterrsicht","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Bildung und Forschung"},{"id":181,"idee":"Mehr Sozialwohnungen Quartiere und Stadtteile m\u00fcssen gemischt sein ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Wohnen und Bauen"},{"id":182,"idee":"Begegnungspl\u00e4tze und gemeinsame Au\u00dfenbereiche","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":183,"idee":"Wie schattig sind die Spielpl\u00e4tze?","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":184,"idee":"umweltbewusste Aktionen ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":185,"idee":"mehr Kotbeutelstationen","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":186,"idee":"Mehr Tafell\u00e4den","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":187,"idee":"In den Stadtteilen fehlen kleine M\u00e4rkte","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":188,"idee":"Digitale Rathaus-Wegweiser am ZOB und Maxplatz","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":189,"idee":"die Kinderbetreuungsm\u00f6glichkeiten f\u00fcr alle Altersgruppen","ideengeber":"Eva Heising","kategorie":"Bew\u00e4ltigung des Alltags"},{"id":190,"idee":"Tranparenz bei Verwaltungsentscheidungen ","ideengeber":"Eva Heising","kategorie":"Serviceleistungen der Stadt"},{"id":191,"idee":"Dolmetscher","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":192,"idee":"Sprechzeiten bei der Stadt ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":193,"idee":"Leichte Sprache in Verwaltungen ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":194,"idee":"Dolmetscher-Service ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":195,"idee":"Mehr Abfalleimer","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":196,"idee":"Sonderm\u00fcll soll auch im Stadtgebiet abgegeben werden k\u00f6nnen","ideengeber":"Elisabeth Horlamus","kategorie":"Umwelt"},{"id":197,"idee":"Abfallkampagne Aufkl\u00e4rung M\u00fclltrennung Fl\u00fcchtlinge","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":198,"idee":"Eine Webseite mit allen Kursen und Veranstaltungen f\u00fcr Kinder ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":199,"idee":"Kulturangebote demokratisieren","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Kultur und Tourismus"},{"id":200,"idee":"Wesite zur Vereins\u00fcbersicht","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":201,"idee":"eine Anwendung, um Trainingspartner und -pl\u00e4tze zu matchen","ideengeber":"Eva Heising","kategorie":"Sport und Freizeit"},{"id":202,"idee":"Die F\u00f6rderung der Bamberger Bier- und Brauereikultur ","ideengeber":"Eva Heising","kategorie":"Kultur und Tourismus"},{"id":203,"idee":"Wesite f\u00fcr Ubungsr\u00e4ume f\u00fcr Kunst- und Kulturschaffende","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":204,"idee":"Familienratgeber ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":205,"idee":"Mehr Angebote f\u00fcr die Sparte 25-35 Jahre","ideengeber":"Elisabeth Horlamus","kategorie":"K.A."},{"id":206,"idee":"Mehr Kulturangebote f\u00fcr Kinder UND Familien","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Sport und Freizeit"},{"id":207,"idee":"SMS-Service f\u00fcr Arztpraxen","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Pflege und Gesundheit"},{"id":208,"idee":"Online-Anmeldung zu Terminen f\u00fcr medizinische Dienstleister","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Pflege und Gesundheit"},{"id":209,"idee":"Unterf\u00fchrungen sind f\u00fcr Fahrradwege nicht geeignet! Oft lebensgef\u00e4hrlich, nicht genug Platz f\u00fcr Bus und Fahrrad- Bamberg braucht ein extra Fahrrad-Tunnel","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Verkehr"},{"id":210,"idee":"Eine Ringlinie Bamberg-Ost und Gaustadt oder Gereuth ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Verkehr"},{"id":211,"idee":"Anreize f\u00fcr h\u00e4ufige Benutzung des \u00d6PNV","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":212,"idee":"Nachtverkehr f\u00fcr Pendler ausweitern","ideengeber":"Elisabeth Horlamus","kategorie":"Verkehr"},{"id":213,"idee":"Kleinbusser f\u00fcr gehbehinderte Menschen","ideengeber":"Elisabeth Horlamus","kategorie":"Verkehr"},{"id":214,"idee":"Autos stehen auf Fahrradwegen \u2013 Meldesystem \u2013 App? Strafe?","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Verkehr"},{"id":215,"idee":"Alternative Energien \u2013 ein qualifizierter Ansprechpartner ","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Serviceleistungen der Stadt"},{"id":216,"idee":"Haltbare Lebensmittel nicht wegschmei\u00dfen, sondern an Bed\u00fcrftige weitergeben","ideengeber":"Barbara Mosig","kategorie":"Serviceleistungen der Stadt"},{"id":217,"idee":"Bergverbindung","ideengeber":"Barbara Mosig","kategorie":"Verkehr"},{"id":218,"idee":"Nachhaltigkeit der digitalen Projekte sichern (hatte ich schon mal eingegegeben, finde es aber nicht mehr...)","ideengeber":"Iris Fischer","kategorie":"Umwelt"},{"id":219,"idee":"Bewertung des \u00d6kologischen Fussabdrucks der entstehenden digitalen Projekte und \u00dcberlegungen zur Minimierung. Beachtung der 17 SDGs.","ideengeber":"Iris Fischer","kategorie":"Umwelt"},{"id":220,"idee":"Bamberg ist kein M\u00fcllberg","ideengeber":"Alexandra J\u00e4kel-Miroshevskaya","kategorie":"Umwelt"},{"id":221,"idee":"Diskussionen in der \"B\u00fcrgerbeteiligung\"","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":222,"idee":"Digitales Begr\u00fc\u00dfungspaket","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":223,"idee":"Kreislaufwirtschaft \/ Tauschringe","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":224,"idee":"Leistungsf\u00e4higes Internet","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":225,"idee":"Bildung","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":226,"idee":"Werkzeugstation f\u00fcr Fahrr\u00e4der","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":227,"idee":"Car Sharing in die Wohnviertel bringen mit kurzen Wegen","ideengeber":"Jens Lindner","kategorie":null},{"id":228,"idee":"Mobilit\u00e4t mit \u00f6ffentlichen Fahrzeugen","ideengeber":"Christina Drescher","kategorie":null},{"id":229,"idee":"St\u00e4rkung der Teilhabe Gefl\u00fcchteter durch digitale Bef\u00e4higung","ideengeber":"Simone Oswald","kategorie":null},{"id":230,"idee":"Web-App f\u00fcr Gefl\u00fcchtete mit regionalen Informationen und Angeboten","ideengeber":"Simone Oswald","kategorie":null},{"id":231,"idee":"Sind der Schutz der Bev\u00f6lkerung bzw. die Gefahrenabwehr smart?","ideengeber":"Jochen D\u00fcrst","kategorie":null},{"id":232,"idee":"online-Kulturkalender f\u00fcr Oberfranken","ideengeber":"Iris Fischer","kategorie":null},{"id":233,"idee":"Mein Bamberg, meine Daten, meine Vorteile - Erm\u00e4chtigte B\u00fcrger:innen bauen ihre Smart City","ideengeber":"Mark Heising","kategorie":null},{"id":234,"idee":"F\u00f6rderung der Mobilit\u00e4t durch \u00f6ffentliche Verkehrsmittel","ideengeber":"Anne Schwarz","kategorie":null},{"id":235,"idee":"Bamberg wird sicher(er)","ideengeber":"Anne Schwarz","kategorie":null},{"id":236,"idee":"Dachwassernutzung","ideengeber":"Monika Thurner","kategorie":null},{"id":237,"idee":"Datensouver\u00e4nit\u00e4t","ideengeber":"Mechthild Westiner","kategorie":null},{"id":238,"idee":"Co2 Fu\u00dfabdruck","ideengeber":"Mechthild Westiner","kategorie":null},{"id":239,"idee":"Digitale Teilhabe - St\u00e4dtische Schulungen","ideengeber":"Volt","kategorie":null},{"id":240,"idee":"Errichtung eines datenschutzkonformen B\u00fcrger*innen-Portals","ideengeber":"Volt","kategorie":null},{"id":241,"idee":null,"ideengeber":"Volt","kategorie":null},{"id":242,"idee":"Digitaler Marktplatz - Produkt\u00fcbersicht von Einzelh\u00e4ndler*innen","ideengeber":"Volt","kategorie":null},{"id":243,"idee":"Integration kultureller und ehrenamtlicher Angebote ins B\u00fcrger*innenportal","ideengeber":"Volt","kategorie":null},{"id":244,"idee":"Raumbuchungen f\u00fcr Kunst- und Kulturschaffende","ideengeber":"Volt","kategorie":null},{"id":245,"idee":"Digitales M\u00e4ngelmeldeportal","ideengeber":"Volt","kategorie":null},{"id":246,"idee":"Digitales Angebot f\u00fcr gesundheitliche Dienste","ideengeber":"Volt","kategorie":null},{"id":247,"idee":"Gewerbeanmeldungen und digitale Bauantr\u00e4ge","ideengeber":"Volt","kategorie":null},{"id":248,"idee":"Eine App \u201eSenioren-regional\u201c.","ideengeber":"Marzena Pisarek","kategorie":null},{"id":249,"idee":"Klappbare Sitze","ideengeber":"Marzena Pisarek","kategorie":null},{"id":250,"idee":"Kommunale Solarliga","ideengeber":"Andreas Eichenseher","kategorie":null},{"id":251,"idee":"Raumlotse und Materiallotse","ideengeber":"Katharina Breinbauer","kategorie":null},{"id":252,"idee":null,"ideengeber":"Katharine Breinbauer","kategorie":null},{"id":253,"idee":"Digitales Solarfl\u00e4chenkataster","ideengeber":"Markus Sch\u00e4fer","kategorie":null},{"id":254,"idee":"Aufhebung von Sprachbarrieren durch die Einf\u00fchrung von Live-\u00dcbersetzungsapps","ideengeber":"Petru Leuthold","kategorie":null},{"id":255,"idee":"Garbage Collector","ideengeber":"Pascal L\u00f6ffler","kategorie":null},{"id":256,"idee":"WLAN an Schulen und in der Stadt. Frei.","ideengeber":"Lennart Peters","kategorie":null},{"id":257,"idee":"DSGVO-konformer Videochat","ideengeber":"Lennart Peters","kategorie":null},{"id":258,"idee":"Idee aus der B\u00fcrgerschaft: Betreutes Internet-Caf\u00e9","ideengeber":"Anonymus Bamberg","kategorie":null},{"id":259,"idee":null,"ideengeber":"Anonymus Bamberg","kategorie":null},{"id":260,"idee":"Idee aus der B\u00fcrgerschaft: Digitales Begr\u00fc\u00dfungspaket f\u00fcr Neubamberger:innen","ideengeber":"Anonymus Bamberg","kategorie":null},{"id":261,"idee":"Modernes Silvester: Lichtshow mit Drohnen statt B\u00f6llern!","ideengeber":"Pascal L\u00f6ffler","kategorie":null},{"id":262,"idee":"Web-Plattform: Die Digitalisierungsampel. Digitalisieren - aber Smart und Vernetzt","ideengeber":"Lennart Peters","kategorie":null},{"id":263,"idee":"Kartierung der Strahlungsbelastung","ideengeber":"Dr. Werner Zirkel","kategorie":null},{"id":264,"idee":"Helfen statt Zocken - digitales Ehrenamt f\u00f6rdern","ideengeber":"Dr. Werner Zirkel","kategorie":null},{"id":265,"idee":"Pr\u00fcfung des Lichtkegels von Fahrradbeleuchtungen um Blenden anderer Verkehrsteilnehmender zu minimieren","ideengeber":"Johanne Scharnick ","kategorie":null},{"id":266,"idee":"100 % solare & smarte LED-Stra\u00dfenbeleuchtung f\u00fcr bisher unbeleuchtete Bushaltestellen","ideengeber":"Ralf Noack","kategorie":null},{"id":267,"idee":"Digitales Schenk & Tauschportal","ideengeber":"Pascal L\u00f6ffler","kategorie":null},{"id":268,"idee":"Digitale Verleihplattform & Nachbarschaften verbinden","ideengeber":"Pascal L\u00f6ffler","kategorie":null}]
+[
+	{
+		"id": 1,
+		"idee": "Hausbesitzer bei energetischer Sanierung unterst\u00fctzen",
+		"ideengeber": "Sascha G\u00f6tz",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 2,
+		"idee": "Digitalisierung von Bambergs g\u00e4rtnerischen Angeboten",
+		"ideengeber": "Patricia Alberth",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 3,
+		"idee": "Inklusion durch digitale Ma\u00dfnahmen",
+		"ideengeber": "Patricia Alberth",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 4,
+		"idee": "Intelligente Steuerung des Verkehrsfluss",
+		"ideengeber": "Mario Mages",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 5,
+		"idee": "\u00d6PNV im Landkreis goes Huber",
+		"ideengeber": "Max Dahmer",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 6,
+		"idee": "SMART-Home L\u00f6sungen",
+		"ideengeber": "Bertrand Eitel",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 7,
+		"idee": "Nachbarschaftshilfe APP",
+		"ideengeber": "Bertrand Eitel",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 8,
+		"idee": "Orte des Erinnerns und Verweilens",
+		"ideengeber": "Claus-Christian Carbon",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 9,
+		"idee": "Mobilit\u00e4ts-App",
+		"ideengeber": "Claus-Christian Carbon",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 10,
+		"idee": "Regional-App",
+		"ideengeber": "Claus-Christian Carbon",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 11,
+		"idee": "Bewegungsprofile verschiedener Gruppen",
+		"ideengeber": "Niklas D\u00f6bler",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 12,
+		"idee": "Personalisierte und intelligente Stadtf\u00fchrung",
+		"ideengeber": "Niklas D\u00f6bler",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 13,
+		"idee": "(Video-)Konferenz Telefonie Netzwerk aufbauen",
+		"ideengeber": "System",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 14,
+		"idee": "OpenHub als dauerhafte Einrichtung",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 15,
+		"idee": "Bereitstellen \u00f6ffentlicher Daten und Programmierschnittstellen (APIs)",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 16,
+		"idee": "Vereinigte + verteilte St\u00e4dte (Online-)Pr\u00e4senz",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 17,
+		"idee": "Gr\u00fcndung und F\u00f6rderung von OpenSource Spaces",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 18,
+		"idee": "B\u00fcrgerbeteiligungs-App",
+		"ideengeber": "Karl Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 19,
+		"idee": "Videoberatung und Chatbots in der Verwaltung (und dar\u00fcber hinaus)",
+		"ideengeber": "Bertrand Eitel",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 20,
+		"idee": "Eine App ist nicht die L\u00f6sung",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 21,
+		"idee": "VHS.daheim - online-gest\u00fctzte Lehr- und Lernangebote ",
+		"ideengeber": "Anna Scherbaum",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 22,
+		"idee": "Gaming Campus ",
+		"ideengeber": "Niklas D\u00f6bler",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 23,
+		"idee": "Projekte- und Vorhaben\u00fcbersicht ",
+		"ideengeber": "Markus Sch\u00e4fer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 24,
+		"idee": "Helping Hands (Plattform Web\/App) f\u00fcr Nachbarschaftshilfe",
+		"ideengeber": "Marcel Binzenh\u00f6fer ",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 25,
+		"idee": "Hackathons f\u00fcr Bamberg",
+		"ideengeber": "Claus-Christian Carbon",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 26,
+		"idee": "Nachhaltig aus der aktuellen Krise lernen",
+		"ideengeber": "Markus Raupach",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 27,
+		"idee": "Familienfreundliche Stadt 2.0",
+		"ideengeber": "Iris Meyer",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 28,
+		"idee": "Stadtplanung und Open-Street-Maps Hand in Hand",
+		"ideengeber": "System",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 29,
+		"idee": "Digitale Formulare",
+		"ideengeber": "System",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 30,
+		"idee": "KI-Einsatz in der \u00f6ffentlichen Verwaltung",
+		"ideengeber": "Christian Schachtner",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 31,
+		"idee": "Kreativit\u00e4tsr\u00e4ume f\u00fcr Interdisziplin\u00e4re Teams schaffen",
+		"ideengeber": "Christian Schachtner",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 32,
+		"idee": "Ideen Contra Ideen",
+		"ideengeber": "Karl-Heinz Schmittlutz",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 33,
+		"idee": "eine Stadt f\u00fcr Alle",
+		"ideengeber": "Anton Zahneisen",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 34,
+		"idee": "Beteiligungsangebote an unterschiedlichen Nutzer*innen orientieren",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 35,
+		"idee": "Kompetenzen und St\u00e4rken im Quartier mit Nachbarschaftshilfe oder Tauschb\u00f6rsen zusammen bringen",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 36,
+		"idee": "Smarte Wertstoffinseln",
+		"ideengeber": "Andreas Eichenseher",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 37,
+		"idee": " Altes Hallenbad am Margaretendamm in Bamberg\n",
+		"ideengeber": "Regina Henniges",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 38,
+		"idee": "Potenielle Faktoren, welche einen Beitrag zur Entwicklung leisten k\u00f6nnen",
+		"ideengeber": "Karl-Heinz Schmittlutz",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 39,
+		"idee": "Smarte Stra\u00dfenbeleuchtung",
+		"ideengeber": "Andreas Eichenseher",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 40,
+		"idee": " Eine G\u00e4rtnerstadt- und G\u00e4rtner App f\u00fcr Verbraucher und Touristen\n",
+		"ideengeber": "Thomas Schmidt",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 41,
+		"idee": "Konzertierete Aktion \"Videokonferenz- und Online-Unterricht-Systeme\/Home-Office-Initiative\"",
+		"ideengeber": "Bernd Bauer-Banzhaf",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 42,
+		"idee": "Digitale Soforthilfe im Rahmen der Digitalen Agenda der Stadt Bamberg",
+		"ideengeber": "Katharina Kroll",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 43,
+		"idee": "Lokales Shopping-Portal Bamberger H\u00e4ndler & Onlineshops",
+		"ideengeber": "Randy John",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 44,
+		"idee": "Machbarkeit",
+		"ideengeber": "Karl-Heinz Schmittlutz",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 45,
+		"idee": " Aufbau von geobasierten Digitalen Zwillingen - SDDI-Modellregionen\n",
+		"ideengeber": "Christian Schachtner",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 46,
+		"idee": "Zusammenr\u00fccken",
+		"ideengeber": "Hannes Peschka",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 47,
+		"idee": "Stromkosten intelligenter beeinflussen: Forcieren des Einsatzes von Smart Metern* durch die Stadtwerke",
+		"ideengeber": "Joachim Graff ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 48,
+		"idee": "Soziales in den Ideen-Pool einbringen ",
+		"ideengeber": "Wolfgang Metzner",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 49,
+		"idee": "Wunsch des Seniorenbeirates der Stadt Bamberg",
+		"ideengeber": "Wolfgang Metzner",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 50,
+		"idee": "Digitale Welterbespur",
+		"ideengeber": "Lore Kleemann",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 51,
+		"idee": "Kompletter Ausbau der Internetanbindung des Bambit-Netzes",
+		"ideengeber": "Tobias Straub ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 52,
+		"idee": "Vernetzte und platzsparende M\u00fcllsammlung",
+		"ideengeber": "Timm Schulze ",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 53,
+		"idee": "M\u00e4ngelmelder f\u00fcr Schlagl\u00f6cher",
+		"ideengeber": "Sascha G\u00f6tz",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 54,
+		"idee": "LoRa Netzwerk in Bamberg",
+		"ideengeber": "Larissa Sedlmeier",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 55,
+		"idee": "Smart City Hackathon Bamberg",
+		"ideengeber": "Tobias Leisgang",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 56,
+		"idee": "Barrierefreies Krankenhaus",
+		"ideengeber": "Margit Gamberoni",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 57,
+		"idee": "Stadt-Smartmetering. Nachatligkeit Dashboard am Beispiel Mobilit\u00e4t und Energie",
+		"ideengeber": "Denis Hebert",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 58,
+		"idee": "Beratungsservice f\u00fcr Speisen & Eink\u00e4ufe f\u00fcr Menschen, die ihre Wohnungen nicht verlassen k\u00f6nnen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 59,
+		"idee": "Matchmaking zwischen Besuchs- \/ Aktivit\u00e4tsbed\u00fcrfnissen und Besuchs- \/ Aktivit\u00e4tsanbietenden",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 60,
+		"idee": "3D-Stadtplanungssoftware f\u00fcr die Szenariendurchspielung bei B\u00fcrger:inn:enbeteiligungen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 61,
+		"idee": "Smart-Terminals f\u00fcr B\u00fcrgerstimmung",
+		"ideengeber": "Horst Finkbeiner ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 62,
+		"idee": "\"Rahmen-App\" f\u00fcr Smart City Bamberg",
+		"ideengeber": "Horst Finkbeiner ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 63,
+		"idee": "Ver\u00e4nderung des Maxplatzes",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 64,
+		"idee": "B\u00f6rse f\u00fcr Wohnungsuchende",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 65,
+		"idee": "\u201eBamberger Schrottr\u00e4der\u201c werden zu \u201eBamberger Leihr\u00e4dern\u201c",
+		"ideengeber": "Nicolas Lindner",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 66,
+		"idee": "App f\u00fcr sofortiges Melden von Stolperfallen an den Bauhof mit Foto und Punkt im Stadtplan ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 67,
+		"idee": "Verbesserung der Stadtverwaltung-Homepage: bessere und leichter findbare Infos f\u00fcr B\u00fcrger:innen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 68,
+		"idee": "Anwohnerparkplakette f\u00fcr Handwerker:innen mit Kastenwagen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 69,
+		"idee": "Transparenz im Haushalt der Stadt Bamberg - Umstellung auf Doppik und Kurz-Erl\u00e4uterung",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 70,
+		"idee": "\u00dcbersicht Sportm\u00f6glichkeiten in Stadt und Umkreis Bamberg",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 71,
+		"idee": "\u00d6ffentliche Kantinen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 72,
+		"idee": "Fl\u00e4chenfra\u00df reduzieren",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 73,
+		"idee": "Begr\u00fcnungs- und Renaturierungsplan zur Mitwirkung ver\u00f6ffentlichen ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 74,
+		"idee": "Stadtentwicklung - geplant, nachhaltig, zukunftsf\u00e4hig",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 75,
+		"idee": "Verbesserungs- und Wahlversprechen dokumentieren und nachverfolgen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 76,
+		"idee": " Verpflichtende Betriebsst\u00e4ttenparkpl\u00e4tze ab mehr als 2 Fahrzeugen\n",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 77,
+		"idee": "# St\u00e4dtische Mietobjekte (Wohnungen, H\u00e4user, Werkst\u00e4tten, Keller etc)",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 78,
+		"idee": "#Kenne Deine Kulturschaffenden! - (An)Erkennung statt Lobhudelei einzig bei Preisen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 79,
+		"idee": "Machtverteilung, Konflikte, Einflussm\u00f6glichkeiten",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 80,
+		"idee": "Erlichstrasse ist f\u00fcr Fahrr\u00e4der frei geworden in beide Richtungen - Wegfall von 6 Parkpl\u00e4tzen.",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 81,
+		"idee": "#Digitalisierung Busauskunft in Bamberg: alexa-f\u00e4hig stellen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 82,
+		"idee": "#Digitalisierung Pl\u00e4tze auf der Unteren Br\u00fccke per Luca-App vergeben",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 83,
+		"idee": "Tempor\u00e4r autofreie Strassen",
+		"ideengeber": "Tobias Leisgang",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 84,
+		"idee": "Digitales Meldesystem f\u00fcr \u00fcbervolle \u00f6ffentliche M\u00fclleimer und Bekanntmachung des allgemeinen M\u00e4ngelmeldesystems",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 85,
+		"idee": "Sportangebote im \u00f6ffentlichen Raum I: Moderner Trimm-Dich-Pfad",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 86,
+		"idee": "Sportangebote im \u00f6ffentlichen Raum II: Fitnessger\u00e4te f\u00fcr Erwachsene auf Spielpl\u00e4tzen",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 87,
+		"idee": " Fitnessparks\/Fitness-Parcours schaffen im Hain, auf Erba, oder wo immer es m\u00f6glich ist",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 88,
+		"idee": "\u00d6PNV attraktiver machen - \"Kreuz- und Querverbindungen des \u00d6PNV",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 89,
+		"idee": "App f\u00fcr Neub\u00fcrger und\/oder Schaffung von bezahlten Stadtpaten",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 90,
+		"idee": "Stressfreie Zone im Bamberg ",
+		"ideengeber": "Marzena Pisarek",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 91,
+		"idee": "\"Verloren-gefunden\"",
+		"ideengeber": "Marzena Pisarek",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 92,
+		"idee": "Bamberg App (Bamberg ist hier ganz, ganz hinten (hinter dem Mond?) Schaut Euch doch mal Heidelberg an",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 93,
+		"idee": "Digitaler \"Vandalismus-\"Melder",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 94,
+		"idee": "Senior:inn:en-Hilfe: Modellprojekt mit Uni & Bosch & Caritas etc initiieren",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 95,
+		"idee": "Kostenfreie Wohnungstauschb\u00f6rse ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 96,
+		"idee": "Gespr\u00e4chs- & Spiele-Caf\u00e9s in allen Stadtvierteln ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 97,
+		"idee": "Parkplatz-App & Installation, die Autofahrer in die Parkh\u00e4user lotst",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 98,
+		"idee": "Spielger\u00e4tei in Parks aus dem Automaten",
+		"ideengeber": "Sascha G\u00f6tz",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 99,
+		"idee": "App zu Abo-Kisten etc.",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 100,
+		"idee": "\u00d6PNV vereinheitlichen",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 101,
+		"idee": "G\u00e4rtner erhalten, Markt regionaler Produkte ausbauen => Digitalkampagne, auch an relevanten Orten ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 102,
+		"idee": "K\u00fcnstler:innen & Kulturschaffende gerechter in Planung von Veranstaltungen einbinden",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 103,
+		"idee": "Digitalisierte Planung von Kultur-Standorten",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 104,
+		"idee": "Single-Wohnungen nicht nur f\u00fcr Student:innen und in der Innenstadt",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 105,
+		"idee": "Digitales Modell f\u00fcr (Keller)Clubs f\u00fcr (Sub)Kultur im Hafenbereich",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 106,
+		"idee": "Gewerbe und Wirtschaft: gesunde zukunftsf\u00e4hige Mischung herstellen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 107,
+		"idee": "Sport: Beachvolleyballfelder, Squashcourts etc.anlegen und digitale Karte erstellen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 108,
+		"idee": "Leitfaden f\u00fcr Smarte Pflege",
+		"ideengeber": "Anton Zahneisen",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 109,
+		"idee": "Ombudstelle f\u00fcr pflegende Angeh\u00f6rige",
+		"ideengeber": "Anton Zahneisen",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 110,
+		"idee": "G\u00fctesiegel f\u00fcr Netzwerkplattformen",
+		"ideengeber": "Anton Zahneisen",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 111,
+		"idee": "Smarte Informations und Qualifizierungsoffensive f\u00fcr die Pflege",
+		"ideengeber": "Anton Zahneisen",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 112,
+		"idee": "Autonome Pendelbusse zwischen ZOB, Bahnhof und den P&R-Parkh\u00e4usern",
+		"ideengeber": "TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 113,
+		"idee": "Seniorengerechte Mobilit\u00e4tskarte\/-app",
+		"ideengeber": "TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 114,
+		"idee": "Leistungsstarkes WLAN-Netz im Stadtgebiet und \u00d6PNV",
+		"ideengeber": "TAG Barrierefreier \u00d6ffentlicher Raum und Mobilit\u00e4t im Seniorenbeirat ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 115,
+		"idee": " \"Wir sind eine gesunde Stadt\" => mehr Aufkl\u00e4rung gesunde Lebensweise, St\u00e4rkung lokaler & regionaler Erzeuger:innen\/Anbieter:innen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 116,
+		"idee": "Sportangebote Kinder & Jugendliche",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 117,
+		"idee": "Homepages der Ausflugsziele up-to-date bringen und halten",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 118,
+		"idee": "Wohnraum: von den Einkommen und M\u00f6glichkeiten her denken",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 119,
+		"idee": "Kultur: vielf\u00e4ltigers Angebot, auf Durchmischung achten",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 120,
+		"idee": "Lernen von best practise Beispiel Hallstadt ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 121,
+		"idee": "Maxplatz - neues Leben f\u00fcr die Steinw\u00fcste ",
+		"ideengeber": "Heiko K\u00fcffner",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 122,
+		"idee": "Sieben Zebras f\u00fcr die Lange Stra\u00dfe",
+		"ideengeber": "Heiko K\u00fcffner",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 123,
+		"idee": "Gr\u00fcnes Weltkulturerbe: Die Stadt und ihre D\u00e4cher begr\u00fcnen",
+		"ideengeber": "Heiko K\u00fcffner",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 124,
+		"idee": "50 Font\u00e4nen zum Abk\u00fchlen",
+		"ideengeber": "Heiko K\u00fcffner",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 125,
+		"idee": "Bamberg Coins - Regionalen und nachhaltigen Konsum f\u00f6rdern",
+		"ideengeber": "Henri Heising",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 126,
+		"idee": "Lokales Foodsharing Netzwerk",
+		"ideengeber": "Justina Malke",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 127,
+		"idee": "Digitales Bildungsangebot zu Nachhaltigkeit in Leichter Sprache f\u00fcr Erwachsene & \u00c4ltere",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 128,
+		"idee": "Aufbau digitaler Kompetenz",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 129,
+		"idee": "Aufbau digitaler Begleitung",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 130,
+		"idee": "Finanzielle Sicherstellung des Aufbaus digitaler Kompetenz und Begleitung",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 131,
+		"idee": "Mehr mehrsprachige infos mit Hilfe digitaler Programme ",
+		"ideengeber": "Mitra Sharifi",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 132,
+		"idee": "Schaffung einer Reflexions- und Evaluationsinstanz des Digitalisierungsprozesses ",
+		"ideengeber": "Wolfgang Budde",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 133,
+		"idee": "Familie und Kinder",
+		"ideengeber": "Andrea",
+		"kategorie": "Sport und Freizeit"
+	},
+	{ "id": 134, "idee": "Gesundheit ", "ideengeber": "Andrea", "kategorie": "Sport und Freizeit" },
+	{
+		"id": 135,
+		"idee": "Mobilit\u00e4t und Verkehr ",
+		"ideengeber": "Andrea",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 136,
+		"idee": "App f\u00fcr Bamberg!!!!",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 137,
+		"idee": "Freie Gastropl\u00e4tze in innerst\u00e4dtischen Lokalen",
+		"ideengeber": "Roland Nowak",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 138,
+		"idee": "eine F\u00e4hrenverbindung (Wasserbus) zwischen Kranen und Erbainsel bzw. Gaustadt und dem Hafen",
+		"ideengeber": "Mitra Sharifi",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 139,
+		"idee": "Probleme in der Stadt von unterwegs melden",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 140,
+		"idee": "Leichte Sprache und englische Version f\u00fcr das Programm Smart City",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 141,
+		"idee": "B\u00fcndelung und \u00dcbersichtlichkeit der Newsletter auf der Webseite der Stadt Bamberg",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 142,
+		"idee": "Seilbahn zur Altenburg",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 143,
+		"idee": "Neustrukturierung und Ausbau des Busnetzes",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 144,
+		"idee": "Bedarfsgerechte Gr\u00f6\u00dfe von \u00f6ffentlichen M\u00fclleimern",
+		"ideengeber": "Marc Kohaupt ",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 145,
+		"idee": "Digitalisierung in Schulen",
+		"ideengeber": "Jacqueline Langer",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 146,
+		"idee": "Digitale Beh\u00f6rdeng\u00e4nge",
+		"ideengeber": "Jacqueline Langer",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 147,
+		"idee": "Smarte Solarb\u00e4nke im \u00f6ffentlichen Raum",
+		"ideengeber": "Eva-Maria Steger",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 148,
+		"idee": "Bauernmarkt",
+		"ideengeber": "Natalie A\u00dfl\u00e4nder",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 149,
+		"idee": "Heilkr\u00e4utergarten um und in Bamberg!",
+		"ideengeber": "Susanne Schreyer ",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 150,
+		"idee": "IDEE von der Begegnungsst\u00e4tte OASE: B\u00fcrgerb\u00fcro mit Endger\u00e4ten und geschulten Helfern",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 151,
+		"idee": "IDEE von der Begegnungsst\u00e4tte OASE: Digitale Litfa\u00dfs\u00e4ule ",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 152,
+		"idee": "IDEE von der Begegnungsst\u00e4tte OASE: Gemeinschaftsk\u00fcche",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 153,
+		"idee": "Grundtarif Internet",
+		"ideengeber": "Marc Kohaupt",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 154,
+		"idee": "IDEE aus der B\u00fcrgerschaft: Materialpool Bamberg",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 155,
+		"idee": "Bamberg-App als zentrale Auskunfts- und Austauschplattform",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 156,
+		"idee": "smarte Stra\u00dfenbeleuchtung",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 157,
+		"idee": "Stadtkarte f\u00fcr barrierefreie Wege",
+		"ideengeber": "Nadja Diemunsch",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 158,
+		"idee": "Lokaler Online-Handel",
+		"ideengeber": "Marc Kohaupt ",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 159,
+		"idee": "Werbung f\u00fcr Pflege von Bepflanzungen - \"Hilf Bamberg gr\u00fcn zu bleiben!\"",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 160,
+		"idee": "IDEE aus der B\u00fcrgerschaft: Virtueller Stadtrundgang\/Stadtf\u00fchrung",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 161,
+		"idee": "Pfand-Hinweise an M\u00fclleimern",
+		"ideengeber": "Marc Kohaupt ",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 162,
+		"idee": "Sch\u00fcler*innen helfen Senior*innen am Smartphone",
+		"ideengeber": "Barbara Mosig",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 163,
+		"idee": "die Lange Strasse nach und nach \"autofrei\" machen",
+		"ideengeber": "Barbara Mosig",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 164,
+		"idee": " IDEE aus der B\u00fcrgerschaft: Digitale Obstkarte zum Ernten",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": "Umwelt"
+	},
+	{ "id": 165, "idee": "Smarte Ampeln", "ideengeber": "Anna Berthold", "kategorie": "Verkehr" },
+	{
+		"id": 166,
+		"idee": "Blindensignale f\u00fcr alle Ampelanlagen in Bamberg installieren",
+		"ideengeber": "Lukas B\u00f6hm",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 167,
+		"idee": "Ruhepl\u00e4tze",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 168,
+		"idee": "Ruhepl\u00e4tze",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 169,
+		"idee": "Erscheinungsbild Innenstadt ",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 170,
+		"idee": "Erscheinungsbild Bahnhof",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 171,
+		"idee": "Wlan in der Innenstadt",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 172,
+		"idee": "Maxplatz soll versch\u00f6nert werden - interaktive Screens mit Nachrichten",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 173,
+		"idee": "smarte L\u00f6sung f\u00fcr GEZ",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 174,
+		"idee": "Zu hohe Wohnpreise",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 175,
+		"idee": "Warme K\u00fcche in Schulen\/Kantinen und ges\u00fcnder",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 176,
+		"idee": "Luftfilter nach den Sommerferien in den Schulen",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 177,
+		"idee": "kosteng\u00fcnstige Sch\u00fcler- und Studententickets ",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 178,
+		"idee": "Kita- und Hortgeb\u00fchren sind zu hoch! ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 179,
+		"idee": "Eine Neuentwicklung des Webkita-Portals",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 180,
+		"idee": "Zu viel Religion, zu wenig Sportunterrsicht",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Bildung und Forschung"
+	},
+	{
+		"id": 181,
+		"idee": "Mehr Sozialwohnungen Quartiere und Stadtteile m\u00fcssen gemischt sein ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Wohnen und Bauen"
+	},
+	{
+		"id": 182,
+		"idee": "Begegnungspl\u00e4tze und gemeinsame Au\u00dfenbereiche",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 183,
+		"idee": "Wie schattig sind die Spielpl\u00e4tze?",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 184,
+		"idee": "umweltbewusste Aktionen ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 185,
+		"idee": "mehr Kotbeutelstationen",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 186,
+		"idee": "Mehr Tafell\u00e4den",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 187,
+		"idee": "In den Stadtteilen fehlen kleine M\u00e4rkte",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 188,
+		"idee": "Digitale Rathaus-Wegweiser am ZOB und Maxplatz",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 189,
+		"idee": "die Kinderbetreuungsm\u00f6glichkeiten f\u00fcr alle Altersgruppen",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Bew\u00e4ltigung des Alltags"
+	},
+	{
+		"id": 190,
+		"idee": "Tranparenz bei Verwaltungsentscheidungen ",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 191,
+		"idee": "Dolmetscher",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 192,
+		"idee": "Sprechzeiten bei der Stadt ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 193,
+		"idee": "Leichte Sprache in Verwaltungen ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 194,
+		"idee": "Dolmetscher-Service ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 195,
+		"idee": "Mehr Abfalleimer",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 196,
+		"idee": "Sonderm\u00fcll soll auch im Stadtgebiet abgegeben werden k\u00f6nnen",
+		"ideengeber": "Elisabeth Horlamus",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 197,
+		"idee": "Abfallkampagne Aufkl\u00e4rung M\u00fclltrennung Fl\u00fcchtlinge",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 198,
+		"idee": "Eine Webseite mit allen Kursen und Veranstaltungen f\u00fcr Kinder ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 199,
+		"idee": "Kulturangebote demokratisieren",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 200,
+		"idee": "Wesite zur Vereins\u00fcbersicht",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 201,
+		"idee": "eine Anwendung, um Trainingspartner und -pl\u00e4tze zu matchen",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 202,
+		"idee": "Die F\u00f6rderung der Bamberger Bier- und Brauereikultur ",
+		"ideengeber": "Eva Heising",
+		"kategorie": "Kultur und Tourismus"
+	},
+	{
+		"id": 203,
+		"idee": "Wesite f\u00fcr Ubungsr\u00e4ume f\u00fcr Kunst- und Kulturschaffende",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 204,
+		"idee": "Familienratgeber ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 205,
+		"idee": "Mehr Angebote f\u00fcr die Sparte 25-35 Jahre",
+		"ideengeber": "Elisabeth Horlamus",
+		"kategorie": "K.A."
+	},
+	{
+		"id": 206,
+		"idee": "Mehr Kulturangebote f\u00fcr Kinder UND Familien",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Sport und Freizeit"
+	},
+	{
+		"id": 207,
+		"idee": "SMS-Service f\u00fcr Arztpraxen",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 208,
+		"idee": "Online-Anmeldung zu Terminen f\u00fcr medizinische Dienstleister",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Pflege und Gesundheit"
+	},
+	{
+		"id": 209,
+		"idee": "Unterf\u00fchrungen sind f\u00fcr Fahrradwege nicht geeignet! Oft lebensgef\u00e4hrlich, nicht genug Platz f\u00fcr Bus und Fahrrad- Bamberg braucht ein extra Fahrrad-Tunnel",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 210,
+		"idee": "Eine Ringlinie Bamberg-Ost und Gaustadt oder Gereuth ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 211,
+		"idee": "Anreize f\u00fcr h\u00e4ufige Benutzung des \u00d6PNV",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 212,
+		"idee": "Nachtverkehr f\u00fcr Pendler ausweitern",
+		"ideengeber": "Elisabeth Horlamus",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 213,
+		"idee": "Kleinbusser f\u00fcr gehbehinderte Menschen",
+		"ideengeber": "Elisabeth Horlamus",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 214,
+		"idee": "Autos stehen auf Fahrradwegen \u2013 Meldesystem \u2013 App? Strafe?",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Verkehr"
+	},
+	{
+		"id": 215,
+		"idee": "Alternative Energien \u2013 ein qualifizierter Ansprechpartner ",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{
+		"id": 216,
+		"idee": "Haltbare Lebensmittel nicht wegschmei\u00dfen, sondern an Bed\u00fcrftige weitergeben",
+		"ideengeber": "Barbara Mosig",
+		"kategorie": "Serviceleistungen der Stadt"
+	},
+	{ "id": 217, "idee": "Bergverbindung", "ideengeber": "Barbara Mosig", "kategorie": "Verkehr" },
+	{
+		"id": 218,
+		"idee": "Nachhaltigkeit der digitalen Projekte sichern (hatte ich schon mal eingegegeben, finde es aber nicht mehr...)",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 219,
+		"idee": "Bewertung des \u00d6kologischen Fussabdrucks der entstehenden digitalen Projekte und \u00dcberlegungen zur Minimierung. Beachtung der 17 SDGs.",
+		"ideengeber": "Iris Fischer",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 220,
+		"idee": "Bamberg ist kein M\u00fcllberg",
+		"ideengeber": "Alexandra J\u00e4kel-Miroshevskaya",
+		"kategorie": "Umwelt"
+	},
+	{
+		"id": 221,
+		"idee": "Diskussionen in der \"B\u00fcrgerbeteiligung\"",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{
+		"id": 222,
+		"idee": "Digitales Begr\u00fc\u00dfungspaket",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{
+		"id": 223,
+		"idee": "Kreislaufwirtschaft \/ Tauschringe",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{
+		"id": 224,
+		"idee": "Leistungsf\u00e4higes Internet",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{ "id": 225, "idee": "Bildung", "ideengeber": "Johanne Scharnick ", "kategorie": null },
+	{
+		"id": 226,
+		"idee": "Werkzeugstation f\u00fcr Fahrr\u00e4der",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{
+		"id": 227,
+		"idee": "Car Sharing in die Wohnviertel bringen mit kurzen Wegen",
+		"ideengeber": "Jens Lindner",
+		"kategorie": null
+	},
+	{
+		"id": 228,
+		"idee": "Mobilit\u00e4t mit \u00f6ffentlichen Fahrzeugen",
+		"ideengeber": "Christina Drescher",
+		"kategorie": null
+	},
+	{
+		"id": 229,
+		"idee": "St\u00e4rkung der Teilhabe Gefl\u00fcchteter durch digitale Bef\u00e4higung",
+		"ideengeber": "Simone Oswald",
+		"kategorie": null
+	},
+	{
+		"id": 230,
+		"idee": "Web-App f\u00fcr Gefl\u00fcchtete mit regionalen Informationen und Angeboten",
+		"ideengeber": "Simone Oswald",
+		"kategorie": null
+	},
+	{
+		"id": 231,
+		"idee": "Sind der Schutz der Bev\u00f6lkerung bzw. die Gefahrenabwehr smart?",
+		"ideengeber": "Jochen D\u00fcrst",
+		"kategorie": null
+	},
+	{
+		"id": 232,
+		"idee": "online-Kulturkalender f\u00fcr Oberfranken",
+		"ideengeber": "Iris Fischer",
+		"kategorie": null
+	},
+	{
+		"id": 233,
+		"idee": "Mein Bamberg, meine Daten, meine Vorteile - Erm\u00e4chtigte B\u00fcrger:innen bauen ihre Smart City",
+		"ideengeber": "Mark Heising",
+		"kategorie": null
+	},
+	{
+		"id": 234,
+		"idee": "F\u00f6rderung der Mobilit\u00e4t durch \u00f6ffentliche Verkehrsmittel",
+		"ideengeber": "Anne Schwarz",
+		"kategorie": null
+	},
+	{ "id": 235, "idee": "Bamberg wird sicher(er)", "ideengeber": "Anne Schwarz", "kategorie": null },
+	{ "id": 236, "idee": "Dachwassernutzung", "ideengeber": "Monika Thurner", "kategorie": null },
+	{
+		"id": 237,
+		"idee": "Datensouver\u00e4nit\u00e4t",
+		"ideengeber": "Mechthild Westiner",
+		"kategorie": null
+	},
+	{
+		"id": 238,
+		"idee": "Co2 Fu\u00dfabdruck",
+		"ideengeber": "Mechthild Westiner",
+		"kategorie": null
+	},
+	{
+		"id": 239,
+		"idee": "Digitale Teilhabe - St\u00e4dtische Schulungen",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 240,
+		"idee": "Errichtung eines datenschutzkonformen B\u00fcrger*innen-Portals",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{ "id": 241, "idee": null, "ideengeber": "Volt", "kategorie": null },
+	{
+		"id": 242,
+		"idee": "Digitaler Marktplatz - Produkt\u00fcbersicht von Einzelh\u00e4ndler*innen",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 243,
+		"idee": "Integration kultureller und ehrenamtlicher Angebote ins B\u00fcrger*innenportal",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 244,
+		"idee": "Raumbuchungen f\u00fcr Kunst- und Kulturschaffende",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 245,
+		"idee": "Digitales M\u00e4ngelmeldeportal",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 246,
+		"idee": "Digitales Angebot f\u00fcr gesundheitliche Dienste",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 247,
+		"idee": "Gewerbeanmeldungen und digitale Bauantr\u00e4ge",
+		"ideengeber": "Volt",
+		"kategorie": null
+	},
+	{
+		"id": 248,
+		"idee": "Eine App \u201eSenioren-regional\u201c.",
+		"ideengeber": "Marzena Pisarek",
+		"kategorie": null
+	},
+	{ "id": 249, "idee": "Klappbare Sitze", "ideengeber": "Marzena Pisarek", "kategorie": null },
+	{
+		"id": 250,
+		"idee": "Kommunale Solarliga",
+		"ideengeber": "Andreas Eichenseher",
+		"kategorie": null
+	},
+	{
+		"id": 251,
+		"idee": "Raumlotse und Materiallotse",
+		"ideengeber": "Katharina Breinbauer",
+		"kategorie": null
+	},
+	{ "id": 252, "idee": null, "ideengeber": "Katharine Breinbauer", "kategorie": null },
+	{
+		"id": 253,
+		"idee": "Digitales Solarfl\u00e4chenkataster",
+		"ideengeber": "Markus Sch\u00e4fer",
+		"kategorie": null
+	},
+	{
+		"id": 254,
+		"idee": "Aufhebung von Sprachbarrieren durch die Einf\u00fchrung von Live-\u00dcbersetzungsapps",
+		"ideengeber": "Petru Leuthold",
+		"kategorie": null
+	},
+	{
+		"id": 255,
+		"idee": "Garbage Collector",
+		"ideengeber": "Pascal L\u00f6ffler",
+		"kategorie": null
+	},
+	{
+		"id": 256,
+		"idee": "WLAN an Schulen und in der Stadt. Frei.",
+		"ideengeber": "Lennart Peters",
+		"kategorie": null
+	},
+	{
+		"id": 257,
+		"idee": "DSGVO-konformer Videochat",
+		"ideengeber": "Lennart Peters",
+		"kategorie": null
+	},
+	{
+		"id": 258,
+		"idee": "Idee aus der B\u00fcrgerschaft: Betreutes Internet-Caf\u00e9",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": null
+	},
+	{ "id": 259, "idee": null, "ideengeber": "Anonymus Bamberg", "kategorie": null },
+	{
+		"id": 260,
+		"idee": "Idee aus der B\u00fcrgerschaft: Digitales Begr\u00fc\u00dfungspaket f\u00fcr Neubamberger:innen",
+		"ideengeber": "Anonymus Bamberg",
+		"kategorie": null
+	},
+	{
+		"id": 261,
+		"idee": "Modernes Silvester: Lichtshow mit Drohnen statt B\u00f6llern!",
+		"ideengeber": "Pascal L\u00f6ffler",
+		"kategorie": null
+	},
+	{
+		"id": 262,
+		"idee": "Web-Plattform: Die Digitalisierungsampel. Digitalisieren - aber Smart und Vernetzt",
+		"ideengeber": "Lennart Peters",
+		"kategorie": null
+	},
+	{
+		"id": 263,
+		"idee": "Kartierung der Strahlungsbelastung",
+		"ideengeber": "Dr. Werner Zirkel",
+		"kategorie": null
+	},
+	{
+		"id": 264,
+		"idee": "Helfen statt Zocken - digitales Ehrenamt f\u00f6rdern",
+		"ideengeber": "Dr. Werner Zirkel",
+		"kategorie": null
+	},
+	{
+		"id": 265,
+		"idee": "Pr\u00fcfung des Lichtkegels von Fahrradbeleuchtungen um Blenden anderer Verkehrsteilnehmender zu minimieren",
+		"ideengeber": "Johanne Scharnick ",
+		"kategorie": null
+	},
+	{
+		"id": 266,
+		"idee": "100 % solare & smarte LED-Stra\u00dfenbeleuchtung f\u00fcr bisher unbeleuchtete Bushaltestellen",
+		"ideengeber": "Ralf Noack",
+		"kategorie": null
+	},
+	{
+		"id": 267,
+		"idee": "Digitales Schenk & Tauschportal",
+		"ideengeber": "Pascal L\u00f6ffler",
+		"kategorie": null
+	},
+	{
+		"id": 268,
+		"idee": "Digitale Verleihplattform & Nachbarschaften verbinden",
+		"ideengeber": "Pascal L\u00f6ffler",
+		"kategorie": null
+	}
+]
