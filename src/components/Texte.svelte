@@ -3,13 +3,15 @@
 	import { animate, stagger } from 'motion';
 	import { onMount } from 'svelte';
 	import { spring } from "motion"
+	  import { base } from '$app/paths';
+
 
 	export let text = '';
 	export let top = '15vh';
 	export let left = '5vw';
-	export let annotations = [];
-	export let phase = 0;
-
+	//export let annotations = [];
+	//export let phaseSankey;
+	export let image= null; 
 
 
 	let boxEl;
@@ -98,47 +100,57 @@
 
 	});
 
-
-  $: currentAnnotation = annotations.filter(a => a.showPhase <= phase);
+//kommt nicht bei 1,2, 8, 10, 14, 15 //kommt nur, wenn es sich ändert.
+// warum bei 0, 3, 4, 5, 6, 7, 9, 11, 12, 13, 16
+ // $: currentAnnotation = annotations.filter(a => a.showPhase <= phase);
+  //$: console.log(`📘 phase ${phase} →`, annotations.filter(a => a.showPhase <=phase));
   //$: console.log(`📘 phase ${phase} →`, annotations.filter(a => a.showPhase === phase));
 
 
 
-
+  // robust auflösen (unterstützt auch absolute http-URLs)
+  const resolve = (p) => p?.startsWith('http')
+    ? p
+    : `${base}/${p.replace(/^\/+/, '')}`;
 
 </script>
 
 {#key text}
-	<div class="w-full flex justify-center px-4">
-		<div
-			bind:this={boxEl}
-			class="absolute bg-gradient-to-r from-smred via-smpurple to-smblue text-white rounded-3xl shadow-md p-14 max-w-screen-md"
-			style="top: {top}; left: {left};"
-		>
-			<p
-				bind:this={textEl}
-				lang ="de"
-				class="story-text text-textcolor break-words hyphens-auto text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-7xl max-w-full break-words leading-snug"
-				style={getAntiSkewStyle(skewClass)}
-			>
-				{@html text}
-			</p>
-		</div>
-	</div>
+  <div class="w-full flex justify-center px-4">
+    <div
+      bind:this={boxEl}
+      class="absolute bg-gradient-to-r from-smred via-smpurple to-smblue text-white
+             rounded-3xl shadow-md p-10 w-full sm:w-4/5 md:w-2/3 lg:w-1/2 xl:w-1/3 max-w-screen-md
+             flex flex-col items-center space-y-4"
+      style="top: {top}; left: {left};"
+    >
+      {#if image}
+        <img
+          src={resolve(image)}
+          alt=""
+  		class="w-1/2 h-auto object-cover rounded-full"
+        />
+      {/if}
+
+      <p
+        bind:this={textEl}
+        lang="de"
+        class="story-text text-textcolor text-xl sm:text-xl md:text-xl lg:text-7xl 
+               break-words hyphens-auto leading-snug text-center"
+        style={getAntiSkewStyle(skewClass)}
+      >
+        {@html text}
+      </p>
+    </div>
+  </div>
 {/key}
 
 
-  {#each currentAnnotation as annotation (annotation.stage)}
-    <div
-      class="absolute bg-gradient-to-r from-smblue/90 via-smpurple/90 to-smblue/90 text-white rounded-3xl shadow-md p-4"
-      style="top: {annotation.y}px; left: {annotation.x}px; transform: translateX(-50%);"
-    >
-      <p lang="de" class="story-text text-center text-textcolor text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-7xl max-w-full break-words hyphens-auto leading-snug">
 
-        {@html annotation.text}
-      </p>
-    </div>
-  {/each}
+ 
+
+
+  
 
 
 <style>

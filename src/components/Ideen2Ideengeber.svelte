@@ -45,8 +45,9 @@
 
 	// Layout für Ideengeber-Rects
 	const rectSize = svgWidth * 0.1; // 1% der Breite
-	const gap = svgWidth * 0.02;
+	const gap = svgWidth * 0.015;
 	const columns = 6;
+	
 	//const columns = Math.floor(svgWidth / (rectSize + gap));
 
 	// **Eindeutige Liste der Ideengeber erstellen**
@@ -82,6 +83,7 @@
 		ideenListe.forEach((idee, index) => {
 			alleIdeen.push({
 				idee: idee.idee,
+				id: idee.id,
 				ideengeber: idee.ideengeber,
 				kategorie: idee.kategorie,
 				index // Index für jede Idee innerhalb des Ideengebers, bspw. 0-5 (Grid Berechnung der Animation beruht)
@@ -89,17 +91,12 @@
 		});
 	});
 
-	const alleIdeenWithStartposition = alleIdeen.map((d) => {
-		d.startX = randomStartPositionIdeas().x;
-		d.startY = randomStartPositionIdeas().y;
-		return d;
-	});
+
 
 	//SVG initialisieren und statische Elemente zeichnen
 	onMount(() => {
 		svg = select(container)
 			.attr('viewBox', container.getAttribute('viewBox'))
-
 			.attr('preserveAspectRatio', 'xMinYMin meet'); //gleichmäsige Skalierung bei unterschiedlichen Seitenverhältnissen
 
 		//Vorbereitung für die Rects: Gradients für Farbverlauf definieren
@@ -119,50 +116,59 @@
 		gradient.append('stop').attr('offset', '50%').attr('stop-color', '#883582');
 
 		gradient.append('stop').attr('offset', '100%').attr('stop-color', '#2b7ab7');
+
+	
 	});
 
-	function randomStartPositionIdeas() {
-		const side = Math.floor(Math.random() * 4);
+
+	function randomStartPosition() {
+		const side = Math.floor(Math.random() * 3);
 
 		switch (side) {
 			case 0:
-				return { x: Math.random() * svgWidth, y: -150 }; // oben
+				return { x: Math.random() * svgWidth, y: svgHeight *30 }; 
 			case 1:
-				return { x: svgWidth + 150, y: Math.random() * svgHeight }; // rechts
+				return { x: svgWidth + 150, y: Math.random() * svgHeight }; 
 			case 2:
-				return { x: Math.random() * svgWidth, y: svgHeight + 150 }; // unten
+				return { x: Math.random() * svgWidth, y: svgHeight *3 }; 
 			case 3:
-				return { x: -150, y: Math.random() * svgHeight }; // links
+				return { x: -150, y: Math.random() * svgHeight }; 
 		}
 	}
+	
 
 	function drawIdeas() {
+	//svg.selectAll('.idee').remove();
 		const padding = rectSize * 0.3;
 		const rows = Math.floor(svgHeight / padding);
 		const columns = Math.ceil(alleIdeen.length / rows);
 		const totalWidth = columns * padding;
 		const startX = svgWidth - totalWidth;
 
-		//console.log("erste Idee:", alleIdeenWithStartposition?.[0]);
+	svg.selectAll('.idee')
+	.data(alleIdeen)
+	.join('rect')
+	.attr('class', 'idee')
+	.attr('opacity', 1)
 
-		// Ausgangspunkt: alle kommen aus der gleichen Position
-		svg
-			.selectAll('.idee')
-			.data(alleIdeenWithStartposition)
-			.join('rect')
-			.attr('class', 'idee')
-			.attr('fill', 'url(#ideeGradient)')
-			.attr('x', (d) => d.startX)
-			.attr('y', (d) => d.startY)
-			.attr('width', rectSize * 0.15)
-			.attr('height', rectSize * 0.15)
-			.attr('rx', rectSize * 0.02)
-			.transition()
-			.delay((d, i) => i * 10)
-			.duration(2500)
-			.ease(easeBackOut.overshoot(1.7))
-			.attr('x', (d, i) => Math.floor(i / rows) * padding + startX)
-			.attr('y', (d, i) => (i % rows) * padding);
+     .each(function() {
+        // EINMAL pro neuem Element:
+        const { x, y } = randomStartPosition();
+        select(this)
+          .attr('x', x)
+          .attr('y', y)
+          .attr('fill','url(#ideeGradient)')
+          .attr('width', rectSize*0.15)
+          .attr('height', rectSize*0.15)
+          .attr('rx', rectSize*0.02);
+      })
+    .transition()
+      .delay((d,i)=>i*10)
+      .duration(2500)
+      .ease(easeBackOut.overshoot(1.7))
+	  .attr('x', (d, i) => Math.floor(i / rows) * padding + startX)
+	  .attr('y', (d, i) => (i % rows) * padding);
+
 
 		const annotationIdeas = svg
 			.selectAll('.annotation-idee')
@@ -173,7 +179,7 @@
 			.attr('y', padding * 15)
 			.attr('transform', `rotate(-90, ${startX - padding}, ${padding * 15})`)
 			.attr('text-anchor', 'middle')
-			.text(`${alleIdeen.length} Ideen`)
+			.text(`263 Ideen`)
 			.attr('font-size', svgWidth * 0.05)
 			.attr('font-weight', 'bold')
 			.attr('fill', 'white')
@@ -192,43 +198,23 @@
 	 //  console.log(`Idee: ${d.idee} | Ideengeber: ${d.ideengeber} | Kategorie: ${d.kategorie}`);
 	//});
 
-function highlightIdea() {
-	console.log(alleIdeenWithStartposition)
-	const zielIdee = "IDEE aus der Bürgerschaft: Digitale Obstkarte zum Ernten";
 
-	// Idee im Dataset finden d.idee.trim() === 'Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen'
-	const ziel = alleIdeenWithStartposition.find((d) => d.idee.trim() === zielIdee);
 
-	if (!ziel) {
-		console.warn('Idee nicht gefunden:', zielIdee);
-		return;
-	}
+function highlightIdea(zielIdee, restoreFill = 'url(#ideeGradient)') {
+    const ziel = alleIdeen.find(d => d.id === zielIdee);
+    if (!ziel) return console.warn("Idee nicht gefunden:", zielIdee);
 
-	// zugehöriges SVG-Element selektieren
-	const rect = svg.selectAll('.idee').filter((d) => d === ziel);
+    const rect = svg.selectAll('.idee').filter(d => d === ziel);
+    if (rect.empty()) return console.warn("SVG-Element nicht gefunden:", zielIdee);
 
-	if (rect.empty()) {
-		console.warn('SVG-Element zur Idee nicht gefunden.');
-		return;
-	}
+    rect
+      .transition().duration(200).attr('stroke-width', 20)
+      .transition().duration(2000).attr('stroke', 'white').attr('fill', 'white')
+      .transition().delay(2000).duration(1000)
+      .attr('stroke-width', 0).attr('stroke', 'none').attr('fill', restoreFill);
+  }
 
-	// Highlight 1 Ideenrect
-	rect
 
-		.transition()
-		.duration(200)
-		.attr('stroke-width', 6)
-		.transition()
-		.duration(2000)
-		.attr('stroke', 'white')
-		.transition()
-		.delay(2000)
-		.duration(1000)
-		.attr('stroke-width', 0)
-		.attr('stroke', 'none');
-
-		
-}
 
 
 
@@ -324,7 +310,7 @@ function highlightIdea() {
 	async function ideenToIdeengeber() {
 		// Anzahl Ideen pro Ideengeber berechnen
 		const ideenProGeber = {};
-		alleIdeenWithStartposition.forEach((d) => {
+		alleIdeen.forEach((d) => {
 			if (!ideenProGeber[d.ideengeber]) ideenProGeber[d.ideengeber] = [];
 			ideenProGeber[d.ideengeber].push(d);
 		});
@@ -369,16 +355,20 @@ function highlightIdea() {
 			if (d.ideen_count === 3 || d.ideen_count === 4) {
 				const t = rect
 					.transition()
-					.duration(200)
-					.attr('stroke-width', 7)
-					.transition()
+					//.duration(200)
+					//.attr('stroke-width', 7)
+					//.transition()
 					.duration(2000)
-					.attr('stroke', 'white')
+					.attr('fill', 'white')
+					.attr('opacity', 0.8)
+					//.attr('stroke', 'white')
 					.transition()
 					.delay(2000)
-					.duration(2000)
-					.attr('stroke-width', 0)
-					.attr('stroke', 'none')
+					.duration(900)
+					.attr('fill', 'grey')
+					.attr('opacity', 1)
+					//.attr('stroke-width', 0)
+					//.attr('stroke', 'none')
 					.end();
 
 				transitions.push(t);
@@ -386,10 +376,10 @@ function highlightIdea() {
 				const t = rect
 					.transition()
 					.duration(2000)
-					.attr('opacity', 0.3)
+					.attr('opacity', 0.8)
 					.transition()
 					.delay(2000)
-					.duration(2000)
+					.duration(900)
 					.attr('opacity', 1)
 					.end();
 
@@ -405,7 +395,7 @@ function highlightIdea() {
 	}
 
 
-	function highlightMaxIdeas() {
+	/*/*function highlightMaxIdeas() {
 		const transitions = [];
 		svg.selectAll('rect.ideengeber').each(function (d) {
 			console.log(d.ideengeber, d.ideen_count);
@@ -424,10 +414,10 @@ function highlightIdea() {
 					.attr('stroke', 'white')
 					.transition()
 					.delay(2000)
-					.duration(300)
+					.duration(2000)
 					.attr('stroke-width', 0)
+					.attr('stroke', 'none')
 					.end();
-					
 				transitions.push(t);
 			} else {
 				const t = rect
@@ -436,7 +426,7 @@ function highlightIdea() {
 					.attr('opacity', 0.3)
 					.transition()
 					.delay(2000)
-					.duration(100)
+					.duration(2000)
 					.attr('opacity', 1)
 					.end();
 
@@ -448,66 +438,9 @@ function highlightIdea() {
 			signalNextStep();
 		});
 	}
+	*/
 
-	function highlightMaxIdeas2() {
-		setTimeout(() => {
-			svg.selectAll('rect.ideengeber').each(function (d) {
-				if (d.ideen_count === 39) {
-					animate(
-						this,
-						{
-							scale: [1, 1.25],
-							stroke: ['#dbd5e0', '#aa98b8', '#8024c7'],
-							strokeWidth: [0, 3, 1]
-						},
-						{
-							duration: 1,
-							easing: 'back-out'
-						}
-					).finished.then(() => {
-						setTimeout(() => {
-							animate(
-								this,
-								{
-									scale: [1.25, 1]
-								},
-								{
-									duration: 0.5,
-									easing: 'ease-out'
-								}
-							);
-						}, 2500);
-					});
-				} else {
-					animate(
-						this,
-						{
-							opacity: [1, 0.3]
-						},
-						{
-							duration: 0.2,
-							easing: 'ease-out'
-						}
-					).finished.then(() => {
-						setTimeout(() => {
-							animate(
-								this,
-								{
-									opacity: [0.3, 1]
-								},
-								{
-									duration: 0.2,
-									easing: 'ease-out'
-								}
-							);
-						}, 2500);
-					});
-				}
-			});
 
-			signalNextStep();
-		}, 5000);
-	}
 
 	function colorIdeas() {
 		svg.selectAll('rect.idee').each(function (d, i) {
@@ -527,7 +460,7 @@ function highlightIdea() {
 			);
 		});
 
-		setTimeout(signalNextStep, alleIdeen.length * 10 + 1400);
+		//setTimeout(signalNextStep, alleIdeen.length * 10 + 1400);
 	}
 
 	function ideasToBarChart() {
@@ -578,15 +511,14 @@ function highlightIdea() {
 	//Bar Chart Vorbereitung
 
 	const barChartX = svgWidth * 0.1; // vorher: 280
-	const barChartY = svgHeight * 0.1; // vorher: 350
+	const barChartY = svgHeight * 0.15; // vorher: 350
 	const barHeight = svgHeight * 0.03;
 	const barSpacing = svgHeight * 0.04; // etwas größer für Abstand
 	const hSpacing = svgWidth * 0.025; // vorher: 47
 	const vSpacing = svgWidth * 0.025; // vorher: 47
 	const rectSizeBar = svgWidth * 0.02; // Rechteckgröße
 	const labelOffset = barChartX * 0.2;
-	console.log('barChartX:', barChartX);
-	console.log('labelOffset:', labelOffset);
+	//console.log('labelOffset:', labelOffset);
 	//console.log("x", barChartX - labelOffset)
 	//Für die Linien
 	const barChartHeight = catCount.length * (barHeight + barSpacing);
@@ -638,8 +570,8 @@ function highlightIdea() {
 			.join('text')
 			.attr('class', 'bar-label')
 			.attr('x', barChartX - labelOffset)
-			.attr('y', (d, i) => barChartY + i * (barHeight + barSpacing) - 5)
-			.attr('font-size', svgWidth * 0.025)
+			.attr('y', (d, i) => barChartY + i * (barHeight + barSpacing) - 7)
+			.attr('font-size', svgWidth * 0.027)
 			.attr('fill', 'white')
 			.attr('font-family', 'Inter, sans-serif')
 			.text((d) => d.kategorie)
@@ -675,7 +607,7 @@ function highlightIdea() {
 			.attr('y', barChartY - barSpacing)
 			//.attr("transform", `rotate(-90, ${startX - padding}, ${padding * 15 })`)
 			//.attr("text-anchor", "middle")
-			.text(`Ideen in ${catCount.length} Kategorien gepackt `)
+			.text(`Ideen in Kategorien gepackt `) //${catCount.length}
 			.attr('font-size', svgWidth * 0.05)
 			.attr('font-weight', 'bold')
 			.attr('fill', 'white')
@@ -747,22 +679,22 @@ function highlightIdea() {
 		svg
 			.selectAll('.bar-label, .bar-count, .bar-line-top, .bar-line-left, .annotation-barChart')
 			.transition()
-			.delay(1000)
 			.duration(2000)
 			.attr('opacity', 0)
 			.remove();
 
 		arrangeRectsVerticallyLeft();
 
-		setTimeout(() => {
-			signalNextStep();
-		}, 4000);
+		//setTimeout(() => {
+		//	signalNextStep();
+//}, 4000);
 	}
 
 	function arrangeRectsVerticallyLeft() {
 		const total = svg.selectAll('.idee').size();
+		const paddingLeft = 200;
 		const padding = 20;
-		const availableHeight = svgHeight - padding * 2;
+		const availableHeight = svgHeight - padding * 4;
 		const rectSize = 9;
 		//vertikeler Abstand zwischen Rects, damit alle reinpassen
 		const vSpacing = (availableHeight - rectSize * total) / (total - 1);
@@ -770,30 +702,24 @@ function highlightIdea() {
 		svg
 			.selectAll('.idee')
 			.transition()
-			.duration(1400)
-			.delay((d, i) => i * 20)
-			.attr('x', padding)
+			.duration(1000)
+			.delay((d, i) => i * 15)
+			.attr('x', paddingLeft)
 			.attr('y', (d, i) => padding + i * (rectSize + vSpacing))
 			.attr('width', rectSize)
 			.attr('height', rectSize)
 
 			.transition()
-			.delay(700)
-			.duration(400)
-			.attr('fill', 'white');
+			.delay(500)
+			.duration(250)
+			.attr('fill', '#dbc5c1');
 	}
 
-	$: if (phase === 1) {
-		drawIdeas();
-		setTimeout(() => {
-			 
-			signalNextStep();
-			
-		},5000)
-	}
 
-	$: if (phase === 4) {
-		highlightIdea(); 
+
+
+$: if (phase === 1) {
+	drawIdeas();
 
 		setTimeout(() => {
 			signalNextStep();
@@ -801,33 +727,64 @@ function highlightIdea() {
 		
 	}	
 
-	$: if (phase === 5) {
+$: if (phase === 3) {
+    highlightIdea(164);
+    setTimeout(() => signalNextStep(), 4000);
+  }
+	
+  // Highlight für Phase 5
+  $: if (phase === 4) {
+	highlightIdea(198);
+    setTimeout(() => signalNextStep(), 3500);
+  }
+
+  // Highlight für Phase 6
+  $: if (phase === 5) {
+     highlightIdea(268);
+
+    setTimeout(() => signalNextStep(), 3500);
+  }
+
+
+	$: if (phase === 6) {
 		drawIdeengeber(); //Ideengeber tauchen auf
 	}
 
 
-	$: if (phase === 6) {
+	$: if (phase === 8) {
 		//setTimeout(() => {
 			highlightAverageIdeas(); // Hightlight average nr. of ideas
 		//}, 3500);
 	}
 
-	$: if (phase === 7) {
+	/*$: if (phase === 11) {
 		highlightMaxIdeas(); // 38 Ideen hervorheben
 	}
+	*/
 
 	$: if (phase === 9) {
 		setTimeout(() => {
 			colorIdeas(); // Ideen werden eingefärbt
-
+		setTimeout(signalNextStep, 3500);
 		},1000);
 	}
 
-	$: if (phase === 10) {
+	$: if (phase === 12) {
 		ideasToBarChart(); // Ideen fliegen in ihre Kategorie-Bar
 	}
 
-	$: if (phase === 13) {
-		hideBarChart(); // Bar Chart transformiert zu vertikaler Grid
+	$: if (phase === 14) {
+		highlightIdea(164, '#8dd3c7');
+		setTimeout(signalNextStep, 3500); 
+		}
+
+
+	$: if (phase === 15) {
+		hideBarChart(); 
+		setTimeout(signalNextStep, 3500); 
+
 	}
+
+	
+	
 </script>

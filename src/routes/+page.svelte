@@ -1,4 +1,5 @@
 <script>
+	// @ts-nocheck
 	import { onMount } from 'svelte'; // store für Kommunikation
 	//import Ideen2Ideengeber from "../components/Ideen2Ideengeber.svelte";
 	import DataStory from '../components/DataStory.svelte';
@@ -7,13 +8,19 @@
 	import * as d3 from 'd3-scale-chromatic';
 	import { writable } from 'svelte/store';
 	import { scaleOrdinal } from 'd3';
+	import { base } from '$app/paths';
+
 
 	let allData = [];
+	let sankeyData = [];
 	let catCount = [];
 	let farbSkala;
 
 	onMount(async () => {
-		const res = await fetch('/ideengeber_data.json');
+		const test = await fetch(`${base}/sankey.json`);
+		sankeyData = await test.json();
+
+		const res = await fetch(`${base}/ideengeber_data.json`);
 		allData = await res.json();
 		//Den Fall "null" als Kategorie "ohne Kategorie" umwandeln und Kategorie = K.A.auch in die Kategorie "ohne Kategorie" umwandeln
 		// @ts-ignore
@@ -58,7 +65,7 @@
 <main>
 	{#if allData.length > 0}
 		<Layout>
-			<DataStory {allData} {catCount} {farbSkala} />
+			<DataStory {allData} {catCount} {farbSkala} {sankeyData}/>
 		</Layout>
 	{:else}
 		<p>Lade Daten...</p>

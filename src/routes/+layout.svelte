@@ -12,4 +12,7 @@
 		--font-main: 'Inter', sans-serif;
 		/* --text-scaling: clamp(6rem, 8vw, 16rem);  Standard für alle Texte, Clamp macht min und max f. schriftgröße */
 	}
+
+
+	
 </style>

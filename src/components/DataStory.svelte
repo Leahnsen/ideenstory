@@ -2,6 +2,8 @@
 	// @ts-nocheck
 	import Ideen2Ideengeber from './Ideen2Ideengeber.svelte';
 	import Texte from './Texte.svelte';
+	import AnnotationSankey from './AnnotationSankey.svelte';
+	import EndAnimation from './EndAnimation.svelte';
 	//import Annotations from './Annotations.svelte';
 	import { json } from 'd3-fetch';
 	import { onMount } from 'svelte';
@@ -11,10 +13,13 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import * as d3 from 'd3-scale-chromatic';
 	import { color } from 'd3';
+	import { base } from '$app/paths';
+
 
 	// Props
 	export let allData = [];
 	export let catCount = [];
+	export let sankeyData = [];
 	export let farbSkala;
 	let phaseLock = false;
 	let combinedAnnotations = [];
@@ -33,6 +38,18 @@
 	let svgWidth;
 	let svgHeight;
 
+
+
+//console.log("SankeyData", sankeyData);
+  // z.B. zieh dir hier schon die Sets:
+  const ideenSet   = new Set(sankeyData.map(d=>d.idee).filter(x => Boolean(x)));
+  const sketchSet  = new Set(sankeyData.map(d=>d.projektskizze).filter(s => s && !s.toLowerCase().includes('keine')));
+  const projectSet = new Set(sankeyData.map(d=>d.umsetzungsprojekt).filter(s => s && !s.toLowerCase().includes('keine')));
+
+
+
+
+
 	onMount(() => {
 		function handleResize() {
 			svgWidth = window.innerWidth * 0.9;
@@ -47,36 +64,115 @@
 
 	// Liste von Story-Schritten mit passenden Texten
 	const storySteps = [
-		//0 
-		"<strong class='text-smblue'> Am Anfang waren Ideen. </strong> Smart City Bamberg startete im Jahr 2021 mit einer Ideensammlung für ein smartes Bamberg.",
-		//1
-		"Alle Bürger:innen konnten sich beteiligen und Probleme einreichen, die sie in Bamberg identifiziert hatten.",
-		//2
-		"Jede Idee ist als <strong> Quadrat </strong>dargestellt.",
-		//3
-		"Insgesamt wurden <strong> 268 </strong> Ideen abgegeben.",
-		//4
-		"Hinter diesem Quadrat steckt zum Beispiel: <dl class='space-y-2'><div><dt class='font-bold'>Idee:</dt><dd class='opacity-60'> Digitale Obstkarte zum Ernten</dd></div><div><dt class='font-bold'>Problem:</dt><dd class='opacity-60'>Es gibt viele öffentliche, aber auch private Obstbäume, die selten oder kaum geleert werden. Das ganze Obst fällt auf den Boden, wird faul und ist nicht mehr genießbar. </dd></div><div><dt class='font-bold'>Lösung:</dt><dd class='opacity-60'>Eine digitale Karte, auf der die Stellen verzeichnet sind, an denen in Bamberg Obst gepflückt werden darf und Beete der essbaren Stadt stehen.</dd></div></dl>",
-		//5
-		'<strong> 79 Menschen und Organisationen</strong> haben diese Ideen eingereicht.',
-		//6
-		"Im Schnitt reichten Bürger:innen <strong> 3,5 </strong> Ideen ein.",
-		//7
-		'Ein paar wenige sprudelten nur so vor Verbesserungsorschlägen: Hier gab jemand 39 Ideen an, die Bamberg zu einer smarteren Stadt machen könnten.',
-		//8
-		"Dahinter steckten verschiedene Themen, hier ein paar Beispiele:  <ul class='list-disc pl-5 space-y-1'><li class='opacity-60'> Zu hohe Wohnpreise</li><li class='opacity-60'>Warme Küche in Schulen/Kantinen und gesünder</li><li class='opacity-60'>Kotbeutelstationen</li></ul>", 
-		//9
-		'Apropos unterschiedliche Ideen - Smart City hat die Ideen kategorisiert nach Themengebieten.',
-		//10
-		"<strong class='text-hellgrün'>Grün</strong> sticht am meisten ins Auge: Dahinter stecken Ideen, die unter <strong class='text-hellgrün'>\"Serviceleistungen der Stadt\"</strong> fallen",
-		//11
-		"<span class='underline decoration-5 decoration-hellgrün'>66 Ideen gab es dazu.</span>",
-		//12
-		'<span class=\'underline decoration-5 decoration-hellgrün\'>\Wie zum Beispiel eine "Bürgerbeteiligungs-App"</span> und die Vision des <span class=\'underline decoration-5 decoration-hellgrün\'>"Aufbaus von geobasierten Digitalen Zwillingen".</span>',
-		'<span class=\'underline decoration-5 decoration-hellgrün\'>\Wie zum Beispiel eine "Bürgerbeteiligungs-App"</span> und die Vision des <span class=\'underline decoration-5 decoration-hellgrün\'>"Aufbaus von geobasierten Digitalen Zwillingen".</span>',
+		 
+		{
+			text:"<strong class='text-smblue'> Am Anfang waren Ideen. </strong> Smart City Bamberg startete im Jahr 2021 mit einer Ideensammlung für ein smartes Bamberg. Jede:r konnte teilnehmen.", 
+			image:"/icons/idee.png",
+			showPhase: 1,
+			top: "20vh", 
+			left: "20vw"
+		},
+		
+		{	
+			text:`Insgesamt wurden <strong> ${ideenSet.size}</strong> Ideen abgegeben.`,
+			image: null,
+			showPhase: 2,
+			top: "39vh", 
+			left: "45vw"
+		},
+
+		{
+			text:"Hinter diesem Quadrat steckt zum Beispiel: <dl class='space-y-2'><div><dt class='font-bold'>Idee:</dt><dd class='opacity-60'> Digitale Obstkarte zum Ernten</dd></div></dl>",
+			image: "/icons/hier-jetzt.png",
+			showPhase: 3,
+			top: "10vh", 
+			left: "37vw"
+		},
+
+		{
+			text:"<dl class='space-y-2'><div><dt class='font-bold'>Idee:</dt><dd class='opacity-60'> Eine Website mit Veranstaltungen für Kinder</dd></div> </dl>",
+			image: "/icons/teilhaben-ferienportal.svg",
+			showPhase: 4,
+			top: "40vh", 
+			left: "40vw"
+		},
+		
+		{
+			text:"Und hier eher was für Erwachsene: <dl class='space-y-2'><div><dt class='font-bold'>Idee:</dt><dd class='opacity-60'> Digitale Verleihplattform & Nachbarschaften verbinden</dd></div> </dl>",
+			image: "/icons/teilhaben-raum-materiallotse.svg",
+			showPhase: 5,
+			top: "6vh", 
+			left: "37vw"
+		},
+		
+		{
+			text:'<strong> 76 Menschen und Organisationen</strong> haben diese Ideen eingereicht.',
+			showPhase: 7,
+			top: "25vh", 
+			left: "55vw"
+		},
+		
+		{
+			text:"Im Schnitt kamen von Teilnehmenden <strong> 3,5 </strong> Ideen.",
+			image: null,
+			showPhase: 8,
+			top: "20vh", 
+			left: "55vw"
+		},
+		
+		{
+			text:'Die Ideen zielten auf verschiedene Themengebiete ab.',
+			image: null,
+			showPhase: 9,
+			top: "35vh", 
+			left: "60vw"
+		},
+
+		{
+			text:"Für welches Themengebiet gab es wohl am meisten Ideen zur Verbesserung?",
+			image: null,
+			showPhase: 10,
+			top: "5vh", 
+			left: "60vw"
+		},
+
+		{
+			text:"<strong class='text-orange'>Orange!</strong>",
+			image: null,
+			showPhase: 11,
+			top: "35vh", 
+			left: "62vw"
+		},
+		
+		{
+			text:"<strong class='text-orange'>Orange</strong> stehr für smartere <strong class='text-orange'>\'Serviceleistungen in der Stadt\'</strong>.",
+			image: null,
+			showPhase: 13,
+			top: "1vh", 
+			left: "55vw"
+		},
+		
+		{ 
+			text:"Die <strong>digitale Obstkarte</strong> von vorhin fällt unter <strong class='text-türkis'>\'Umwelt\'</strong>.",
+			image: "/icons/hier-jetzt.png",
+			showPhase: 14,
+			top: "38vh", 
+			left: "50vw"
+		},
+		//{ text:'<span class=\'underline decoration-5 decoration-hellgrün\'>\Wie zum Beispiel eine "Bürgerbeteiligungs-App"</span> und die Vision des <span class=\'underline decoration-5 decoration-hellgrün\'>"Aufbaus von geobasierten Digitalen Zwillingen".</span>',	image: null},
 
 
 	];
+	
+
+
+
+  // reaktives Ableiten des aktuellen Story-Index
+  //$: storyIndex = phaseTextMap[$phase] ?? null;
+  //$: storyIndex = phaseTextMap[$phase] ?? null;
+  // hier holen wir uns das Objekt oder ein Default:
+  //$: currentItem = storyIndex !== null
+   //// : { text: "", image: null };
 
 	function handlePhaseEnd() {
 		if (phaseLock) return; // Verhindert doppelte Aufrufe innerhalb einer Phase
@@ -90,43 +186,14 @@
 		}, 2000);
 	}
 
-	$: {
-		if (
-			$phase === 1 ||
-			$phase === 2 ||
-			$phase === 4 ||
-			$phase === 13 
-		) {
-			phaseTop = '20vh';
-			phaseLeft = '20vw';
-		} else if ($phase === 8 || $phase === 9 || $phase === 10 || $phase === 11) {
-			phaseTop = '35vh';
-			phaseLeft = '50vw';
-    } else if ($phase === 0) {
-      phaseTop = '20vh';
-			phaseLeft = '30vw';
-		} else if ($phase === 3) {
-			phaseTop = '35vh';
-			phaseLeft = '40vw';
-    } else if ( $phase === 5 || $phase === 7 || $phase === 6){
-			phaseTop = '20vh';
-			phaseLeft = '60vw';
-
-    } else if ($phase === 8) {
-      phaseTop = '10vh';
-      phaseLeft = '60vw';
-		} else {
-			phaseTop = '30vh';
-			phaseLeft = '50vw';
-		}
-	}
-
-	$: if ($phase < storySteps.length) {
-		console.log('phase', $phase, storySteps.length);
+	
+	$: if ($phase <16) {
+		//console.log('phase', $phase, storySteps.length);
 		// Timer nur für Textphasen starten (keine D3 Animation vorhanden)
-	if (![1, 4, 5, 6, 7, 9, 10, 13].includes($phase)) {
-		console.log('phase', $phase);
-	setTimeout(handlePhaseEnd, 4500);
+	if (![1, 3, 4, 5, 6, 8, 9, 12, 14,15].includes($phase)) {
+	
+		//console.log('phaseBEDINGUNG POSITIV', $phase);
+	setTimeout(handlePhaseEnd, 5000);
 }
 
 		
@@ -138,132 +205,111 @@
 	//Story/Anmiationsmanager für Sankey
 
 	const storyStepsSankey = [
-		{//0
-			text: 'Was kam nach den Ideen?<br> Das sehen wir uns jetzt an.',
-			top: '15vh',
-			left: '10vw'
-		},
 		{
-			text: 'Das Team von Smart City entschied über deren Weiterentwicklung: <br> Welche Ideen können ausgebaut werden? Welche nicht?',
-			top: '20vh',
-			left: '20vw'
-		},
-		{//2 to Projektskizzen start
-			text: 'Dabei wurden oft mehrere Ideen zu einem Projekt zusammengefasst. <br>So entstanden <strong>40 Projektskizzen.</strong>',
-			top: '25vh',
-			left: '50vw'
+			showPhase: 1,
+			text: '<strong>Was wurde aus den Ideen?</strong><br> Das sehen wir uns jetzt an.',
+			top: '35vh',
+			left: '40vw'
 		},
 
+		{
+			//  Ideen Highlight ersten 3 Ideen
+			showPhase: 5,
+			text: "Ähnliche Ideen wurden in gemeinsame Skizzen gebündelt. Das sieht man an den Knoten, auf die oft mehrere Ideen zulaufen.",
+			top: '50vh',
+			left: '55vw'
+		},
+
+		{
+			showPhase: null,
+			text: "So wurden aus 65 Ideen 27 Skizzen.",
+			top: '35vh',
+			left: '50vw'
+		},
+	
 		{//3 Label keine Projektskizze
-			text: '<strong>203 Ideen</strong> wurden nicht weiterverfolgt, es gab keine Projektskizze.',
-			top: '15vh',
-			left: '59vw'
-		},
-
-		{//4
-			text: 'Das sieht nach viel aus. Bedeutet aber auch, dass <strong>65 Ideen</strong> aus der Bevölkerung in die nächste Phase genommen wurden.',
-			top: '60vh',
+			showPhase: 6,
+			text: '<strong>180 Ideen</strong> wurden nicht weiterverfolgt. Warum nicht?',
+			top: '37vh',
 			left: '50vw'
 		},
-		
-		{//5
-			text: 'Wenn Ideen auf Eis gelegt wurden, hatte das häufig den Hintergrund, dass sie nicht zu den Smart City Kriterien passten.',
-			top: '25vh',
-			left: '65vw'
-		},
+
 		{//6 Highlight Idee === Outdoorgyms + Label Outdoorgyms
-			text: '<strong>Outdoorgyms</strong> - das klingt für alle sinnvoll und fehlt in Bamberg.' ,
-			top: '25vh',
-			left: '70vw'
+			showPhase: 8,
+			text: 'Ein Beispiel: <strong>Fitnessgeräte im Freien</strong> - das klingt sinnvoll, das gibt es in Bamberg nur am Volkspark.' ,
+			image: "/icons/outdoorgyms.png",
+			top: '13vh',
+			left: '55vw'
 		},
 
 
 		{//7 Highlight Idee === Outdoorgyms + Label Outdoorgyms
-			text: 'Nichtsdestotrotz gab es dafür keine Projektskizze - denn bei Smart City geht es um digitale Ideen. Digital sind die Outdoorgyms aber nicht.',
-			top: '25vh',
-			left: '65vw'
-		},
-	
-		{//8
-			text: `2023 wurden die Projektskizzen nochmal weiter zusammengefasst. In <strong>4</strong> unterschiedliche Maßnahmen`, 
+			showPhase: 9,
+			text: 'Aber bei Smart City geht es um digitale Ideen. Daher hat man die Idee nicht weiterverfolgt.',
+			image: "/icons/outdoorgyms.png",
 			top: '10vh',
-			left: '60vw'
-		},
-		{//9  to Maßnahmen + Labels showMaßnahmen 
-			text: ` 
-				<span class="underline decoration-[#2b7ab7] decoration-8 text-white">Informieren</span>, 
-				<span class="underline decoration-[#883582] decoration-8 text-white">Teilhaben</span>
-				<span class="underline decoration-[#1c9741] decoration-8 text-white">Bewahren</span> und
-				<span class="underline decoration-[#e73e20] decoration-8 text-white">Bewegen</span>.`,
-
-			top: '15vh',
 			left: '55vw'
 		},
 
-	
 		{
-		//10 vs 11 in Phasensteuerung Umsetzung start
-			text: 'Jetzt kommen wir in der Gegenwart an.',
-			top: '15vh',
+			showPhase: 10,
+			text: 'Im Projekt <strong> Hier & Jetzt</strong> finden wir unsere Ideen von vorhin wieder und befinden sich gerade in der Umsetzung.',
+			image: "/icons/hier-jetzt.png",
+			top: '35vh',
+			left: '50vw'
+		},
+		{
+			
+			showPhase: 11,
+			text: '<strong>Hier & Jetzt</strong> wird eine Online-Karte für Bamberg. Sie zeigt bspw. barrierefreie Orte, Plätze für Familien, Veranstaltungen, Obstwiesen, Orte für die Jugend.',
+			image: "/icons/hier-jetzt.png",
+			top: '35vh',
 			left: '55vw'
 		},
 
-		{//11
-			text: 'Bis heute sind <strong>15 Projekte</strong> in die Praxisphase gestartet. Abgeschlossen ist noch keines.',
-			top: '5vh',	
-			left: '55vw'
+		{
+			showPhase: 12,
+			text: 'Wenn <strong>Hier & Jetzt</strong> abgeschlossen ist, kann man auf einer Karte sehen, was in der Nähe geboten wird, basierend auf lokalem Bamberger:innen Wissensschatz.',
+			image: "/icons/hier-jetzt.png",
+			top: '20vh',
+			left: '50vw'
+		},
+
+		{
+			showPhase: 13,
+			text: 'Bis heute sind <strong>20 Projekte</strong> in die Umsetzung gestartet.',
+			top: '25vh',	
+			left: '50vw'
 		
 		},
-			//12 Hier & Jetzt Node anzeigen, Label
-		{	text: 'Eines der Projekte heißt <strong>"Hier & Jetzt"</strong>. ',
-			top: '60vh',
-			left: '55vw'
-		},
-		{
-			//13 hier & jetzt beschreiben
-			text: '<strong>Hier & Jetzt</strong> wird eine Online-Karte für Bamberg. Sie zeigt bspw. barrierefreie Orte, Plätze für Familien, Veranstaltungen, Obstwiesen, Orte für die Jugend.',
-			top: '56vh',
-			left: '55vw'
-		},
 
-		{
-			//14  Ideen Highlight ersten 3 Ideen
-			text: "<strong>3 Ideen</strong> lieferten die Basis von Hier & Jetzt: <ul class='list-disc pl-5 space-y-1'><li class='opacity-60'> Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen</li><li class='opacity-60'>Digitale Obstkarte zum Ernten</li><li class='opacity-60'>Digitale Verleihplattform </li></ul>", 
-			top: '40vh',
-			left: '15vw'
-		},
-
-		{ //15 nach Projektskizzen link //2. Phase highlight
-			text: 'Dann wurden die Ideen zunächst getrennt weiterentwickelt. Eine <stron>regionale Lebensmittelplattform</strong> stand im Raum. Und die Enticklung eines <strong>Raum- und Materiallotsen</strong>.',
-			top: '1vh',
+				{
+			showPhase: 13,
+			text: 'Bald kann man sie in Bamberg erleben.',
+			top: '25vh',	
 			left: '50vw'
+		
 		},
-
- 
-		{
-			// 16 Ideen Highlight zu Maßnahmen & Labels der Maßnahmen zeigen
-			text: `Hier & Jetzt zahlt auf <span class="underline decoration-[#e73e20] decoration-8 text-white">Bewegen</span>. und
-					<span class="underline decoration-[#883582] decoration-8 text-white">Teilhaben</span>`, 
-			top: '10vh',
-			left: '55vw'
-		},
-
-		{
-			// 17drawto Umsetzung start
-			text: 'Wenn <strong>Hier & Jetzt</strong> abgeschlossen ist,  soll man ausgehend vom eigenen Standort kann man direkt auf einer Karte sehen, was in der Nähe geboten wird - und zwar jenseits von Google Maps Wissen, basierend auf lokalem Bamberger:innen Wissensschatz.',
-			top: '1vh',
-			left: '50vw'
-		},
-
 
 	];
 
+	// Triggert nur, wenn es neuen Text gibt. 
+	$: currentSankeyStep = storyStepsSankey.find(s => s.showPhase === $phaseSankey) ?? null;
+	//$: console.log('currentSankeyStep', currentSankeyStep);
+	$: currentIdeengeberStep = storySteps.find(s => s.showPhase === $phase) ?? null;
+
+
+$: console.log('phaseSankey ist jetzt', $phaseSankey);
+$: console.log('phaseIDeen ist jetzt', $phase);
+
+
 		//const storyDelays = [5000, 5000, 7000, 4000, 6000, 8000, 5000, 6000, 5000];
-	$: if ($phase === storySteps.length && $phaseSankey <= storyStepsSankey.length){
-				console.log("phaseSankey", $phaseSankey);
-				setTimeout(handleSankeyPhaseEnd, 4500);
-			}
-		
+$: if ($phase === 16 
+    && $phaseSankey <= 16  
+    && ![2,3,4,5, 6, 7,9,10,13, 14, 15].includes($phaseSankey)) {
+  setTimeout(handleSankeyPhaseEnd, 4500);
+}
+
 
 	let phaseLock2 = false;
 
@@ -290,23 +336,18 @@
 	{
 		stage: 'Idee',
 		showPhase: 1,
-		text: '<strong>2021:<br>Ideen</strong>'
+		text: '<strong>2021: Ideen</strong>'
 	},
 	{
 		stage: 'Projektskizze',
-		showPhase: 3,
-		text: '<strong>2022:<br>Projektskizzen</strong>',
+		showPhase: 2,
+		text: '<strong>2022: Skizzen</strong>',
 
 	},
 	{
-		stage: 'Maßnahme',
-		showPhase: 9,
-		text: '<strong>2023:<br>Maßnahmen</strong>'
-	},
-	{
 		stage: 'Umsetzungsprojekt',
-		showPhase: 11,
-		text: '<strong>Seit 2024:<br>Umsetzung</strong>'
+		showPhase: 14,
+		text: '<strong>2025: Umsetzung</strong>'
 	},
 
 	];
@@ -324,7 +365,7 @@
 				class="svg-container overflow-visible"
 			>
 				{#if svgContainer}
-					{#if $phase <= 13}
+					{#if $phase <= 16}
 						<Ideen2Ideengeber
 							container={svgContainer}
 							{svgHeight}
@@ -337,11 +378,10 @@
 						/>
 					{/if}
 
-					{#if $phaseSankey <= 19}
+					{#if $phaseSankey <= 16}
 						<Sankey
 							container={svgContainer}
 							{allData}
-							{farbSkala}
 							phaseSankey={$phaseSankey}
 							{svgHeight}
 							{svgWidth}
@@ -351,34 +391,60 @@
 
 						/>
 					{/if}
+
+					{#if $phaseSankey >16}
+						<EndAnimation 
+							container={svgContainer}
+							{ideenSet}
+							{sketchSet}
+							{projectSet}
+							{svgHeight}
+							{svgWidth}
+							on:finished={() => {
+								phase.set(0);
+								phaseSankey.set(0);
+								}}
+						/>
+					{/if}
 				{/if}
 			</svg>
 		{/if}
 
 		<!-- Texte als Overlay außerhalb des SVG -->
-		{#if $phase < storySteps.length}
-			{#key $phase}
+			{#if currentIdeengeberStep}
+			{#key currentIdeengeberStep.showPhase}
 				<Texte
-					text={storySteps[$phase]}
-					top={phaseTop}
-					left={phaseLeft}
+				text={currentIdeengeberStep.text}
+				image={currentIdeengeberStep.image}
+				top={currentIdeengeberStep.top}
+				left={currentIdeengeberStep.left}
 				/>
+			{/key}
+			{/if}
+
+		{#if $phase === 16 && $phaseSankey <17}
+			<AnnotationSankey
+				annotations={combinedAnnotations}
+				phase={$phaseSankey}
+			/>
+		{/if}
+
+<!-- currentSankeyStep nur vorhanden, wenn es einen Text gibt	 -->
+		{#if $phase === 16 && currentSankeyStep}
+			{#key currentSankeyStep.showPhase}
+				<!--{#if storyStepsSankey[$phaseSankey]}-->
+					<Texte
+						text={currentSankeyStep.text}
+						top={currentSankeyStep.top}
+						left={currentSankeyStep.left}
+						image={currentSankeyStep.image}
+						phase= {$phaseSankey}
+					/>
+				<!--{/if}-->
 			{/key}
 		{/if}
 
-		{#if $phase === storySteps.length && $phaseSankey <= 18}
-			{#key $phaseSankey}
-				{#if storyStepsSankey[$phaseSankey]}
-					<Texte
-						text={storyStepsSankey[$phaseSankey].text}
-						top={storyStepsSankey[$phaseSankey].top}
-						left={storyStepsSankey[$phaseSankey].left}
-						annotations={combinedAnnotations}
-						phase= {$phaseSankey}
-					/>
-				{/if}
-				
-			{/key}
-		{/if}
+
+
 	</div>
 </main>

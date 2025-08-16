@@ -2,7 +2,7 @@
 	// @ts-nocheck
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { json } from 'd3-fetch';
-	import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
+	import { sankey, sankeyLinkHorizontal, sankeyCenter, sankeyLeft } from 'd3-sankey';
 	import { scaleOrdinal } from 'd3-scale';
 	import { get } from 'svelte/store';
 	import { writable } from 'svelte/store';
@@ -10,11 +10,15 @@
 	import { select } from 'd3-selection';
 	import { easeLinear, easeCubicIn } from 'd3-ease';
 	import { draw, fade, slide } from 'svelte/transition';
-	import { bin, reduce } from 'd3';
+	import { bin, reduce,scaleLinear, max } from 'd3';
 	import { tick } from 'svelte';
+	import EndAnimation from './EndAnimation.svelte';
+	import {fly,blur} from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { base } from '$app/paths';
+
 	//import Annotations from './Annotations.svelte';
 
-	export let farbSkala;
 	export let allData;
 	export let phaseSankey;
 	export let container;
@@ -29,9 +33,11 @@
 	//let height= 3400;
 	let sankeyGenerator;
 	// vier Stationen definieren
-	const stages = ['Idee', 'Projektskizze', 'Maßnahme', 'Umsetzungsprojekt'];
+	const stages = ['Idee', 'Projektskizze', 'Umsetzungsprojekt'];
 
 	export let sankeyNodeMap = {};
+	let umsetzungIndex = new Map();
+
 
 	$: if (sankeyDataReady) {
 		sankeyNodeMap = {};
@@ -42,48 +48,27 @@
 		});
 	}
 
-	//Vorverarbeitung für die Farbkategorien
 
-	function getcolorForIdea(idee) {
-		let ideeEintrag = allData.find((d) => d.idee === idee);
-		//console.log(` Farbe für Idee "${idee}":`, ideeEintrag?.kategorie, "→", farbSkala(ideeEintrag?.kategorie));
-		return ideeEintrag ? farbSkala(ideeEintrag.kategorie) : '#888';
-	}
 
-	// Einzelne Idee hervorheben
-	let activeIdea = null; //  Speichert die aktuell hervorgehobene Idee
+$: if (sankeyDataReady) {
+  const list = sankeyDataReady.nodes
+    .filter(n => n.stage === 'Umsetzungsprojekt')
+    .sort((a,b) => (a.y0 - b.y0) || (a.x0 - b.x0)); // vertikal sortieren, dann links/rechts
 
-	function highlightIdea(ideaName) {
-		activeIdea = ideaName;
-	}
+  // Name → Reihenindex
+  umsetzungIndex = new Map(list.map((n,i) => [norm(n.name), i]));
+  console.log('umsetzungIndex', umsetzungIndex);
+}
 
 
 
-	function isPartOfHighlightedPath(node) {
-		return activeIdea && node.originalIdea === activeIdea;
-	}
-
-	function isLinkHighlighted(link) {
-		return activeIdea && link.source.originalIdea === activeIdea;
-	}
-
-	function getColorForMeasure(measure) {
-		if (!measure || measure.includes('Keine Maßnahme')) return '#888'; // Grau für "Keine Maßnahme"
-
-		const measureColors = {
-			Bewegen: '#e73e20',
-			Informieren: '#2b7ab7',
-			Teilhaben: '#883582',
-			Bewahren: '#1c9741'
-		};
-
-		return measureColors[measure];
-	}
 
 	onMount(async () => {
 		const svg = select(container);
 
-		rawData = await json('/sankey.json');
+		
+
+		rawData = await json(`${base}/sankey.json`);
 
 		// Mapping von Ideen zu Kategorien erstellen
 		let ideaToCategory = {};
@@ -131,8 +116,8 @@
 			rawData.forEach((record) => {
 				let value;
 				if (i === 0) value = record.projektskizze;
-				else if (i === 1) value = record.maßnahme;
-				else if (i === 2) value = record.umsetzungsprojekt;
+				//else if (i === 1) value = record.maßnahme;
+				else if (i === 1) value = record.umsetzungsprojekt;
 				if (value !== undefined && value !== null && value !== '') {
 					values.add(value);
 				}
@@ -157,7 +142,7 @@
 		// Erstelle Links: Jeder Datensatz erzeugt einen Fluss von Station zu Station.
 		// Dabei wird im Übergang in die nächste Station geprüft, ob das Feld mehrere Werte enthält.
 		function splitValue(val, stage) {
-			if (stage === 'Maßnahme' || (stage === 'Umsetzungsprojekt' && val.includes(','))) {
+			if ((stage === 'Umsetzungsprojekt' && val.includes(','))) {
 				let parts = val.split(',').map((s) => s.trim()); // wenn Maßnahme, dann kommaseparierte Werte
 				return parts;
 			}
@@ -170,7 +155,7 @@
 			let flow = [
 				{ stage: 'Idee', value: record.idee },
 				{ stage: 'Projektskizze', value: record.projektskizze },
-				{ stage: 'Maßnahme', value: record.maßnahme },
+				//{ stage: 'Maßnahme', value: record.maßnahme },
 				{ stage: 'Umsetzungsprojekt', value: record.umsetzungsprojekt }
 			];
 
@@ -232,25 +217,35 @@
 		sankeyDataReadyToUse();
 	});
 
+
 	function createSankeyGenerator() {
 		return sankey()
 			.nodeWidth(nodeWidth) //horizontal space between nodes
-			.nodePadding(nodePadding) //vertical space between nodes
+			.nodePadding(nodePadding) //vertical space between nodes#
+			
+			.nodeAlign(sankeyLeft)
 			.extent([
 				//overall layout boundaries
 				[margin.left, margin.top],
 				[svgWidth - margin.right, svgHeight - margin.bottom]
-			]);
+			])
+			//.iterations(32);
 	}
+
+	let maxVal;
+	let widthScale;
 
 	$: if (svgWidth && svgHeight && sankeyData.nodes.length > 0) {
 		sankeyDataReadyToUse();
+			//Design & highlight links
+			maxVal = max(sankeyDataReady.links, d => d.value);
+			widthScale = scaleLinear([0, maxVal], [6, 55]);
 	}
 
 	//Start with the viz setup
 
-	const margin = { top: 10, right: 10, bottom: 5, left: 10 };
-	const nodeWidth = svgWidth * 0.04; //urspr: 70/80
+	const margin = { top: 80, right: 500, bottom: 50, left: 150 };
+	const nodeWidth = svgWidth * 0.025; //urspr: 70/80
 	const nodePadding = svgHeight * 0.002; //urspr.: 8/9
 
 	//data muss durch den sankey generator, um positions zu kalkulieren (output wie sankeyData, nur mit Layout Daten )
@@ -276,6 +271,7 @@
 		const umsetzungsprojektNodes = sankeyDataReady.nodes.filter(
 			node => node.stage === 'Umsetzungsprojekt' && !node.name.toLowerCase().includes('kein umsetzungsprojekt')
 		);
+
 
 		//console.log('🚫 Ohne Projektskizze:', ohneProjektskizze);
 		//console.log('🚀 Umsetzungsprojekte:', umsetzungsprojektNodes.length);
@@ -315,17 +311,20 @@
 
 	
 	let greyOutOthers = false;
-	let showMaßnahmenLabel = false;
-	let showUmsetzungLabel = false;
 	let showProjektskizzenLabel= false;
 	let showNodeLabel = false;
 	let showUmsetzungsprojekte = false;
+	let showHierJetztLabel = false;
 
 	
 	let showGaertnerLabel = false;
 	let showObstkarteLabel = false;
 	let showVerleihplattformLabel = false;
 	let showMeiEssnLabel = false;
+
+	let showUmsetzungLabelOdd  = false; 
+	let showUmsetzungLabelEven = false; 
+
 
 
 	function startSankeyIdeas() {
@@ -347,44 +346,21 @@ function startSankeyProjektskizzen() {
 
 	setTimeout(() => {
 		showProjektskizzen = true;
-		signalNextStep();
-		console.log('showProjektskizzen');
 	}, 1000);
 }
 
 
 
-	function startSankeyMaßnahmen() {
-		
-		// showMaßnahmenLabel = true;
-		showLinksToMaßnahmen = true;
-
-		requestAnimationFrame(() => {
-			animateLinksDraw('Projektskizze', 'Maßnahme');
-
-		});
-
-		setTimeout(() => {
-			showMaßnahmen = true;
-			showUmsetzungColor = true;
-			showMaßnahmenLabel= true;
-
-
-			signalNextStep();
-		}, 1000);
-	}
-
 	function startSankeyUmsetzung() {
 		showLinksToUmsetzung = true;
 
 		requestAnimationFrame(() => {
-			animateLinksDraw('Maßnahme', 'Umsetzungsprojekt');
+			animateLinksDraw('Projektskizze', 'Umsetzungsprojekt');
 		});
 
 
 		setTimeout(() => {
-			//showMaßnahmenLabel = false;
-			showUmsetzungsprojekte = true;
+			showUmsetzungsprojekte= true;
 
 			signalNextStep();
 		}, 1000);
@@ -395,7 +371,7 @@ function startSankeyProjektskizzen() {
 	function signalNextStep() {
 		if (phaseLock) return; // Falls schon aktiv, nicht erneut starten
 		phaseLock = true;
-		console.log('phaseSankeyFromSTartIn der Funktion signal:', phaseSankey);
+		//console.log('phaseSankeyFromSTartIn der Funktion signal:', phaseSankey);
 
 		setTimeout(() => {
 			dispatch('phaseSankeyEnd');
@@ -416,107 +392,121 @@ function startSankeyProjektskizzen() {
 			source: ' Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen\n',
 			target: 'Mei Essn/Regionale Lebensmittelplattform '
 		},
-		1: { source: 'Mei Essn/Regionale Lebensmittelplattform ', target: 'Bewegen' },
-		2: { source: 'Bewegen', target: 'Hier & Jetzt' },
+		1: { source: 'Mei Essn/Regionale Lebensmittelplattform ', target: 'Hier & Jetzt' },
 
-		3: {
+		2: {
 			source: ' IDEE aus der Bürgerschaft: Digitale Obstkarte zum Ernten',
-			target: 'Keine Projektskizze'
+			target: 'keine Projektskizze, aber weiterverfolgt'
 		},
-		4: { source: 'Keine Projektskizze', target: 'Bewegen' },
-		5: { source: 'Bewegen', target: 'Hier & Jetzt' },
+		3: { source: 'keine Projektskizze, aber weiterverfolgt', target: 'Hier & Jetzt' },
 
-		6: {
+		4: {
 			source: 'Digitale Verleihplattform & Nachbarschaften verbinden',
 			target: 'Raum (und Material-)lotse + Hier & Jetzt'
 		},
-		7: { source: 'Raum (und Material-)lotse + Hier & Jetzt', target: 'Teilhaben' },
-		8: { source: 'Teilhaben', target: 'Hier & Jetzt' },
+		5: { source: 'Raum (und Material-)lotse + Hier & Jetzt', target: 'Hier & Jetzt' },
 
 		//Andere Beispiele
-		9: {
+		6: {
 			source: 'Sportangebote im öffentlichen Raum II: Fitnessgeräte für Erwachsene auf Spielplätzen',
 			target: 'Keine Projektskizze'
 		}
 	};
+	
+const PHASE7_LINKS = [
+  { source: 'Sportangebote im öffentlichen Raum II: Fitnessgeräte für Erwachsene auf Spielplätzen', target: 'Keine Projektskizze' },
+];
+	
+function resetLinksToDefault(list) {
+  const ids = new Set(list.map(d => linkId(d.source, d.target)));
+  select('svg').selectAll('path.link')
+    .filter(function () {
+      const id = linkId(this.getAttribute('data-source-name'), this.getAttribute('data-target-name'));
+      return ids.has(id);
+    })
+    .each(function () {
+      const v = this.__data__?.value;
+      select(this)
+        .attr('stroke', 'white')
+        .attr('stroke-width', v != null ? widthScale(v) : 8)
+        .attr('opacity', (this.getAttribute('data-target-name') === 'Keine Projektskizze' && reduceOpacity) ? 0.1 : 0.3);
+    });
+}
+	function removeRects() {
+
+		const svg = select('svg');
+
+		svg
+			.selectAll('.idee').remove();
+			/*.transition()
+			.duration(1400)
+			.delay((d, i) => i * 2)
+			.attr('opacity', 0);
+		*/
+
+	}
+
+	let specificLinks = [];
+
 
 //Phasensteuerung
-	$: if (phaseSankey === 1) {
+
+$: if (phaseSankey === 1) {
 		startSankeyIdeas();
 	}
+	
+$: if (phaseSankey === 2) {
+  addSpecificLinks([
+    { source: 'Digitale Verleihplattform & Nachbarschaften verbinden',
+      target: 'Raum (und Material-)lotse + Hier & Jetzt' }
+  ], { revealTargetAfterDraw: true });
 
-	$: if (phaseSankey === 2) {
-		startSankeyProjektskizzen();
-	}
+  showVerleihplattformLabel = true;
 
-	$: if (phaseSankey === 3) {
-		showNoProjektskizzenLinks = true;
-	}
+  setTimeout(signalNextStep, 3000);
+}
 
-	//TODO. Was soll das? 
+$: if (phaseSankey === 3) {
+  addSpecificLinks([
+    { source: ' IDEE aus der Bürgerschaft: Digitale Obstkarte zum Ernten',
+      target: 'Keine Projektskizze, aber weiterverfolgt' }
+  ], { revealTargetAfterDraw: true });
+
+  showObstkarteLabel = true;
+
+  setTimeout(signalNextStep, 2500);
+}
+
+
+$: if (phaseSankey === 4) {
+  addSpecificLinks([
+    { source: ' Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen\n',
+      target: 'Mei Essn/Regionale Lebensmittelplattform ' },
+	 { source: "App zu Abo-Kisten etc.",
+		target: "Mei Essn/Regionale Lebensmittelplattform "}
+  ], { revealTargetAfterDraw: true });
+
+  showGaertnerLabel = true;
+  setTimeout(signalNextStep, 2000);
+}
+
+
+
 	$: if (phaseSankey === 5) {
-		increaseLinkWidth = true;
+		startSankeyProjektskizzen();
 		reduceOpacity = true;
+
+ setTimeout(signalNextStep, 6000);
+
+
 	}
 
-let linksToHighlightGym =[];
 	$: if (phaseSankey === 6) {
-		//highlight link outdoorgymys
-		linksToHighlightGym = [
-		highlightExample[9]
-		];
-		animateLinksDraw(null, null, linksToHighlightGym);
-		showNodeLabel = true;
-
-
-
-		setTimeout(() => {
-			signalNextStep();
-		}, 6000);
-	}
-
-
-	$: if (phaseSankey === 7) {
-
-		setTimeout(() => {
-			resetLinkStyles(linksToHighlightGym);
-			showNodeLabel = false;
-			showNoProjektskizzenLinks = false;
-
-			setTimeout(() => {
-				startSankeyMaßnahmen();
-
-			},4000);
-			
-		},2000);
-		
-	}
-
-
-	
-	$: if (phaseSankey === 10) {
-
-		setTimeout(() => {
-			showUmsetzungColor = false;
-			showMaßnahmenLabel= false;
-
-		startSankeyUmsetzung();
-
-
-			
-		},2000);
-
-	}
-
-	
-
-	$: if (phaseSankey === 12) {
-			showUmsetzungLabel = true;
-
-
-		setTimeout(() => {
-				signalNextStep();
-		}, 2500);
+		showNoProjektskizzenLinks = true;
+		showObstkarteLabel = false;
+		showGaertnerLabel = false;
+		showVerleihplattformLabel = false;
+		 setTimeout(signalNextStep, 5000);
 
 
 	}
@@ -524,16 +514,24 @@ let linksToHighlightGym =[];
 
 
 
-$: if (phaseSankey === 14) {
-		//increaseLinkWidth = true;
-		//reduceOpacity = true;
-	const linksToHighlight = [
-		highlightExample[0],
-		highlightExample[3],
-		highlightExample[6]
-	];
+$: if (phaseSankey === 7) {
+	showNodeLabel = true;
 
-	animateLinksDraw(null, null, linksToHighlight);
+  addSpecificLinks(PHASE7_LINKS, { revealTargetAfterDraw: true });
+  setTimeout(signalNextStep, 2000);
+}
+
+
+$: if (phaseSankey === 9) {
+
+
+setTimeout(() => {
+				showNoProjektskizzenLinks = false;
+				showNodeLabel = false;
+				resetLinksToDefault(PHASE7_LINKS);
+
+}, 2000)
+
 
 
 	setTimeout(() => {
@@ -544,40 +542,65 @@ $: if (phaseSankey === 14) {
 
 
 
-$: if (phaseSankey === 16) {
+$: if (phaseSankey === 10) {
+		addSpecificLinks( [
+			{ source: 'Keine Projektskizze, aber weiterverfolgt', target: 'Hier & Jetzt' },
+			{ source: 'Mei Essn/Regionale Lebensmittelplattform ', target: 'Hier & Jetzt' }, 
+			{ source: 'Raum (und Material-)lotse + Hier & Jetzt', target: 'Hier & Jetzt' }
 
-	const linksToHighlight = [
-		highlightExample[1],
-		highlightExample[4],
-		highlightExample[7]
-	];
+		], { revealTargetAfterDraw: true });
+	
+		//showUmsetzungColor = true;
 
-
-		animateLinksDraw(null, null, linksToHighlight);
-
-		//TODO MAßnahmenlabel anzeigen der genutzten aka Bewegen und Teilhaben
-		//Oder via Farbe referenzieren: Bewegen: #e73e20; Teilhaben: #e73e20, 
-		//kästchen in Farben und dann Text in Farbe!
-		showUmsetzungColor = true;
 
 			setTimeout(() => {
+				showHierJetztLabel = true;
+
 				signalNextStep();
-			}, 3000);
+			}, 5000);
 
 	}
 
-	$: if (phaseSankey === 17) {
-		showUmsetzungLabel = true;
-
-		const linksToHighlight = [
-			highlightExample[2],
-			highlightExample[5],
-			highlightExample[8]
-		];
 
 
-		animateLinksDraw(null, null, linksToHighlight);
+	
+	$: if (phaseSankey === 13) {
 
+		setTimeout(() => {
+		startSankeyUmsetzung();
+		
+		},2000);
+
+
+	}
+
+	
+
+	$: if (phaseSankey === 14) {
+		showUmsetzungLabelOdd = true;   
+		
+
+		setTimeout(() => {
+				signalNextStep();
+		}, 2500);
+
+
+	}
+
+
+	$: if (phaseSankey === 15) {
+		showUmsetzungLabelOdd = false;
+		showUmsetzungLabelEven = true;   
+		
+		setTimeout(() => {
+				signalNextStep();
+		}, 2500);
+	}
+
+
+
+	$: if (phaseSankey === 16) {
+		removeRects(); 
 			setTimeout(() => {
 				signalNextStep();
 			}, 4000);
@@ -589,9 +612,9 @@ $: if (phaseSankey === 16) {
 	//Vorbereitung für Labels
 	const stageYears = [
 		{ stage: 'Idee', year: 2021, showPhase: 1 },
-		{ stage: 'Projektskizze', year: 2022, showPhase: 3 },
-		{ stage: 'Maßnahme', year: 2023, showPhase: 6 },
-		{ stage: 'Umsetzungsprojekt', year: 2025, showPhase: 7 }
+		{ stage: 'Projektskizze', year: 2022, showPhase: 2 },
+		//{ stage: 'Maßnahme', year: 2023, showPhase: 6 },
+		{ stage: 'Umsetzungsprojekt', year: 2025, showPhase: 8}
 	];
 
 	//Vorbereitung Stage Labels + BgBoxes
@@ -602,37 +625,29 @@ $: if (phaseSankey === 16) {
 
 	
 	export let sankeyAnnotations = [];
-
+	//console.log('sankeyAnnotations', sankeyAnnotations);
 $: yearPositions = stageYears.map((d, i) => {
-	const availableW = svgWidth - margin.left - margin.right;
-	const step = availableW / (stageYears.length - 1);
-
-	// Finde alle Nodes dieser Stage
 	const nodesForStage = sankeyDataReady?.nodes?.filter(
 		n => n.stage === d.stage && n.name !== 'Kein Umsetzungsprojekt'
 	) || [];
-	// Finde kleinstes y0 = höchste Position
+
 	const minY = nodesForStage.length > 0
 		? Math.min(...nodesForStage.map(n => n.y0))
 		: margin.top;
-	
-	const yOffset = d.stage === 'Umsetzungsprojekt' ? -160 : -50;
 
+	const topNode = nodesForStage.find(n => n.y0 === minY);
 
-	const xOffsets = {
-		'Idee': +80,
-		'Projektskizze': 0,
-		'Maßnahme': 0,
-		'Umsetzungsprojekt': +40
-	}
+	const yOffset = d.stage === 'Umsetzungsprojekt' ? -160 : 0;
 
 	return {
 		...d,
-		x: margin.left + i * step + xOffsets[d.stage],
+		x: topNode ? (topNode.x0 + topNode.x1) / 2 : margin.left + i * ((svgWidth - margin.left - margin.right) / (stageYears.length - 1)),
 		y: minY + yOffset
 	};
 });
 
+
+//console.log('yearPositions', yearPositions);
 export let combinedAnnotations = [];
 $: combinedAnnotations = yearPositions.map((pos) => {
   const match = sankeyAnnotations.find((a) => a.stage === pos.stage);
@@ -642,59 +657,64 @@ $: combinedAnnotations = yearPositions.map((pos) => {
 
 
 
+//console.log('combinedAnnotations', combinedAnnotations);
 
 
-function animateLinksDraw(sourceStage, targetStage, specificLinks = []) {
-	select('svg')
-		.selectAll('path.link')
-		.filter(function () {
-			// Erst prüfen, ob ein konkretes Highlight vorliegt
-			if (specificLinks.length > 0) {
-				const source = this.getAttribute('data-source-name');
-				const target = this.getAttribute('data-target-name');
-				return specificLinks.some(
-					(d) => d.source === source && d.target === target
-				);
-			}
 
-			// Sonst nach Stage matchen
-			return (
-				this.getAttribute('data-source-stage') === sourceStage &&
-				this.getAttribute('data-target-stage') === targetStage
-			);
-		})
-		.each(function () {
-			const path = select(this);
-			const totalLength = this.getTotalLength();
+function animateLinksDraw(sourceStage, targetStage, specificList = [], opts = {}) {
+  const { revealTargetAfterDraw = false, replayDashIfDrawn = false } = opts;
+  const specificIds = new Set(specificList.map(d => linkId(d.source, d.target)));
 
-			const source = this.getAttribute('data-source-name');
-			const target = this.getAttribute('data-target-name');
+  select('svg')
+    .selectAll('path.link')
+    .filter(function () {
+      const s = this.getAttribute('data-source-name');
+      const t = this.getAttribute('data-target-name');
+      const id = linkId(s, t);
 
-			const isSpecific = specificLinks.some(
-				(d) => d.source === source && d.target === target
-			);
+      if (specificIds.size) {
+        // Bei spezifischen Links: IMMER mitnehmen – auch wenn schon gezeichnet
+        return specificIds.has(id);
+      }
+      // Massenfall: bereits gezeichnete überspringen
+      if (drawnLinkIds.has(id)) return false;
 
-			// Animation für alle
-			path
-				.attr('stroke-dasharray', totalLength)
-				.attr('stroke-dashoffset', totalLength);
+      return (
+        this.getAttribute('data-source-stage') === sourceStage &&
+        this.getAttribute('data-target-stage') === targetStage
+      );
+    })
+    .each(function () {
+      const path = select(this);
+      const s = this.getAttribute('data-source-name');
+      const t = this.getAttribute('data-target-name');
+      const id = linkId(s, t);
+      const isSpecific = specificList.length && specificIds.has(id);
+      const alreadyDrawn = drawnLinkIds.has(id);
 
-			if (isSpecific) {
-				// Nur für spezifische Links Style ändern
-				path
-					.attr('stroke', 'url(#smartCityGradient)')
-					.attr('opacity', 1)
-					.attr('stroke-width', 23);
-			}
+      // Bereits gezeichnet + spezifisch: nur highlighten & nach vorn holen
+      if (isSpecific && alreadyDrawn && !replayDashIfDrawn) {
+        path.attr('stroke', 'url(#smartCityGradient)').attr('stroke-width', 15).attr('opacity', 1).raise();
+        if (revealTargetAfterDraw) forceNodes([t]);
+        return;
+      }
 
-			path
-				.raise()
-				.transition()
-				.duration(1000)
-				.ease(easeCubicIn)
-				.attr('stroke-dashoffset', 2);
-		});
+      // Normaler Draw
+      const L = this.getTotalLength();
+      path.attr('stroke-dasharray', L).attr('stroke-dashoffset', L);
+      if (isSpecific) path.attr('stroke', 'url(#smartCityGradient)').attr('stroke-width', 15).attr('opacity', 1);
+
+      path.raise()
+        .transition().duration(1000).ease(easeCubicIn)
+        .attr('stroke-dashoffset', 2)
+        .on('end', () => {
+          drawnLinkIds.add(id);
+          path.classed('drawn', true);
+          if (revealTargetAfterDraw) forceNodes([t]);
+        });
+    });
 }
+
 
 
 function resetLinkStyles(specificLinks = []) {
@@ -708,12 +728,17 @@ function resetLinkStyles(specificLinks = []) {
 		.each(function () {
 			select(this)
 				.attr('stroke', 'white')
-				.attr('opacity', 0.5)
-				.attr('stroke-width', 10);
+				.attr('opacity', 0.3)
+			//	  .attr('stroke-width', widthScale(this.value));
 		});
 }
 
 
+
+let forceShowNodes = new Set(); //enthält spezifische Nodes, die einzeln sichtbar werden sollen
+let drawnLinkIds = new Set();   // merkt bereits gezeichnete Links
+let visibleSpecificIds= new Set(); // merkt bereits gezeichnete Links
+const linkId = (s, t) => `${norm(s)}→${norm(t)}`;
 
 
 /*/ $: if (sankeyDataReady) {
@@ -739,6 +764,77 @@ function resetLinkStyles(specificLinks = []) {
 }
 */
 
+// Anzahl aller einzigartigen Ideen
+const ideeCount = new Set(rawData.map(d => d.idee)).size;
+
+//get rid of space in names
+const norm = (s) => (s ?? '').replace(/\s+/g, ' ').trim();
+
+
+function isSpecific(link) {
+  return specificLinks.some(d =>
+    norm(d.source) === norm(link.source.name) &&
+    norm(d.target) === norm(link.target.name)
+  );
+}
+
+
+async function addSpecificLinks(list, { revealTargetAfterDraw = true } = {}) {
+  // 1) sichtbar machen (kumulativ!)
+  const next = new Set(visibleSpecificIds);
+  list.forEach(d => next.add(linkId(d.source, d.target)));
+  visibleSpecificIds = next; // Reassignment -> Template zeigt alle bisherigen + neuen
+
+  await tick(); // warten, bis die <path>-Elemente für die NEUEN existieren
+
+  // 2) nur die NEUEN animieren (die alten sind schon drawn)
+  const justAdded = list.map(d => ({ source: norm(d.source), target: norm(d.target) }));
+  requestAnimationFrame(() => {
+    animateLinksDraw(null, null, justAdded, { revealTargetAfterDraw });
+  });
+}
+
+
+// Hilfsfunktion 
+function forceNodes(names) {
+  const next = new Set(forceShowNodes);     // Kopie anlegen
+  names.forEach(n => next.add(norm(n)));    // Targets normalisiert hinzufügen
+  forceShowNodes = next;                    // <-- NEU ZUWEISEN => reaktiv!
+}
+async function drawSpecific(list) {
+  // Normierte Whitelist speichern
+  specificLinks = list.map(d => ({
+    source: norm(d.source),
+    target: norm(d.target)
+  }));
+
+  forceNodes(list.map(d => d.target));
+
+  await tick();                 // <— warten, bis die <path>-Elemente gerendert sind
+  requestAnimationFrame(() => { // nächster Frame: sicher da
+    animateLinksDraw(null, null, specificLinks);
+  });
+}
+
+
+$: fontsizeAnnotations =
+  svgWidth < 600
+	? 18
+	: svgWidth < 900
+	? 20
+	: svgWidth < 1200
+	? 30
+	: svgWidth < 2000
+	? 40
+	: 30;
+
+
+// Labels gezielt umbrechen (Key = normalisierter Node-Name)
+const breakMap = new Map([
+  ['Innovativer Katastrophenschutz', ['Innovativer', 'Katastrophenschutz']],
+  ['Regionale Lebensmittelplattform', ['Regionale', 'Lebensmittelplattform']],
+]);
+
 </script>
 
 {#if sankeyDataReady}
@@ -747,17 +843,22 @@ function resetLinkStyles(specificLinks = []) {
    Links -->
 
 		{#each sankeyDataReady.links as link (link.source.name + '-' + link.target.name)}
-			{#if (link.source.stage === 'Idee' && link.target.stage === 'Projektskizze' && showLinksToProjektskizzen) || (link.source.stage === 'Projektskizze' && link.target.stage === 'Maßnahme' && showLinksToMaßnahmen) || (link.source.stage === 'Maßnahme' && link.target.stage === 'Umsetzungsprojekt' && showLinksToUmsetzung)}
+				{#if
+					(showLinksToProjektskizzen && link.source.stage === 'Idee' && link.target.stage === 'Projektskizze') ||
+					(showLinksToUmsetzung     && link.source.stage === 'Projektskizze' && link.target.stage === 'Umsetzungsprojekt') ||
+					(visibleSpecificIds.size && visibleSpecificIds.has(linkId(link.source.name, link.target.name)))
+				}
 				<path
 					d={linkGenerator(link)}
 					fill="none"
 					data-source-stage={link.source.stage}
 					data-target-stage={link.target.stage}
-					data-source-name={link.source.name}
-					data-target-name={link.target.name}
+					data-source-name={norm(link.source.name)}
+					data-target-name={norm(link.target.name)}
 					stroke='white'
-					stroke-width={Math.max(8, link.width + 8)}
-					opacity= 0.7
+					stroke-width={widthScale(link.value)}
+					opacity={ (link.target.name === 'Keine Projektskizze' && reduceOpacity ? 0.1 : 0.3)
+					} 
 					class="link"
 				/>
 
@@ -766,11 +867,11 @@ function resetLinkStyles(specificLinks = []) {
 		<!--opacity={link.target.name === 'Keine Projektskizze' && reduceOpacity ? 0.3 : 0.4}-->
 		<!-- Nodes -->
 		{#each sankeyDataReady.nodes as node (node.stage + '-' + node.name)}
-			{#if (node.stage === 'Idee' && showIdeas) || 
-			(node.stage === 'Projektskizze' && showProjektskizzen) || 
-			(node.stage === 'Maßnahme' && showMaßnahmen) ||
-			(node.stage === 'Umsetzungsprojekt' && showUmsetzungsprojekte)
-			} 
+			{#if
+				(node.stage === 'Idee' && showIdeas) ||
+				(node.stage === 'Projektskizze' && (showProjektskizzen || forceShowNodes.has(norm(node.name)))) ||
+				(node.stage === 'Umsetzungsprojekt' && (showUmsetzungsprojekte || forceShowNodes.has(norm(node.name))))
+			}
 				<g
 					class="node"
 					transform="translate({node.x0},{node.y0})"
@@ -779,17 +880,19 @@ function resetLinkStyles(specificLinks = []) {
 					<rect
 						height={node.y1 - node.y0}
 						width={node.x1 - node.x0}
-						fill={node.stage === 'Maßnahme' && showUmsetzungColor
-							? getColorForMeasure(node.name) || 'white'
+						fill={node.name === 'Hier & Jetzt' && showHierJetztLabel || node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks
+							? 'url(#smartCityGradient)'
 							: '#dbc5c1'}
 
-
-						rx="5"
-						ry="5"
+						stroke-width="10"
+						opacity={node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks ? 0.7: 1}
+						rx="3"
+						ry="3"
 						class="node-rect"
 					/>
 				<!--	{#if node.stage !== 'Idee'}
-						<text
+						<text  
+
 							x={node.x0 < svgWidth / 2 ? node.x1 - node.x0 + 6 : -6}
 							y={(node.y1 - node.y0) / 2}
 							text-anchor={node.x0 < svgWidth / 2 ? 'start' : 'end'}
@@ -801,41 +904,77 @@ function resetLinkStyles(specificLinks = []) {
 					{/if}
 
 			-->
+					{#if node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks}
+						<text
+							x={node.x1 - node.x0 + 10}
+							y={(node.y1 - node.y0) / 2}
+							text-anchor="start"
+							dominant-baseline="middle"
+							font-size={fontsizeAnnotations}
+							class="fill-textcolor font-bold"
+							transition:fade={{ duration: 900 }}
+						>
+							Keine Skizze 
+						</text>
+					{/if}
            
 				{#if 
-					(node.stage === 'Maßnahme' && showMaßnahmenLabel) || 
-					(node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks) ||
-					(node.name === 'Sportangebote im öffentlichen Raum II: Fitnessgeräte für Erwachsene auf Spielplätzen' && showNodeLabel) ||
-					(node.name === 'Hier & Jetzt' && showUmsetzungLabel)||
+					(node.name === 'Keine Projektskizze' && showNodeLabel) ||
+					//(node.name === 'Sportangebote im öffentlichen Raum II: Fitnessgeräte für Erwachsene auf Spielplätzen' && showNodeLabel) ||
+					(node.name === 'Hier & Jetzt' && showHierJetztLabel)||
 					//erste stage
-					(node.name === ' Eine Gärtnerstadt- und Gärtner App für Verbraucher und Touristen\n' && showGaertnerLabel)||
-					(node.name === ' IDEE aus der Bürgerschaft: Digitale Obstkarte zum Ernten' && showObstkarteLabel)||
-					(node.name === 'Digitale Verleihplattform & Nachbarschaften verbinden' && showVerleihplattformLabel)||
-					//zweite stage
-					(node.name === 'Mei Essn/Regionale Lebensmittelplattform ' && showMeiEssnLabel)||
-					(node.name === ' Digitale Verleihplattform & Nachbarschaften verbinden' && showVerleihplattformLabel)
+					(node.name === 'Keine Projektskizze, aber weiterverfolgt' && showGaertnerLabel)||
+					(node.name === 'Mei Essn/Regionale Lebensmittelplattform ' && showObstkarteLabel)||
+					(node.name === 'Raum (und Material-)lotse + Hier & Jetzt' && showVerleihplattformLabel)||
+					(node.stage === 'Umsetzungsprojekt' && (
+     					((showUmsetzungLabelOdd  && ((umsetzungIndex.get(norm(node.name)) ?? 0) % 2 === 0)) ||
+      					(showUmsetzungLabelEven && ((umsetzungIndex.get(norm(node.name)) ?? 0) % 2 === 1)))
+ 					 ))
+
 				}
+					<!-- svelte-ignore missing-declaration -->
 					<text
 						x={ 
 							node.name === 'Hier & Jetzt'
-								? node.x1 - node.x0 - 10
+								? node.x1 - node.x0 +10
 								:node.x1 - node.x0 + 10}
 												
 						y={
 							node.name === 'Hier & Jetzt'
-								? -30
+								? (node.y1 - node.y0) / 2
+								: node.name === 'Keine Projektskizze' && showNodeLabel
+								? (node.y1 - node.y0) / 2 + (node.y1 - node.y0) / 3
 								: (node.y1 - node.y0) / 2
 						}
-						text-anchor={node.name === 'Hier & Jetzt' ? 'end' : 'start'}
+						  text-anchor="start"
+							dominant-baseline="middle"
+							font-size={fontsizeAnnotations}  
+							class="fill-textcolor font-bold"
 
-						class="fill-textcolor text-2xl md:text-4xl lg:text-6xl font-bold"
-						transition:fade={{ duration: 800 }}
+ 						 transition:fade={{ duration: 850, easing: quintOut }}
+
 					>
-						{#if node.name === 'Sportangebote im öffentlichen Raum II: Fitnessgeräte für Erwachsene auf Spielplätzen'}
-							<tspan x={node.x1 + 650} dy="-1.2em">"Sportangebote im öffentlichen Raum II:</tspan>
-							<tspan x={node.x1 + 650} dy="1.2em">Fitnessgeräte für Erwachsene</tspan>
-							<tspan x={node.x1 + 650} dy="1.2em">auf Spielplätzen"</tspan>
+						{#if node.name === 'Keine Projektskizze' && showNodeLabel}
+							{`Fitnessgeräte im öffentlichen Raum`}
+				
 			
+						{:else if (node.name === 'Keine Projektskizze, aber weiterverfolgt')}
+								{`Gärtner App`}
+						
+						{:else if (node.name === 'Mei Essn/Regionale Lebensmittelplattform ')}
+								{`Digitale Obstkarte zum Ernten, App zu Abo-Kisten`}
+
+						{:else if (node.name === 'Raum (und Material-)lotse + Hier & Jetzt')}
+								{`Digitale Verleihplattform`}
+						
+						{:else if (breakMap.has(norm(node.name)))}
+							{#each breakMap.get(norm(node.name)) as line, i}
+								<tspan
+								x={node.x1 - node.x0 + 10}
+								dy={i === 0 ? '-0.6em' : '1em'}
+								>{line}</tspan>
+							{/each}
+
 						{:else}
 							{node.name}
 						{/if}
@@ -847,51 +986,7 @@ function resetLinkStyles(specificLinks = []) {
 		{/each}
   
 
-		<!--  Jahreszahlen pro Stage -->
-		<!--{#each yearPositions as { year, stage, x, y, showPhase }}
-			{#if phaseSankey >= showPhase}
-				<text
-					x={x}
-					y={y - 40}
-					font-size={svgWidth * 0.03}
-					text-anchor="middle"
-					class="years-label fill-textcolor"
-					font-weight="bold"
-				>
-					{year}
-				</text>
 
-				<line
-					x1={margin.left}
-					x2={x}
-					y1={margin.top - 20}
-					y2={margin.top - 20}
-					stroke="white"
-					stroke-width="6"
-					transition:draw={{ duration: 1100 }}
-				/>
-
-				<text
-				x={x + margin.left}
-				y={y + 100}
-				text-anchor={
-					stage === 'Idee' ? 'start' :
-					stage === 'Umsetz-ungs-projekt' ? 'end' :
-					'middle'
-					}
-				font-size={svgWidth * 0.03}
-				fill="white"
-				font-weight="bold"
-				>
-				{#each stage.split('-') as part, i}
-					<tspan x={x} dy={i === 0 ? '0' : '1.2em'}>{part}</tspan>
-				{/each}
-				</text>
-
-
-			{/if}
-	{/each}
--->	
 		<!--! Gradient -->
 		<defs>
 			<linearGradient id="smartCityGradient" x1="0%" y1="0%" x2="100%" y2="0%">

@@ -1,10 +1,5 @@
 [
-	{
-		"id": 1,
-		"idee": "Hausbesitzer bei energetischer Sanierung unterst\u00fctzen",
-		"ideengeber": "Sascha G\u00f6tz",
-		"kategorie": "Wohnen und Bauen"
-	},
+
 	{
 		"id": 2,
 		"idee": "Digitalisierung von Bambergs g\u00e4rtnerischen Angeboten",
@@ -1465,7 +1460,6 @@
 		"ideengeber": "Katharina Breinbauer",
 		"kategorie": null
 	},
-	{ "id": 252, "idee": null, "ideengeber": "Katharine Breinbauer", "kategorie": null },
 	{
 		"id": 253,
 		"idee": "Digitales Solarfl\u00e4chenkataster",
