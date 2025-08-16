@@ -5,7 +5,7 @@
 	import DataStory from '../components/DataStory.svelte';
 	import Layout from '../components/Layout.svelte';
 	import Sankey from '../components/sankey.svelte';
-	import * as d3 from 'd3-scale-chromatic';
+	import {schemeSet3} from 'd3-scale-chromatic';
 	import { writable } from 'svelte/store';
 	import { scaleOrdinal } from 'd3';
 	import { base } from '$app/paths';
@@ -58,7 +58,7 @@
 		farbSkala = scaleOrdinal()
 			.domain(katSammlung)
 			// @ts-ignore
-			.range(d3.schemeSet3);
+			.range(schemeSet3);
 	});
 </script>
 

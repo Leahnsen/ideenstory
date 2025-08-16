@@ -4,7 +4,7 @@
 	import { select, selectAll } from 'd3-selection';
 	import { transition } from 'd3-transition';
 	import { scaleOrdinal } from 'd3-scale';
-	import * as d3 from 'd3-scale-chromatic';
+	import {schemeSet3} from 'd3-scale-chromatic';
 	import { xml } from 'd3-fetch';
 	import Sankey from './sankey.svelte';
 	import { max } from 'd3-array';
