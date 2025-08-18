@@ -5,14 +5,12 @@
 	import AnnotationSankey from './AnnotationSankey.svelte';
 	import EndAnimation from './EndAnimation.svelte';
 	//import Annotations from './Annotations.svelte';
-	import { json } from 'd3-fetch';
 	import { onMount } from 'svelte';
 	import Sankey from './sankey.svelte';
 	import Layout from './Layout.svelte';
 	import { writable } from 'svelte/store';
 	import { scaleOrdinal } from 'd3-scale';
-	import * as d3 from 'd3-scale-chromatic';
-	import { color } from 'd3';
+	import {schemeSet3} from 'd3-scale-chromatic';
 	import { base } from '$app/paths';
 
 

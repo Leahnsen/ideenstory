@@ -1,21 +1,20 @@
 <script>
 	// @ts-nocheck
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { json } from 'd3-fetch';
 	import { sankey, sankeyLinkHorizontal, sankeyCenter, sankeyLeft } from 'd3-sankey';
-	import { scaleOrdinal } from 'd3-scale';
+	import { scaleOrdinal, scaleLinear } from 'd3-scale';
 	import { get } from 'svelte/store';
 	import { writable } from 'svelte/store';
 	import { transition } from 'd3-transition';
 	import { select } from 'd3-selection';
 	import { easeLinear, easeCubicIn } from 'd3-ease';
 	import { draw, fade, slide } from 'svelte/transition';
-	import { bin, reduce,scaleLinear, max } from 'd3';
 	import { tick } from 'svelte';
 	import EndAnimation from './EndAnimation.svelte';
 	import {fly,blur} from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { base } from '$app/paths';
+	import { bin, max } from 'd3-array';
 
 	//import Annotations from './Annotations.svelte';
 
@@ -68,7 +67,8 @@ $: if (sankeyDataReady) {
 
 		
 
-		rawData = await json(`${base}/sankey.json`);
+		rawData = await fetch(`${base}/sankey.json`);
+		rawData = await rawData.json();
 
 		// Mapping von Ideen zu Kategorien erstellen
 		let ideaToCategory = {};

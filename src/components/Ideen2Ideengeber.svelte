@@ -5,12 +5,12 @@
 	import { transition } from 'd3-transition';
 	import { scaleOrdinal } from 'd3-scale';
 	import {schemeSet3} from 'd3-scale-chromatic';
-	import { xml } from 'd3-fetch';
+	//import { xml } from 'd3-fetch';
 	import Sankey from './sankey.svelte';
 	import { max } from 'd3-array';
 	import { easeBackOut, easeBounceInOut } from 'd3-ease';
 	import { animate } from 'motion';
-	import { lab } from 'd3';
+	import { lab } from 'd3-color';
 	import { cubicInOut } from 'svelte/easing';
 
 	export let allData = [];
