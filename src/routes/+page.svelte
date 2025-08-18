@@ -7,7 +7,7 @@
 	import Sankey from '../components/sankey.svelte';
 	import {schemeSet3} from 'd3-scale-chromatic';
 	import { writable } from 'svelte/store';
-	import { scaleOrdinal } from 'd3';
+	import { scaleOrdinal } from 'd3-scale';
 	import { base } from '$app/paths';
 
 
