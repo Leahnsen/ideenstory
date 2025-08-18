@@ -15,6 +15,10 @@
 	import { quintOut } from 'svelte/easing';
 	import { base } from '$app/paths';
 	import { bin, max } from 'd3-array';
+	import { animate } from 'motion';
+	
+
+
 
 	//import Annotations from './Annotations.svelte';
 
@@ -56,10 +60,7 @@ $: if (sankeyDataReady) {
 
   // Name → Reihenindex
   umsetzungIndex = new Map(list.map((n,i) => [norm(n.name), i]));
-  console.log('umsetzungIndex', umsetzungIndex);
 }
-
-
 
 
 	onMount(async () => {
@@ -274,7 +275,7 @@ $: if (sankeyDataReady) {
 
 
 		//console.log('🚫 Ohne Projektskizze:', ohneProjektskizze);
-		//console.log('🚀 Umsetzungsprojekte:', umsetzungsprojektNodes.length);
+		console.log('🚀 Umsetzungsprojekte:', umsetzungsprojektNodes.length);
 		
 	
 			
@@ -315,6 +316,7 @@ $: if (sankeyDataReady) {
 	let showNodeLabel = false;
 	let showUmsetzungsprojekte = false;
 	let showHierJetztLabel = false;
+	let showHierJetztNode = false;
 
 	
 	let showGaertnerLabel = false;
@@ -452,7 +454,11 @@ function resetLinksToDefault(list) {
 //Phasensteuerung
 
 $: if (phaseSankey === 1) {
+	setTimeout(() => {
 		startSankeyIdeas();
+
+		
+	}, 2000)
 	}
 	
 $: if (phaseSankey === 2) {
@@ -504,6 +510,7 @@ $: if (phaseSankey === 4) {
 	$: if (phaseSankey === 6) {
 		showNoProjektskizzenLinks = true;
 		showObstkarteLabel = false;
+
 		showGaertnerLabel = false;
 		showVerleihplattformLabel = false;
 		 setTimeout(signalNextStep, 5000);
@@ -554,12 +561,27 @@ $: if (phaseSankey === 10) {
 
 
 			setTimeout(() => {
-				showHierJetztLabel = true;
 
 				signalNextStep();
 			}, 5000);
 
 	}
+
+$: if (phaseSankey === 11) {
+
+	showHierJetztNode = true;
+	setTimeout(() => {
+		showHierJetztLabel = true;
+
+	}, 800);
+	
+		setTimeout(() => {
+		signalNextStep();
+		
+		},4000);
+
+
+	}	
 
 
 
@@ -582,7 +604,7 @@ $: if (phaseSankey === 10) {
 
 		setTimeout(() => {
 				signalNextStep();
-		}, 2500);
+		}, 3500);
 
 
 	}
@@ -594,7 +616,7 @@ $: if (phaseSankey === 10) {
 		
 		setTimeout(() => {
 				signalNextStep();
-		}, 2500);
+		}, 3500);
 	}
 
 
@@ -617,6 +639,8 @@ $: if (phaseSankey === 10) {
 		{ stage: 'Umsetzungsprojekt', year: 2025, showPhase: 8}
 	];
 
+
+	
 	//Vorbereitung Stage Labels + BgBoxes
 	const boxPaddingX = 10;
 	const boxPaddingY = 15;
@@ -835,6 +859,13 @@ const breakMap = new Map([
   ['Regionale Lebensmittelplattform', ['Regionale', 'Lebensmittelplattform']],
 ]);
 
+let ksEl; // Referenz auf das Text-Element
+const underlineColor = '#fccde5';   
+const underlineThickness = 10;         // Dicke in px
+const underlineOffset = 2;            // Abstand unterhalb der Schrift in px
+
+const delayFor = (name) => (umsetzungIndex.get(norm(name)) ?? 0) * 80;
+
 </script>
 
 {#if sankeyDataReady}
@@ -880,43 +911,52 @@ const breakMap = new Map([
 					<rect
 						height={node.y1 - node.y0}
 						width={node.x1 - node.x0}
-						fill={node.name === 'Hier & Jetzt' && showHierJetztLabel || node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks
-							? 'url(#smartCityGradient)'
-							: '#dbc5c1'}
+						fill={	node.name === 'Hier & Jetzt' && showHierJetztNode || 
+								node.name === 'Keine Projektskizze, aber weiterverfolgt' && showGaertnerLabel||
+								node.name === 'Mei Essn/Regionale Lebensmittelplattform ' && showObstkarteLabel||
+								node.name === 'Raum (und Material-)lotse + Hier & Jetzt' && showVerleihplattformLabel
+									? '#e73e20'
+									:node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks
+									? '#fccde5'
+									: '#dbc5c1'}
 
 						stroke-width="10"
 						opacity={node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks ? 0.7: 1}
-						rx="3"
-						ry="3"
+			
 						class="node-rect"
 					/>
-				<!--	{#if node.stage !== 'Idee'}
-						<text  
+	
+{#if node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks}
+  {#key node.name}
+    <g>
+      <text
+        bind:this={ksEl}
+        x={node.x1 - node.x0 + 10}
+        y={(node.y1 - node.y0) / 2}
+        text-anchor="start"
+        dominant-baseline="middle"
+        font-size={fontsizeAnnotations}
+        class="fill-textcolor font-bold"
+        transition:blur={{ duration: 500 }}
 
-							x={node.x0 < svgWidth / 2 ? node.x1 - node.x0 + 6 : -6}
-							y={(node.y1 - node.y0) / 2}
-							text-anchor={node.x0 < svgWidth / 2 ? 'start' : 'end'}
-							class="fill-textcolor text-2xl md:text-4xl lg:text-4xl font-bold"
-							transition:fade={{ duration: 500 }}
-						>
-							{node.name}
-						</text>
-					{/if}
+      >
+        Keine Skizze
+      </text>
 
-			-->
-					{#if node.name === 'Keine Projektskizze' && showNoProjektskizzenLinks}
-						<text
-							x={node.x1 - node.x0 + 10}
-							y={(node.y1 - node.y0) / 2}
-							text-anchor="start"
-							dominant-baseline="middle"
-							font-size={fontsizeAnnotations}
-							class="fill-textcolor font-bold"
-							transition:fade={{ duration: 900 }}
-						>
-							Keine Skizze 
-						</text>
-					{/if}
+      {#if ksEl}
+        <rect
+          x={ksEl.getBBox().x}
+          y={ksEl.getBBox().y + ksEl.getBBox().height + underlineOffset}
+          width={ksEl.getBBox().width}
+          height={underlineThickness}
+          fill={underlineColor}
+          opacity="1"
+          pointer-events="none"
+        />
+      {/if}
+    </g>
+  {/key}
+{/if}
            
 				{#if 
 					(node.name === 'Keine Projektskizze' && showNodeLabel) ||
@@ -932,7 +972,6 @@ const breakMap = new Map([
  					 ))
 
 				}
-					<!-- svelte-ignore missing-declaration -->
 					<text
 						x={ 
 							node.name === 'Hier & Jetzt'
@@ -950,8 +989,8 @@ const breakMap = new Map([
 							dominant-baseline="middle"
 							font-size={fontsizeAnnotations}  
 							class="fill-textcolor font-bold"
+							transition:blur={{ duration: 900, delay: delayFor(node.name) }}
 
- 						 transition:fade={{ duration: 850, easing: quintOut }}
 
 					>
 						{#if node.name === 'Keine Projektskizze' && showNodeLabel}
@@ -971,7 +1010,7 @@ const breakMap = new Map([
 							{#each breakMap.get(norm(node.name)) as line, i}
 								<tspan
 								x={node.x1 - node.x0 + 10}
-								dy={i === 0 ? '-0.6em' : '1em'}
+								dy={i === 0 ? '0em' : '1em'}
 								>{line}</tspan>
 							{/each}
 

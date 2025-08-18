@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import '../app.postcss';
-	import * as d3 from 'd3-scale-chromatic';
+
 </script>
 
 <slot />

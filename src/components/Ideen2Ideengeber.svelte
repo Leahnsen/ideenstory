@@ -9,7 +9,7 @@
 	import Sankey from './sankey.svelte';
 	import { max } from 'd3-array';
 	import { easeBackOut, easeBounceInOut } from 'd3-ease';
-	import { animate } from 'motion';
+	import { animate, stagger } from 'motion';
 	import { lab } from 'd3-color';
 	import { cubicInOut } from 'svelte/easing';
 
@@ -91,6 +91,15 @@
 		});
 	});
 
+	// stabile Reihenfolge (hier: erst nach id, dann nach index)
+	alleIdeen
+	.sort((a, b) => (a.id ?? 0) - (b.id ?? 0) || a.index - b.index);
+
+	// feste Raster-Position merken
+	alleIdeen.forEach((d, i) => {
+	d.order = i;  
+	});
+
 
 
 	//SVG initialisieren und statische Elemente zeichnen
@@ -145,29 +154,28 @@
 		const totalWidth = columns * padding;
 		const startX = svgWidth - totalWidth;
 
-	svg.selectAll('.idee')
-	.data(alleIdeen)
-	.join('rect')
-	.attr('class', 'idee')
-	.attr('opacity', 1)
-
-     .each(function() {
-        // EINMAL pro neuem Element:
+  svg.selectAll('.idee')
+    .data(alleIdeen, d => d.id) // <— KEY nach id!
+    .join('rect')
+      .attr('class', 'idee')
+      .attr('opacity', 1)
+      .each(function () {
         const { x, y } = randomStartPosition();
         select(this)
           .attr('x', x)
           .attr('y', y)
-          .attr('fill','url(#ideeGradient)')
-          .attr('width', rectSize*0.15)
-          .attr('height', rectSize*0.15)
-          .attr('rx', rectSize*0.02);
+          .attr('fill', 'url(#ideeGradient)')
+          .attr('width',  rectSize * 0.15)
+          .attr('height', rectSize * 0.15)
+          .attr('rx',     rectSize * 0.02);
       })
-    .transition()
-      .delay((d,i)=>i*10)
-      .duration(2500)
-      .ease(easeBackOut.overshoot(1.7))
-	  .attr('x', (d, i) => Math.floor(i / rows) * padding + startX)
-	  .attr('y', (d, i) => (i % rows) * padding);
+      .transition()
+        .delay((d, i) => i * 10)
+        .duration(2500)
+        .ease(easeBackOut.overshoot(1.7))
+        // <— Position NICHT aus i, sondern aus d.order
+        .attr('x', d => Math.floor(d.order / rows) * padding + startX)
+        .attr('y', d => (d.order % rows) * padding);
 
 
 		const annotationIdeas = svg
@@ -193,15 +201,13 @@
 			//.on('end', signalNextStep());
 	}
 
-	// debugging
-	// ideenRects.on("mouseover", (event, d) => {
-	 //  console.log(`Idee: ${d.idee} | Ideengeber: ${d.ideengeber} | Kategorie: ${d.kategorie}`);
-	//});
+
 
 
 
 function highlightIdea(zielIdee, restoreFill = 'url(#ideeGradient)') {
     const ziel = alleIdeen.find(d => d.id === zielIdee);
+	console.log("ziel", ziel);	
     if (!ziel) return console.warn("Idee nicht gefunden:", zielIdee);
 
     const rect = svg.selectAll('.idee').filter(d => d === ziel);
@@ -212,6 +218,11 @@ function highlightIdea(zielIdee, restoreFill = 'url(#ideeGradient)') {
       .transition().duration(2000).attr('stroke', 'white').attr('fill', 'white')
       .transition().delay(2000).duration(1000)
       .attr('stroke-width', 0).attr('stroke', 'none').attr('fill', restoreFill);
+
+	  	// debugging
+	svg.selectAll('.idee').on("mouseover", (event, d) => {
+	   console.log(`Idee: ${d.idee} | Ideengeber: ${d.ideengeber} | Kategorie: ${d.kategorie}`);
+	});
   }
 
 
@@ -442,26 +453,36 @@ function highlightIdea(zielIdee, restoreFill = 'url(#ideeGradient)') {
 
 
 
-	function colorIdeas() {
-		svg.selectAll('rect.idee').each(function (d, i) {
-			const zielFarbe = farbSkala(d.kategorie);
+function colorIdeas() {
+  svg.selectAll('rect.idee').each(function (d, i) { const zielFarbe = farbSkala(d.kategorie);
 
-			animate(
-				this,
-				{
-					fill: zielFarbe,
-					opacity: [0.5, 0.75, 1]
-				},
-				{
-					//delay: i * 0.01,
-					duration: 1.2,
-					ease: 'circInOut'
-				}
-			);
-		});
+  // 1) Farbe wechseln – knackig mit Spring
+  animate(
+    this,
+    { 
+	fill: zielFarbe
+	}, 
+    {
+      duration: 0.5,
+      easing: 'spring(1, 80, 12)',   // <— Motion spring(stiffness, damping, mass)
+      delay: stagger(0.08)           // subtile Staffelung
+    }
+  );
 
-		//setTimeout(signalNextStep, alleIdeen.length * 10 + 1400);
-	}
+  // 2) kurzer „Pop“ über Helligkeit
+  animate(
+    this,
+    { filter: ['brightness(1.35)', 'brightness(1)'] },
+    {
+      duration: 0.45,
+      easing: 'ease-out',
+      delay: stagger(0.01)
+    }
+  );
+  });
+}
+
+		
 
 	function ideasToBarChart() {
 		fadeOutIdeengeberRects();
@@ -716,6 +737,13 @@ function highlightIdea(zielIdee, restoreFill = 'url(#ideeGradient)') {
 	}
 
 
+$: if (phase === 0) {
+	
+		setTimeout(() => {
+			signalNextStep();
+		},200);
+		
+	}	
 
 
 $: if (phase === 1) {
@@ -723,7 +751,7 @@ $: if (phase === 1) {
 
 		setTimeout(() => {
 			signalNextStep();
-		},2000);
+		},6500);
 		
 	}	
 
@@ -781,7 +809,7 @@ $: if (phase === 3) {
 
 	$: if (phase === 15) {
 		hideBarChart(); 
-		setTimeout(signalNextStep, 3500); 
+		//setTimeout(signalNextStep, 3500); 
 
 	}
 
